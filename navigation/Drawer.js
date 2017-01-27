@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -10,7 +10,7 @@ import {
   DrawerNavigation,
   DrawerNavigationItem,
 } from '@exponent/ex-navigation';
-import { Ionicons } from '@exponent/vector-icons';
+import { FontAwesome } from '@exponent/vector-icons';
 import Router from './Router';
 import { Font } from 'exponent';
 
@@ -23,21 +23,18 @@ const Drawer = React.createClass({
         );
     },
 
-    renderTitle(title, isSelected) {
+    renderTitle(title, icon, isSelected) {
         return (
-            <Text style={[styles.titleText, isSelected ? styles.selectedTitleText : {}]}>
-                {title}
-            </Text>
-        );
-    },
-
-    renderIcon(name, isSelected) {
-        return (
-            <Ionicons
-                style={[styles.icon, isSelected ? styles.selectedTitleText : null]}
-                name={name}
-                size={24}
-            />
+            <View style={styles.titleContainer}>
+                <FontAwesome
+                    style={[styles.icon, isSelected ? styles.selectedTitleText : {}]}
+                    name={icon}
+                    size={24}
+                />
+                <Text style={[styles.titleText, isSelected ? styles.selectedTitleText : {}]}>
+                    {title}
+                </Text>
+            </View>
         );
     },
 
@@ -47,15 +44,20 @@ const Drawer = React.createClass({
                 <DrawerNavigationItem
                     id='home'
                     selectedStyle={styles.selectedItemStyle}
-                    renderTitle={isSelected => this.renderTitle('Home', isSelected)}
-                    renderIcon={isSelected => this.renderIcon('md-alert', isSelected)}>
+                    renderTitle={isSelected => this.renderTitle('Home', 'home', isSelected)}>
                     <StackNavigation id='home' initialRoute={Router.getRoute('home')} />
                 </DrawerNavigationItem>
                 <DrawerNavigationItem
                     id='movies'
                     selectedStyle={styles.selectedItemStyle}
-                    renderTitle={isSelected => this.renderTitle('Movies', isSelected)}>
+                    renderTitle={isSelected => this.renderTitle('Movies', 'film', isSelected)}>
                     <StackNavigation id='movies' initialRoute={Router.getRoute('movies')} />
+                </DrawerNavigationItem>
+                <DrawerNavigationItem
+                    id='tvshows'
+                    selectedStyle={styles.selectedItemStyle}
+                    renderTitle={isSelected => this.renderTitle('TV Shows', 'tv', isSelected)}>
+                    <StackNavigation id='tvshows' initialRoute={Router.getRoute('tvshows')} />
                 </DrawerNavigationItem>
             </DrawerNavigation>
         );
@@ -79,21 +81,27 @@ const styles = StyleSheet.create({
         color: '#D32F2F',
     },
     drawer: {
-        backgroundColor: '#444',
+        backgroundColor: '#333',
     },
     selectedItemStyle: {
-        backgroundColor: '#AAA',
+        backgroundColor: '#555',
     },
     selectedTitleText: {
-        color: 'white'
+        color: '#EEE'
     },
     icon: {
-        color: 'purple',
+        color: '#EEE',
     },
     titleText: {
-        color: '#222',
+        color: '#EEE',
         fontWeight: 'bold',
         marginLeft: 18,
+    },
+    titleContainer: {
+        flexDirection: 'row',
+        flex: 1,
+        height: 40,
+        alignItems: 'center',
     },
 });
 

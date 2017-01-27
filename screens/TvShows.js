@@ -1,15 +1,20 @@
 import React from 'react';
 import {
+  Image,
+  Linking,
+  Platform,
+  ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
 import LoadingContainer from '../components/LoadingContainer';
 import getNavigationBar from '../components/NavBar';
 
-export default class Home extends React.Component {
-    static route = getNavigationBar("Home");
+export default class TvShows extends React.Component {
+    static route = getNavigationBar("TV Shows");
 
     state = {
         loading: true,

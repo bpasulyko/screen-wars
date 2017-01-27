@@ -38,7 +38,7 @@ export default class Movies extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#444',
+        backgroundColor: '#333',
         alignItems: 'center',
         justifyContent: 'center',
     },

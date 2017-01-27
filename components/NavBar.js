@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         marginRight: 15,
     },
     titleText: {
-        color: 'white',
+        color: '#EEE',
         fontSize: 25,
         fontFamily: 'star-wars',
     },
