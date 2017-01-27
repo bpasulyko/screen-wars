@@ -1,6 +1,6 @@
 {
-  "name": "screen-wars",
-  "description": "An empty new project",
+  "name": "Screen Wars",
+  "description": "",
   "slug": "screen-wars",
   "privacy": "public",
   "sdkVersion": "12.0.0",
@@ -14,7 +14,7 @@
   },
   "loading": {
     "iconUrl": "https://s3.amazonaws.com/exp-brand-assets/ExponentEmptyManifest_192.png",
-    "hideExponentText": false
+    "hideExponentText": true
   },
   "packagerOpts": {
     "assetExts": ["ttf", "mp4"]
