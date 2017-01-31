@@ -3,10 +3,13 @@ import {
   StyleSheet,
   Text,
   View,
+  ListView,
+  Image,
 } from 'react-native';
 
 import LoadingContainer from '../components/LoadingContainer';
 import getNavigationBar from '../components/NavBar';
+import SearchResults from '../components/SearchResults';
 
 export default class Home extends React.Component {
     static route = getNavigationBar("Home");
@@ -14,7 +17,7 @@ export default class Home extends React.Component {
     state = {
         loading: true,
         search: false,
-        queryString: 'BOOM',
+        searchResults: null,
     };
 
     componentWillMount() {
@@ -33,19 +36,32 @@ export default class Home extends React.Component {
     }
 
     handleSearch = () => {
-        this.setState({ search: !this.state.search });
+        this.setState({
+            search: !this.state.search,
+            searchResults: null,
+        });
     };
 
     handleSearchSubmit = (queryString) => {
-        this.setState({ queryString: queryString });
+        return fetch(`${window.BASE_URL}/search/multi?api_key=${window.API_KEY}&language=en-US&query=${queryString}`)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({ searchResults: responseJson.results });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     };
 
     render() {
         return (
             <View style={styles.container}>
-                <LoadingContainer loading={this.state.loading}>
-                    <Text>{this.state.queryString}</Text>
-                </LoadingContainer>
+                {this.state.searchResults && <SearchResults results={this.state.searchResults} />}
+                <View style={styles.content}>
+                    <LoadingContainer loading={this.state.loading}>
+                        <Text style={{ color: '#fff' }}>CONTENT STUFF</Text>
+                    </LoadingContainer>
+                </View>
             </View>
         );
     };
@@ -55,6 +71,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#333',
+    },
+    content: {
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },
