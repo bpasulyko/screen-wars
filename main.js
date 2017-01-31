@@ -15,6 +15,9 @@ import {
 import Router from './navigation/Router';
 import Drawer from './navigation/Drawer';
 
+window.API_KEY = 'c61fe26ad89f613231e56e67cff3779d';
+window.BASE_URL = 'https://api.themoviedb.org/3';
+
 class App extends React.Component {
     state = {
         appIsReady: false,
@@ -22,6 +25,7 @@ class App extends React.Component {
 
     componentWillMount() {
         this.loadAssetsAsync();
+        this.loadImageConfig();
     }
 
     async loadAssetsAsync() {
@@ -29,8 +33,18 @@ class App extends React.Component {
             'star-wars': require('./assets/fonts/SFDistantGalaxy.ttf'),
             'star-wars-outline': require('./assets/fonts/SFDistantGalaxyOutline.ttf'),
         });
+    }
 
-        this.setState({ appIsReady: true });
+    loadImageConfig() {
+        return fetch(`${BASE_URL}/configuration?api_key=${API_KEY}`)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                window.imageConfig = responseJson.images;
+                this.setState({ appIsReady: true });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     render() {
