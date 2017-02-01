@@ -8,11 +8,22 @@ import {
 } from 'react-native';
 
 import LoadingContainer from '../components/LoadingContainer';
-import getNavigationBar from '../components/NavBar';
+import NavBarTitle from '../components/NavBarTitle';
+import SearchButton from '../components/SearchButton';
 import SearchResults from '../components/SearchResults';
 
 export default class Home extends React.Component {
-    static route = getNavigationBar("Home");
+    static route = {
+        navigationBar: {
+            backgroundColor: '#171717',
+            renderTitle: ({ config: { eventEmitter }, params }) => {
+                return <NavBarTitle title="Home" emitter={eventEmitter} searchEnabled={params.search}/>;
+            },
+            renderRight: ({ config: { eventEmitter }, params }) => {
+                return <SearchButton emitter={eventEmitter} searchEnabled={params.search}/>;
+            },
+        }
+    }
 
     state = {
         loading: true,

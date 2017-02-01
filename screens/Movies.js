@@ -11,10 +11,17 @@ import {
 } from 'react-native';
 
 import LoadingContainer from '../components/LoadingContainer';
-import getNavigationBar from '../components/NavBar';
+import NavBarTitle from '../components/NavBarTitle';
 
 export default class Movies extends React.Component {
-    static route = getNavigationBar("Movies");
+    static route = {
+        navigationBar: {
+            backgroundColor: '#171717',
+            renderTitle: ({ config: { eventEmitter }, params }) => {
+                return <NavBarTitle title="Movies" emitter={eventEmitter}/>;
+            },
+        },
+    }
 
     state = {
         loading: true,

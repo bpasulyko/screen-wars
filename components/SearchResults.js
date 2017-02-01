@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#000',
     },
     list: {
-        height: 400,
+        maxHeight: 400,
         width: 300,
     },
 });

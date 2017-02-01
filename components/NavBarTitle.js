@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableHighlight } from 'react-native';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { FontAwesome } from '@exponent/vector-icons';
 
 const NavBarTitle = React.createClass({
@@ -36,39 +36,7 @@ const NavBarTitle = React.createClass({
     }
 });
 
-const SearchButton = React.createClass({
-    propTypes: {
-        emitter: PropTypes.object,
-        searchEnabled: PropTypes.bool,
-    },
-
-    handlePress() {
-        this.props.emitter.emit('search');
-    },
-
-    render() {
-        const icon = (!this.props.searchEnabled) ? 'search' : 'times';
-        return (
-            <TouchableHighlight underlayColor="#333" onPress={this.handlePress} style={styles.searchButtonContainer}>
-                <FontAwesome name={icon} size={24} style={styles.searchIcon} />
-            </TouchableHighlight>
-        );
-    }
-});
-
-export default function getNavigationBar(title) {
-    return {
-        navigationBar: {
-            backgroundColor: '#171717',
-            renderTitle: ({ config: { eventEmitter }, params }) => {
-                return <NavBarTitle title={title} emitter={eventEmitter} searchEnabled={params.search}/>;
-            },
-            renderRight: ({ config: { eventEmitter }, params }) => {
-                return <SearchButton emitter={eventEmitter} searchEnabled={params.search}/>;
-            },
-        },
-    };
-};
+export default NavBarTitle;
 
 const styles = StyleSheet.create({
     titleContainer: {
@@ -84,17 +52,6 @@ const styles = StyleSheet.create({
         color: '#EEE',
         fontSize: 25,
         fontFamily: 'star-wars',
-    },
-    searchButtonContainer: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        margin: 5,
-        width: 45,
-        borderRadius: 30,
-    },
-    searchIcon: {
-        color: '#EEE',
     },
     input: {
         color: '#BBB',
