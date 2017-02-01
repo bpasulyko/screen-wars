@@ -14,6 +14,16 @@ import {
 } from '@exponent/ex-navigation';
 import Router from './navigation/Router';
 import Drawer from './navigation/Drawer';
+import * as firebase from 'firebase';
+
+var config = {
+    apiKey: "AIzaSyDxIqLoE2tSxlm76VsnomRdccAyKRg8VA0",
+    authDomain: "screen-wars.firebaseapp.com",
+    databaseURL: "https://screen-wars.firebaseio.com",
+    storageBucket: "screen-wars.appspot.com",
+    messagingSenderId: "82685205616"
+};
+firebase.initializeApp(config);
 
 window.API_KEY = 'c61fe26ad89f613231e56e67cff3779d';
 window.BASE_URL = 'https://api.themoviedb.org/3';
