@@ -36,6 +36,7 @@ export default SearchResults;
 const styles = StyleSheet.create({
     listContainer: {
         position: 'absolute',
+        top: 0,
         marginLeft: 30,
         elevation: 7,
         zIndex: 2,

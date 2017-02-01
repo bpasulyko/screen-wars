@@ -56,12 +56,12 @@ export default class Home extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                {this.state.searchResults && <SearchResults results={this.state.searchResults} />}
                 <View style={styles.content}>
                     <LoadingContainer loading={this.state.loading}>
                         <Text style={{ color: '#fff' }}>CONTENT STUFF</Text>
                     </LoadingContainer>
                 </View>
+                {this.state.searchResults && <SearchResults results={this.state.searchResults} />}
             </View>
         );
     };
