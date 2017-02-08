@@ -64,6 +64,20 @@ export default class Home extends React.Component {
             });
     };
 
+    handleResultSelect = (data) => {
+        const saveFunc = (data.media_type === 'movie') ? saveMovie : saveTvShow;
+        saveFunc(data).then(() => {
+            this.props.navigator.showLocalAlert(data.title + ' saved!', {
+                text: { color: '#EEE' },
+                container: { backgroundColor: '#222' },
+            });
+        });
+        this.setState({
+            search: false,
+            searchResults: null,
+        });
+    };
+
     render() {
         return (
             <View style={styles.container}>
@@ -72,10 +86,37 @@ export default class Home extends React.Component {
                         <Text style={{ color: '#fff' }}>CONTENT STUFF</Text>
                     </LoadingContainer>
                 </View>
-                {this.state.searchResults && <SearchResults results={this.state.searchResults} />}
+                {this.state.searchResults && (
+                    <SearchResults
+                        results={this.state.searchResults}
+                        onResultSelect={this.handleResultSelect}
+                    />
+                )}
             </View>
         );
     };
+}
+
+function saveMovie(data) {
+    return window.firebase.database().ref('movies/' + data.id).set({
+        title: data.title,
+        poster: data.poster_path,
+        releaseDate: data.release_date,
+        genres: data.genre_ids,
+        rating: data.vote_average.toFixed(1),
+        watched: true,
+    });
+}
+
+function saveTvShow(data) {
+    return window.firebase.database().ref('tv/' + data.id).set({
+        title: data.name,
+        poster: data.poster_path,
+        releaseDate: data.first_air_date,
+        genres: data.genre_ids,
+        rating: data.vote_average.toFixed(1),
+        watched: true,
+    });
 }
 
 const styles = StyleSheet.create({

@@ -4,32 +4,33 @@ import {
   View,
   Image,
   Text,
+  TouchableNativeFeedback,
 } from 'react-native';
 
 const SearchResultRow = React.createClass({
     propTypes: {
-        image: React.PropTypes.string,
-        title: React.PropTypes.string,
-        year: React.PropTypes.string,
+        rowData: React.PropTypes.object,
+        onResultSelect: React.PropTypes.func,
     },
 
     render() {
         const baseUrl = window.imageConfig.base_url;
-        const size = 'original';
-        const path = this.props.image;
-        const imageUrl = `${baseUrl}${size}${path}`;
-
-        const year = (this.props.year) ? `(${this.props.year.split('-')[0]})` : null;
+        const imageUrl = `${baseUrl}original${this.props.rowData.poster_path}`;
+        const releaseDate = this.props.rowData.first_air_date || this.props.rowData.release_date;
+        const title = this.props.rowData.title || this.props.rowData.name;
+        const year = (releaseDate) ? `(${releaseDate.split('-')[0]})` : null;
         return (
-            <View style={styles.resultRow}>
-                <View style={styles.imageContainer}>
-                    <Image style={styles.image} source={{ uri: imageUrl }} />
+            <TouchableNativeFeedback onPress={this.props.onResultSelect}>
+                <View style={styles.resultRow}>
+                    <View style={styles.imageContainer}>
+                        <Image style={styles.image} source={{ uri: imageUrl }} />
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.text} ellipsizeMode='tail' numberOfLines={1}>{title}</Text>
+                        {year && <Text style={styles.text}>{year}</Text>}
+                    </View>
                 </View>
-                <View style={styles.textContainer}>
-                    <Text style={styles.text} ellipsizeMode='tail' numberOfLines={1}>{this.props.title}</Text>
-                    {year && <Text style={styles.text}>{year}</Text>}
-                </View>
-            </View>
+            </TouchableNativeFeedback>
         );
     }
 });

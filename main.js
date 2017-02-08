@@ -24,6 +24,7 @@ var config = {
     messagingSenderId: "82685205616"
 };
 firebase.initializeApp(config);
+window.firebase = firebase;
 
 window.API_KEY = 'c61fe26ad89f613231e56e67cff3779d';
 window.BASE_URL = 'https://api.themoviedb.org/3';

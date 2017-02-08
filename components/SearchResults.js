@@ -9,6 +9,7 @@ import SearchResultRow from './SearchResultRow';
 const SearchResults = React.createClass({
     propTypes: {
         results: React.PropTypes.array,
+        onResultSelect: React.PropTypes.func,
     },
 
     render() {
@@ -20,10 +21,12 @@ const SearchResults = React.createClass({
                     dataSource={results}
                     style={styles.list}
                     renderRow={(rowData) => {
-                        return <SearchResultRow
-                            image={rowData.poster_path}
-                            title={rowData.title || rowData.name}
-                            year={rowData.first_air_date || rowData.release_date} />;
+                        return (
+                            <SearchResultRow
+                                rowData={rowData}
+                                onResultSelect={() => this.props.onResultSelect(rowData)}
+                            />
+                        );
                     }}
                 />
             </View>
