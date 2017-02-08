@@ -67,7 +67,8 @@ export default class Home extends React.Component {
     handleResultSelect = (data) => {
         const saveFunc = (data.media_type === 'movie') ? saveMovie : saveTvShow;
         saveFunc(data).then(() => {
-            this.props.navigator.showLocalAlert(data.title + ' saved!', {
+            const title = data.title || data.name;
+            this.props.navigator.showLocalAlert(title + ' added!', {
                 text: { color: '#EEE' },
                 container: { backgroundColor: '#222' },
             });

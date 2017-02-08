@@ -4,7 +4,7 @@ import {
   View,
   Image,
   Text,
-  TouchableNativeFeedback,
+  TouchableHighlight,
 } from 'react-native';
 
 const SearchResultRow = React.createClass({
@@ -20,7 +20,7 @@ const SearchResultRow = React.createClass({
         const title = this.props.rowData.title || this.props.rowData.name;
         const year = (releaseDate) ? `(${releaseDate.split('-')[0]})` : null;
         return (
-            <TouchableNativeFeedback onPress={this.props.onResultSelect}>
+            <TouchableHighlight onPress={this.props.onResultSelect}>
                 <View style={styles.resultRow}>
                     <View style={styles.imageContainer}>
                         <Image style={styles.image} source={{ uri: imageUrl }} />
@@ -30,7 +30,7 @@ const SearchResultRow = React.createClass({
                         {year && <Text style={styles.text}>{year}</Text>}
                     </View>
                 </View>
-            </TouchableNativeFeedback>
+            </TouchableHighlight>
         );
     }
 });
