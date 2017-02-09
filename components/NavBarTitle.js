@@ -17,13 +17,14 @@ const NavBarTitle = React.createClass({
         if (this.props.searchEnabled) {
             return (
                 <View style={styles.titleContainer}>
+                    <FontAwesome name="search" size={18} style={styles.searchIcon} />
                     <TextInput
                         style={styles.input}
                         placeholder="Search"
                         returnKeyType='search'
                         autoFocus={true}
                         onSubmitEditing={this.handleSearchSubmit}
-                        underlineColorAndroid='#BBB'/>
+                        underlineColorAndroid='rgba(0,0,0,0)'/>
                 </View>
             );
         }
@@ -52,6 +53,11 @@ const styles = StyleSheet.create({
         color: '#EEE',
         fontSize: 25,
         fontFamily: 'star-wars',
+    },
+    searchIcon: {
+        color:'#BBB',
+        marginRight: 5,
+        marginLeft: 10,
     },
     input: {
         color: '#BBB',

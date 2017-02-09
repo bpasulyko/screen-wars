@@ -9,7 +9,7 @@ import {
 
 import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
-import SearchButton from '../components/SearchButton';
+import AddButton from '../components/AddButton';
 import SearchResults from '../components/SearchResults';
 
 export default class Home extends React.Component {
@@ -20,7 +20,7 @@ export default class Home extends React.Component {
                 return <NavBarTitle title="Home" emitter={eventEmitter} searchEnabled={params.search}/>;
             },
             renderRight: ({ config: { eventEmitter }, params }) => {
-                return <SearchButton emitter={eventEmitter} searchEnabled={params.search}/>;
+                return <AddButton emitter={eventEmitter} searchEnabled={params.search}/>;
             },
         }
     }
