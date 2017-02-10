@@ -1,17 +1,17 @@
 import React from 'react';
+import _ from 'lodash';
 import {
   Image,
-  Linking,
-  Platform,
-  ScrollView,
   StyleSheet,
   Text,
+  ScrollView,
   TouchableOpacity,
   View,
 } from 'react-native';
 
 import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
+import ItemList from '../components/ItemList';
 
 export default class Movies extends React.Component {
     static route = {
@@ -25,17 +25,27 @@ export default class Movies extends React.Component {
 
     state = {
         loading: true,
+        movies: null,
     };
 
-    componentDidMount = () => {
-        setTimeout(() => this.setState({ loading: false }), 3000);
-    };
+    componentDidMount() {
+        window.firebase.database().ref('movies/').on('value', (movies) => {
+            this.setState({
+                loading: false,
+                movies: movies.val(),
+            })
+        });
+    }
 
     render() {
         return (
             <View style={styles.container}>
                 <LoadingContainer loading={this.state.loading}>
-                    <Text>BOOM</Text>
+                    {this.state.movies && (
+                        <ScrollView>
+                            <ItemList list={_.values(this.state.movies)} />
+                        </ScrollView>
+                    )}
                 </LoadingContainer>
             </View>
         );
