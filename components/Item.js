@@ -4,7 +4,8 @@ import {
   Image,
   View,
   Dimensions,
-  TouchableNativeFeedback,
+  Animated,
+  TouchableHighlight,
 } from 'react-native';
 import Item from './Item';
 
@@ -13,13 +14,35 @@ const ItemList = React.createClass({
         item: React.PropTypes.object,
     },
 
+    componentWillMount() {
+        this.animation = new Animated.Value(0);
+    },
+
+    handlePress() {
+        Animated.sequence([
+            Animated.timing(this.animation, { toValue: 1, duration: 100 }),
+            Animated.timing(this.animation, { toValue: 0, duration: 100 }),
+        ]).start();
+    },
+
     render() {
         const baseUrl = window.imageConfig.base_url;
-        const imageUrl = `${baseUrl}original${this.props.item.poster}`;
+        const size = window.imageConfig.poster_sizes[1];
+        const imageUrl = `${baseUrl}${size}${this.props.item.poster}`;
+        const animatedStyle = {
+            transform: [{
+                scale: this.animation.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [1, 1.1]
+                })
+            }],
+        };
         return (
-            <View style={styles.imageContainer}>
-                <Image style={styles.image} source={{ uri: imageUrl }} />
-            </View>
+            <Animated.View style={[styles.imageContainer, animatedStyle]}>
+                <TouchableHighlight onPress={this.handlePress}>
+                    <Image style={styles.image} source={{ uri: imageUrl }} />
+                </TouchableHighlight>
+            </Animated.View>
         );
     }
 });

@@ -15,7 +15,8 @@ const SearchResultRow = React.createClass({
 
     render() {
         const baseUrl = window.imageConfig.base_url;
-        const imageUrl = `${baseUrl}original${this.props.rowData.poster_path}`;
+        const size = window.imageConfig.poster_sizes[0];
+        const imageUrl = `${baseUrl}${size}${this.props.rowData.poster_path}`;
         const releaseDate = this.props.rowData.first_air_date || this.props.rowData.release_date;
         const title = this.props.rowData.title || this.props.rowData.name;
         const year = (releaseDate) ? `(${releaseDate.split('-')[0]})` : null;
