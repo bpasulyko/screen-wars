@@ -43,7 +43,7 @@ export default class Movies extends React.Component {
                 <LoadingContainer loading={this.state.loading}>
                     {this.state.movies && (
                         <ScrollView>
-                            <ItemList list={_.values(this.state.movies)} />
+                            <ItemList list={_.sortBy(_.values(this.state.movies), 'title')} />
                         </ScrollView>
                     )}
                 </LoadingContainer>
