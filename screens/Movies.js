@@ -12,6 +12,7 @@ import {
 import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
 import ItemList from '../components/ItemList';
+import { FontAwesome } from '@exponent/vector-icons';
 
 export default class Movies extends React.Component {
     static route = {
@@ -38,14 +39,21 @@ export default class Movies extends React.Component {
     }
 
     render() {
+        const MovieList = (
+            <ScrollView>
+                <ItemList list={_.sortBy(_.values(this.state.movies), 'title')} />
+            </ScrollView>
+        );
+        const NoMovies = (
+            <View style={styles.noMovies}>
+                <FontAwesome name="film" size={100} style={styles.icon} />
+                <Text style={styles.noMoviesText}>You haven't added any movies to your collection!</Text>
+            </View>
+        );
         return (
             <View style={styles.container}>
                 <LoadingContainer loading={this.state.loading}>
-                    {this.state.movies && (
-                        <ScrollView>
-                            <ItemList list={_.sortBy(_.values(this.state.movies), 'title')} />
-                        </ScrollView>
-                    )}
+                    {this.state.movies && MovieList || NoMovies}
                 </LoadingContainer>
             </View>
         );
@@ -59,4 +67,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    noMovies: {
+        padding: 20,
+    },
+    icon: {
+        color: '#888',
+        textAlign: 'center',
+        marginBottom: 20,
+    },
+    noMoviesText: {
+        color: '#EEE',
+        fontSize: 20,
+        textAlign: 'center',
+    }
 });
