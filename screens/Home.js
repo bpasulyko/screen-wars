@@ -20,7 +20,13 @@ export default class Home extends React.Component {
                 return <NavBarTitle title="Home" emitter={eventEmitter} searchEnabled={params.search}/>;
             },
             renderRight: ({ config: { eventEmitter }, params }) => {
-                return <AddButton emitter={eventEmitter} searchEnabled={params.search}/>;
+                return (
+                    <AddButton
+                        emitter={eventEmitter}
+                        searchEnabled={params.search}
+                        reset={params.searchResults === null}
+                    />
+                );
             },
         }
     }
@@ -43,6 +49,7 @@ export default class Home extends React.Component {
     componentDidUpdate() {
         this.props.navigator.updateCurrentRouteParams({
             search: this.state.search,
+            searchResults: this.state.searchResults,
         });
     }
 

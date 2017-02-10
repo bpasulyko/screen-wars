@@ -12,6 +12,12 @@ const AddButton = React.createClass({
         this.animation = new Animated.Value(0);
     },
 
+    componentDidUpdate() {
+        if (this.props.reset && !this.props.searchEnabled) {
+            Animated.spring(this.animation, { toValue: 0 }).start();
+        }
+    },
+
     handlePress() {
         Animated.spring(
             this.animation,
