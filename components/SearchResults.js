@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   ListView,
+  Animated,
 } from 'react-native';
 import SearchResultRow from './SearchResultRow';
 
@@ -12,11 +13,23 @@ const SearchResults = React.createClass({
         onResultSelect: React.PropTypes.func,
     },
 
+    componentWillMount() {
+        this.animation = new Animated.Value(0);
+    },
+
+    componentDidMount() {
+        Animated.spring(this.animation, { toValue: 400 }).start();
+    },
+
     render() {
+        const animatedStyle = {
+            maxHeight: this.animation,
+        };
+
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         const results = ds.cloneWithRows(this.props.results);
         return (
-            <View style={styles.listContainer}>
+            <Animated.View style={[styles.listContainer, animatedStyle]}>
                 <ListView
                     dataSource={results}
                     style={styles.list}
@@ -29,7 +42,7 @@ const SearchResults = React.createClass({
                         );
                     }}
                 />
-            </View>
+            </Animated.View>
         );
     }
 });
