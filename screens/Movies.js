@@ -33,7 +33,7 @@ export default class Movies extends React.Component {
         window.firebase.database().ref('movies/').on('value', (movies) => {
             this.setState({
                 loading: false,
-                movies: movies.val(),
+                movies: _.sortBy(_.values(movies.val()), 'title'),
             })
         });
     }
@@ -41,7 +41,7 @@ export default class Movies extends React.Component {
     render() {
         const MovieList = (
             <ScrollView>
-                <ItemList list={_.sortBy(_.values(this.state.movies), 'title')} />
+                <ItemList list={this.state.movies} />
             </ScrollView>
         );
         const NoMovies = (

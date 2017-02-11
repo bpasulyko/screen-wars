@@ -1,8 +1,7 @@
 import React from 'react';
+import _ from 'lodash';
 import {
   Image,
-  Linking,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,30 +11,49 @@ import {
 
 import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
+import ItemList from '../components/ItemList';
+import { FontAwesome } from '@exponent/vector-icons';
 
 export default class TvShows extends React.Component {
     static route = {
         navigationBar: {
             backgroundColor: '#171717',
             renderTitle: ({ config: { eventEmitter }, params }) => {
-                return <NavBarTitle title="TV Shows" emitter={eventEmitter}/>;
+                return <NavBarTitle title="TV" emitter={eventEmitter}/>;
             },
         },
     }
 
     state = {
         loading: true,
+        tvShows: null,
     };
 
     componentDidMount = () => {
-        setTimeout(() => this.setState({ loading: false }), 3000);
+        window.firebase.database().ref('tv/').on('value', (tvShows) => {
+            this.setState({
+                loading: false,
+                tvShows: _.sortBy(_.values(tvShows.val()), 'title'),
+            })
+        });
     };
 
     render() {
+        const TvShowList = (
+            <ScrollView>
+                <ItemList list={this.state.tvShows} />
+            </ScrollView>
+        );
+        const NoTvShows = (
+            <View style={styles.noTvShows}>
+                <FontAwesome name="tv" size={100} style={styles.icon} />
+                <Text style={styles.noTvShowsText}>You haven't added any TV shows to your collection!</Text>
+            </View>
+        );
         return (
             <View style={styles.container}>
                 <LoadingContainer loading={this.state.loading}>
-                    <Text>BOOM</Text>
+                    {this.state.tvShows && TvShowList || NoTvShows}
                 </LoadingContainer>
             </View>
         );
@@ -49,4 +67,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    noTvShows: {
+        padding: 20,
+    },
+    icon: {
+        color: '#888',
+        textAlign: 'center',
+        marginBottom: 20,
+    },
+    noTvShowsText: {
+        color: '#EEE',
+        fontSize: 20,
+        textAlign: 'center',
+    }
 });
