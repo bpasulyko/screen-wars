@@ -8,13 +8,13 @@ import Item from './Item';
 const ItemList = React.createClass({
     propTypes: {
         list: React.PropTypes.array,
-        onDeleteItem: React.PropTypes.func,
+        onClick: React.PropTypes.func,
     },
 
     render() {
         return (
             <View style={styles.listContainer}>
-                {this.props.list.map((item, index) => <Item key={index} item={item} onDeleteItem={this.props.onDeleteItem} />)}
+                {this.props.list.map((item, index) => <Item key={index} item={item} onClick={this.props.onClick} />)}
             </View>
         );
     }
