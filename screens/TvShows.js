@@ -26,7 +26,7 @@ export default class TvShows extends React.Component {
 
     state = {
         loading: true,
-        tvShows: null,
+        tvShows: [],
     };
 
     componentDidMount = () => {
@@ -53,7 +53,7 @@ export default class TvShows extends React.Component {
         return (
             <View style={styles.container}>
                 <LoadingContainer loading={this.state.loading}>
-                    {this.state.tvShows && TvShowList || NoTvShows}
+                    {this.state.tvShows.length > 0 && TvShowList || NoTvShows}
                 </LoadingContainer>
             </View>
         );
