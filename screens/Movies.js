@@ -69,7 +69,7 @@ export default class Movies extends React.Component {
 
     renderModal = () => {
         const baseUrl = window.imageConfig.base_url;
-        const size = window.imageConfig.poster_sizes[1];
+        const size = window.imageConfig.poster_sizes[2];
         const imageUrl = `${baseUrl}${size}${this.state.selectedMovie.poster}`;
         return (
             <Modal
