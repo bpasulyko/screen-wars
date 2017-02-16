@@ -12,6 +12,7 @@ import Item from './Item';
 const ItemList = React.createClass({
     propTypes: {
         item: React.PropTypes.object,
+        onClick: React.PropTypes.func,
     },
 
     componentWillMount() {
@@ -23,6 +24,7 @@ const ItemList = React.createClass({
             Animated.timing(this.animation, { toValue: 1, duration: 100 }),
             Animated.timing(this.animation, { toValue: 0, duration: 100 }),
         ]).start();
+        this.props.onClick(this.props.item);
     },
 
     render() {
@@ -39,7 +41,7 @@ const ItemList = React.createClass({
         };
         return (
             <Animated.View style={[styles.imageContainer, animatedStyle]}>
-                <TouchableHighlight onPress={this.handlePress}>
+                <TouchableHighlight style={styles.image} onPress={this.handlePress}>
                     <Image style={styles.image} source={{ uri: imageUrl }} />
                 </TouchableHighlight>
             </Animated.View>
@@ -59,6 +61,7 @@ const styles = StyleSheet.create({
         width: ITEM_WIDTH,
         height: ITEM_HEIGHT,
         margin: 4,
+        borderRadius: 4,
     },
     image: {
         width: ITEM_WIDTH,
