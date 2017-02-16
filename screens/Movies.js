@@ -99,7 +99,7 @@ export default class Movies extends React.Component {
     render() {
         const MovieList = (
             <ScrollView>
-                <ItemList list={this.state.movies} onDeleteItem={this.handleDeleteItem} />
+                <ItemList list={this.state.movies} onClick={this.handleDeleteItem} />
             </ScrollView>
         );
         const NoMovies = (
