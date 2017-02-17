@@ -12,6 +12,7 @@ import {
 import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
 import ItemList from '../components/ItemList';
+import DeleteModal from '../components/DeleteModal';
 import { FontAwesome } from '@exponent/vector-icons';
 
 export default class TvShows extends React.Component {
@@ -27,6 +28,8 @@ export default class TvShows extends React.Component {
     state = {
         loading: true,
         tvShows: [],
+        selectedTvShow: null,
+        modalVisible: false,
     };
 
     componentDidMount = () => {
@@ -38,10 +41,46 @@ export default class TvShows extends React.Component {
         });
     };
 
+    showDeleteModal = (selectedTvShow) => {
+        this.setState({
+            modalVisible: true,
+            selectedTvShow: selectedTvShow,
+        });
+    };
+
+    deleteTvShow = () => {
+        return window.firebase.database().ref('tv/' + this.state.selectedTvShow.id).remove()
+            .then(() => {
+                this.props.navigator.showLocalAlert(this.state.selectedTvShow.title + ' deleted!', {
+                    text: { color: '#EEE' },
+                    container: { backgroundColor: '#222' },
+                });
+                this.closeModal();
+            });
+    };
+
+    closeModal = () => {
+        this.setState({
+            modalVisible: false,
+            selectedTvShow: null,
+        });
+    };
+
+    renderModal = () => {
+        return (
+            <DeleteModal
+                selectedItem={this.state.selectedTvShow}
+                visible={this.state.modalVisible}
+                onClose={this.closeModal}
+                onDelete={this.deleteTvShow}
+            />
+        );
+    };
+
     render() {
         const TvShowList = (
             <ScrollView>
-                <ItemList list={this.state.tvShows} />
+                <ItemList list={this.state.tvShows} onClick={this.showDeleteModal} />
             </ScrollView>
         );
         const NoTvShows = (
@@ -52,6 +91,7 @@ export default class TvShows extends React.Component {
         );
         return (
             <View style={styles.container}>
+                {this.state.selectedTvShow && this.renderModal()}
                 <LoadingContainer loading={this.state.loading}>
                     {this.state.tvShows.length > 0 && TvShowList || NoTvShows}
                 </LoadingContainer>
