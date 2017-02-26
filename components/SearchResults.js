@@ -4,6 +4,7 @@ import {
   View,
   ListView,
   Animated,
+  Dimensions,
 } from 'react-native';
 import SearchResultRow from './SearchResultRow';
 
@@ -29,37 +30,43 @@ const SearchResults = React.createClass({
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         const results = ds.cloneWithRows(this.props.results);
         return (
-            <Animated.View style={[styles.listContainer, animatedStyle]}>
-                <ListView
-                    dataSource={results}
-                    style={styles.list}
-                    renderRow={(rowData) => {
-                        return (
-                            <SearchResultRow
-                                rowData={rowData}
-                                onResultSelect={() => this.props.onResultSelect(rowData)}
-                            />
-                        );
-                    }}
-                />
-            </Animated.View>
+            <View style={styles.listContainer}>
+                <Animated.View style={animatedStyle}>
+                    <ListView
+                        dataSource={results}
+                        style={styles.list}
+                        renderRow={(rowData) => {
+                            return (
+                                <SearchResultRow
+                                    rowData={rowData}
+                                    onResultSelect={() => this.props.onResultSelect(rowData)}
+                                />
+                            );
+                        }}
+                    />
+                </Animated.View>
+            </View>
         );
     }
 });
 
 export default SearchResults;
 
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
     listContainer: {
         position: 'absolute',
         top: 0,
-        marginLeft: 30,
-        elevation: 7,
-        zIndex: 2,
-        backgroundColor: '#000',
+        width: WIDTH,
+        height: HEIGHT,
+        backgroundColor: 'rgba(0,0,0,0.25)',
+        alignItems: 'center',
     },
     list: {
         maxHeight: 400,
         width: 300,
+        elevation: 7,
     },
 });

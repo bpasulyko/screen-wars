@@ -10,6 +10,7 @@ const NavBarTitle = React.createClass({
     },
 
     handleSearchSubmit(e) {
+        this.refs['search_input'].blur();
         this.props.emitter.emit('searchSubmitted', e.nativeEvent.text);
     },
 
@@ -19,10 +20,12 @@ const NavBarTitle = React.createClass({
                 <View style={styles.titleContainer}>
                     <FontAwesome name="search" size={18} style={styles.searchIcon} />
                     <TextInput
+                        ref="search_input"
                         style={styles.input}
                         placeholder="Search"
                         returnKeyType='search'
-                        autoFocus={true}
+                        autoFocus
+                        selectTextOnFocus
                         onSubmitEditing={this.handleSearchSubmit}
                         underlineColorAndroid='rgba(0,0,0,0)'/>
                 </View>
