@@ -49,15 +49,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
     },
     imageContainer: {
-        elevation: 5,
+        elevation: 2,
         backgroundColor: '#444',
+        borderRadius: 4,
     },
     image: {
         width: 39,
         height: 60,
         borderRadius: 4,
-        borderWidth:1,
-        borderColor: '#777',
     },
     textContainer: {
         paddingLeft: 10,
