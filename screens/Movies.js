@@ -14,6 +14,7 @@ import NavBarTitle from '../components/NavBarTitle';
 import ItemList from '../components/ItemList';
 import DeleteModal from '../components/DeleteModal';
 import { FontAwesome } from '@exponent/vector-icons';
+import Router from '../navigation/Router';
 
 export default class Movies extends React.Component {
     static route = {
@@ -40,6 +41,10 @@ export default class Movies extends React.Component {
             })
         });
     }
+
+    goToDetails = (selectedMovie) => {
+        this.props.navigator.push(Router.getRoute('details', { id: selectedMovie.id, type: 'movie' }));
+    };
 
     showDeleteModal = (selectedMovie) => {
         this.setState({
@@ -80,7 +85,7 @@ export default class Movies extends React.Component {
     render() {
         const MovieList = (
             <ScrollView>
-                <ItemList list={this.state.movies} onClick={this.showDeleteModal} />
+                <ItemList list={this.state.movies} onClick={this.goToDetails} />
             </ScrollView>
         );
         const NoMovies = (
