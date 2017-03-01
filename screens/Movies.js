@@ -12,7 +12,6 @@ import {
 import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
 import ItemList from '../components/ItemList';
-import DeleteModal from '../components/DeleteModal';
 import { FontAwesome } from '@exponent/vector-icons';
 import Router from '../navigation/Router';
 
@@ -29,8 +28,6 @@ export default class Movies extends React.Component {
     state = {
         loading: true,
         movies: [],
-        modalVisible: false,
-        selectedMovie: null,
     };
 
     componentDidMount() {
@@ -43,43 +40,7 @@ export default class Movies extends React.Component {
     }
 
     goToDetails = (selectedMovie) => {
-        this.props.navigator.push(Router.getRoute('details', { id: selectedMovie.id, type: 'movie' }));
-    };
-
-    showDeleteModal = (selectedMovie) => {
-        this.setState({
-            modalVisible: true,
-            selectedMovie: selectedMovie,
-        });
-    };
-
-    deleteMovie = () => {
-        return window.firebase.database().ref('movies/' + this.state.selectedMovie.id).remove()
-            .then(() => {
-                this.props.navigator.showLocalAlert(this.state.selectedMovie.title + ' deleted!', {
-                    text: { color: '#EEE' },
-                    container: { backgroundColor: '#222' },
-                });
-                this.closeModal();
-            });
-    };
-
-    closeModal = () => {
-        this.setState({
-            modalVisible: false,
-            selectedMovie: null,
-        });
-    };
-
-    renderModal = () => {
-        return (
-            <DeleteModal
-                selectedItem={this.state.selectedMovie}
-                visible={this.state.modalVisible}
-                onClose={this.closeModal}
-                onDelete={this.deleteMovie}
-            />
-        );
+        this.props.navigator.push(Router.getRoute('details', { item: selectedMovie, type: 'movie' }));
     };
 
     render() {
@@ -96,7 +57,6 @@ export default class Movies extends React.Component {
         );
         return (
             <View style={styles.container}>
-                {this.state.selectedMovie && this.renderModal()}
                 <LoadingContainer loading={this.state.loading}>
                     {this.state.movies.length > 0 && MovieList || NoMovies}
                 </LoadingContainer>

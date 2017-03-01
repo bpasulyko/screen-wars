@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     },
     stars: {
         flexDirection: 'row',
+        paddingLeft: 30,
     },
     icon: {
         color: '#FFC107',
