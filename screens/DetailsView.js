@@ -32,6 +32,7 @@ export default class DetailsView extends React.Component {
 
     state = {
         loading: true,
+        type: null,
         itemDetails: {},
         modalVisible: false,
     };
@@ -44,6 +45,7 @@ export default class DetailsView extends React.Component {
                 this.setState({
                     itemDetails: _.merge({}, responseJson, params.item),
                     loading: false,
+                    type: params.type,
                 });
             })
             .catch((error) => {
@@ -57,9 +59,9 @@ export default class DetailsView extends React.Component {
         });
     };
 
-    deleteMovie = () => {
+    deleteItem = () => {
         console.log('deleted!');
-        return window.firebase.database().ref('movies/' + this.state.itemDetails.id).remove()
+        return window.firebase.database().ref(`${this.state.type}/` + this.state.itemDetails.id).remove()
             .then(() => {
                 this.props.navigator.pop();
             });
@@ -77,7 +79,7 @@ export default class DetailsView extends React.Component {
                 selectedItem={this.state.itemDetails}
                 visible={this.state.modalVisible}
                 onClose={this.closeModal}
-                onDelete={this.deleteMovie}
+                onDelete={this.deleteItem}
             />
         );
     };

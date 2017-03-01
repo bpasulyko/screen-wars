@@ -31,7 +31,7 @@ export default class Movies extends React.Component {
     };
 
     componentDidMount() {
-        window.firebase.database().ref('movies/').on('value', (movies) => {
+        window.firebase.database().ref('movie/').on('value', (movies) => {
             this.setState({
                 loading: false,
                 movies: _.sortBy(_.values(movies.val()), 'title'),

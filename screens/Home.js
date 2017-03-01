@@ -106,7 +106,7 @@ export default class Home extends React.Component {
 }
 
 function saveMovie(data) {
-    return window.firebase.database().ref('movies/' + data.id).set({
+    return window.firebase.database().ref('movie/' + data.id).set({
         id: data.id,
         title: data.title,
         poster: data.poster_path,

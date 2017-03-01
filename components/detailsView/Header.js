@@ -15,9 +15,11 @@ const Header = React.createClass({
         const item = this.props.itemDetails;
         const baseUrl = window.imageConfig.base_url;
         const posterSize = window.imageConfig.poster_sizes[2];
-        const posterUrl = `${baseUrl}${posterSize}${item.poster_path}`;
-        const year = (item.release_date) ? item.release_date.split('-')[0] : '';
-        const runtime = `${Math.floor(item.runtime/60)}h ${item.runtime%60}min`;
+        const posterUrl = `${baseUrl}${posterSize}${item.poster}`;
+        const year = (item.releaseDate) ? item.releaseDate.split('-')[0] : '';
+        const runtime = (item.runtime)
+            ? `${Math.floor(item.runtime/60)}h ${item.runtime%60}min`
+            : `${item.number_of_seasons} seasons`;
         return (
             <View style={styles.headerContainer}>
                 <View style={styles.posterContainer}>
