@@ -13,6 +13,7 @@ import {
 import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
 import Backdrop from '../components/detailsView/Backdrop';
+import Header from '../components/detailsView/Header';
 // import DeleteModal from '../components/DeleteModal';
 import { FontAwesome } from '@exponent/vector-icons';
 
@@ -49,20 +50,13 @@ export default class DetailsView extends React.Component {
 
     render() {
         const item = this.state.itemDetails;
-        const baseUrl = window.imageConfig.base_url;
-        const posterSize = window.imageConfig.poster_sizes[2];
-        const posterUrl = `${baseUrl}${posterSize}${item.poster_path}`;
-        const year = (item.release_date) ? item.release_date.split('-')[0] : '';
         return (
             <View style={styles.container}>
                 <LoadingContainer loading={this.state.loading}>
                     <ScrollView>
                         <Backdrop path={item.backdrop_path} />
                         <View style={styles.content}>
-                            <View style={styles.posterContainer}>
-                                <Image style={styles.poster} source={{ uri: posterUrl }} />
-                            </View>
-                            <Text style={styles.title}>{item.title} ({year})</Text>
+                            <Header itemDetails={item} />
                         </View>
                     </ScrollView>
                 </LoadingContainer>
@@ -79,30 +73,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     content: {
-        elevation: 100,
-        zIndex: 2,
         flex: 1,
-        flexDirection: 'row',
-        padding: 20,
-    },
-    posterContainer: {
-        elevation: 5,
-        backgroundColor: '#333',
-        width: 90,
-        height: 135,
-        borderRadius: 4,
-    },
-    poster: {
-        width: 90,
-        height: 135,
-        borderRadius: 4,
-    },
-    title: {
-        fontSize: 24,
-        flex: 1,
-        color: '#EEE',
-        paddingLeft: 10,
-        fontFamily: 'star-wars',
-        flexWrap: 'wrap',
+        padding: 10,
     },
 });

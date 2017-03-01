@@ -4,8 +4,6 @@ import {
   Image,
   View,
   Dimensions,
-  Animated,
-  TouchableHighlight,
 } from 'react-native';
 import {
   Components
