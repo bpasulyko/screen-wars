@@ -57,6 +57,8 @@ export default class DetailsView extends React.Component {
                         <Backdrop path={item.backdrop_path} />
                         <View style={styles.content}>
                             <Header itemDetails={item} />
+                            <Text style={styles.tagline}>{item.tagline}</Text>
+                            <Text style={styles.overview}>{item.overview}</Text>
                         </View>
                     </ScrollView>
                 </LoadingContainer>
@@ -76,4 +78,14 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
     },
+    tagline: {
+        color: '#EEE',
+        fontStyle: 'italic',
+        textAlign: 'center',
+        paddingVertical: 15,
+    },
+    overview: {
+        color: '#EEE',
+        lineHeight: 25,
+    }
 });
