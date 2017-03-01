@@ -14,6 +14,7 @@ import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
 import Backdrop from '../components/detailsView/Backdrop';
 import Header from '../components/detailsView/Header';
+import Rating from '../components/detailsView/Rating';
 // import DeleteModal from '../components/DeleteModal';
 import { FontAwesome } from '@exponent/vector-icons';
 
@@ -57,6 +58,7 @@ export default class DetailsView extends React.Component {
                         <Backdrop path={item.backdrop_path} />
                         <View style={styles.content}>
                             <Header itemDetails={item} />
+                            <Rating rating={item.vote_average} />
                             <Text style={styles.tagline}>{item.tagline}</Text>
                             <Text style={styles.overview}>{item.overview}</Text>
                         </View>
@@ -82,7 +84,8 @@ const styles = StyleSheet.create({
         color: '#EEE',
         fontStyle: 'italic',
         textAlign: 'center',
-        paddingVertical: 15,
+        paddingTop: 20,
+        paddingBottom: 10,
     },
     overview: {
         color: '#EEE',
