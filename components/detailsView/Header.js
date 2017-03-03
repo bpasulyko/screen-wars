@@ -11,15 +11,20 @@ const Header = React.createClass({
         itemDetails: React.PropTypes.shape(),
     },
 
+    formatRuntime(runtime) {
+        const hours = Math.floor(runtime/60);
+        const mins = runtime%60;
+        return (hours > 0) ? `${hours}h ${mins}min` : `${mins}min`;
+    },
+
     render() {
         const item = this.props.itemDetails;
         const baseUrl = window.imageConfig.base_url;
         const posterSize = window.imageConfig.poster_sizes[2];
         const posterUrl = `${baseUrl}${posterSize}${item.poster}`;
         const year = (item.releaseDate) ? item.releaseDate.split('-')[0] : '';
-        const runtime = (item.runtime)
-            ? `${Math.floor(item.runtime/60)}h ${item.runtime%60}min`
-            : `${item.number_of_seasons} seasons`;
+        const runtime = (item.type === 'movie') ? item.runtime : item.episode_run_time[0];
+        const formattedRuntime = this.formatRuntime(runtime);
         return (
             <View style={styles.headerContainer}>
                 <View style={styles.posterContainer}>
@@ -31,7 +36,7 @@ const Header = React.createClass({
                         <Text style={styles.text}>Directed by:</Text>
                         <Text style={styles.text}>Some Director Person</Text>
                     </View>
-                    <Text style={[styles.text, styles.runtime]}>{runtime}</Text>
+                    <Text style={[styles.text, styles.runtime]}>{formattedRuntime}</Text>
                 </View>
             </View>
         );
@@ -47,9 +52,7 @@ const styles = StyleSheet.create({
     },
     posterContainer: {
         elevation: 5,
-        backgroundColor: '#333',
-        width: 100,
-        height: 150,
+        backgroundColor: '#222',
         borderRadius: 4,
     },
     poster: {

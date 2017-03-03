@@ -14,6 +14,7 @@ import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
 import Backdrop from '../components/detailsView/Backdrop';
 import Header from '../components/detailsView/Header';
+import SubHeader from '../components/detailsView/SubHeader';
 import Rating from '../components/detailsView/Rating';
 import Button from '../components/Button';
 import DeleteModal from '../components/DeleteModal';
@@ -32,7 +33,6 @@ export default class DetailsView extends React.Component {
 
     state = {
         loading: true,
-        type: null,
         itemDetails: {},
         modalVisible: false,
     };
@@ -43,9 +43,8 @@ export default class DetailsView extends React.Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
-                    itemDetails: _.merge({}, responseJson, params.item),
+                    itemDetails: _.merge({}, responseJson, params.item, { type: params.type }),
                     loading: false,
-                    type: params.type,
                 });
             })
             .catch((error) => {
@@ -60,8 +59,7 @@ export default class DetailsView extends React.Component {
     };
 
     deleteItem = () => {
-        console.log('deleted!');
-        return window.firebase.database().ref(`${this.state.type}/` + this.state.itemDetails.id).remove()
+        return window.firebase.database().ref(`${this.state.itemDetails.type}/` + this.state.itemDetails.id).remove()
             .then(() => {
                 this.props.navigator.pop();
             });
@@ -94,8 +92,7 @@ export default class DetailsView extends React.Component {
                         <Backdrop path={item.backdrop_path} />
                         <View style={styles.content}>
                             <Header itemDetails={item} />
-                            <Rating rating={item.vote_average} />
-                            <Text style={styles.tagline}>{item.tagline}</Text>
+                            <SubHeader itemDetails={item} />
                             <Text style={styles.overview}>{item.overview}</Text>
                             <View style={styles.deleteButton}>
                                 <Button color="#D32F2F" text="Delete" icon="trash" onClick={this.showDeleteModal} />
@@ -120,13 +117,6 @@ const styles = StyleSheet.create({
         padding: 10,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    tagline: {
-        color: '#EEE',
-        fontStyle: 'italic',
-        textAlign: 'center',
-        paddingTop: 20,
-        paddingBottom: 10,
     },
     overview: {
         color: '#EEE',
