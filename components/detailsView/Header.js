@@ -11,6 +11,16 @@ const Header = React.createClass({
         itemDetails: React.PropTypes.shape(),
     },
 
+    formatYear(item) {
+        if (item.type === 'movie') {
+            return item.releaseDate.split('-')[0];
+        } else {
+            return (item.status === 'Ended')
+                ? `${item.releaseDate.split('-')[0]}-${item.last_air_date.split('-')[0]}`
+                : `${item.releaseDate.split('-')[0]}-`;
+        }
+    },
+
     formatRuntime(runtime) {
         const hours = Math.floor(runtime/60);
         const mins = runtime%60;
@@ -22,7 +32,7 @@ const Header = React.createClass({
         const baseUrl = window.imageConfig.base_url;
         const posterSize = window.imageConfig.poster_sizes[2];
         const posterUrl = `${baseUrl}${posterSize}${item.poster}`;
-        const year = (item.releaseDate) ? item.releaseDate.split('-')[0] : '';
+        const year = this.formatYear(item);
         const runtime = (item.type === 'movie') ? item.runtime : item.episode_run_time[0];
         const formattedRuntime = this.formatRuntime(runtime);
         return (
@@ -33,7 +43,7 @@ const Header = React.createClass({
                 <View style={styles.headerContent}>
                     <Text style={[styles.text, styles.title]}>{item.title} ({year})</Text>
                     <View>
-                        <Text style={styles.text}>Directed by:</Text>
+                        <Text style={styles.text}>Directed by</Text>
                         <Text style={styles.text}>Some Director Person</Text>
                     </View>
                     <Text style={[styles.text, styles.runtime]}>{formattedRuntime}</Text>
@@ -67,13 +77,13 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     title: {
-        fontSize: 24,
+        fontSize: 20,
+        fontWeight: '500',
     },
     runtime: {
-        fontSize: 20,
+        fontSize: 16,
     },
     text: {
-        fontFamily: 'star-wars',
         color: '#EEE',
     }
 });
