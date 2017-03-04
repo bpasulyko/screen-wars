@@ -39,7 +39,7 @@ export default class DetailsView extends React.Component {
 
     componentDidMount() {
         const params = this.props.route.params;
-        return fetch(`${window.BASE_URL}/${params.type}/${params.item.id}?api_key=${window.API_KEY}&language=en-US`)
+        return fetch(`${window.BASE_URL}/${params.type}/${params.item.id}?api_key=${window.API_KEY}&language=en-US&append_to_response=credits`)
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({

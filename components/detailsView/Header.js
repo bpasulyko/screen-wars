@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import {
   StyleSheet,
   Image,
@@ -11,7 +12,8 @@ const Header = React.createClass({
         itemDetails: React.PropTypes.shape(),
     },
 
-    formatYear(item) {
+    formatYear() {
+        const item = this.props.itemDetails;
         if (item.type === 'movie') {
             return item.releaseDate.split('-')[0];
         } else {
@@ -21,32 +23,41 @@ const Header = React.createClass({
         }
     },
 
-    formatRuntime(runtime) {
+    formatRuntime() {
+        const item = this.props.itemDetails;
+        const runtime = (item.type === 'movie') ? item.runtime : item.episode_run_time[0];
         const hours = Math.floor(runtime/60);
         const mins = runtime%60;
         return (hours > 0) ? `${hours}h ${mins}min` : `${mins}min`;
+    },
+
+    renderDirectorSection() {
+        const item = this.props.itemDetails;
+        const directors = (item.type === 'movie')
+            ? _.filter(item.credits.crew, { job: 'Director' })
+            : item.created_by
+        const label = (item.type === 'movie') ? 'Directed by' : 'Created by';
+        return (
+            <View>
+                <Text style={[styles.text, { fontSize: 11 }]}>{label}</Text>
+                <Text style={[styles.text, { fontSize: 16 }]}>{directors.map((x) => x.name).join(', ')}</Text>
+            </View>
+        );
     },
 
     render() {
         const item = this.props.itemDetails;
         const baseUrl = window.imageConfig.base_url;
         const posterSize = window.imageConfig.poster_sizes[2];
-        const posterUrl = `${baseUrl}${posterSize}${item.poster}`;
-        const year = this.formatYear(item);
-        const runtime = (item.type === 'movie') ? item.runtime : item.episode_run_time[0];
-        const formattedRuntime = this.formatRuntime(runtime);
         return (
             <View style={styles.headerContainer}>
                 <View style={styles.posterContainer}>
-                    <Image style={styles.poster} source={{ uri: posterUrl }} />
+                    <Image style={styles.poster} source={{ uri: `${baseUrl}${posterSize}${item.poster}` }} />
                 </View>
                 <View style={styles.headerContent}>
-                    <Text style={[styles.text, styles.title]}>{item.title} ({year})</Text>
-                    <View>
-                        <Text style={styles.text}>Directed by</Text>
-                        <Text style={styles.text}>Some Director Person</Text>
-                    </View>
-                    <Text style={[styles.text, styles.runtime]}>{formattedRuntime}</Text>
+                    <Text style={[styles.text, styles.title]}>{item.title} ({this.formatYear()})</Text>
+                    {this.renderDirectorSection()}
+                    <Text style={[styles.text, styles.runtime]}>{this.formatRuntime()}</Text>
                 </View>
             </View>
         );
