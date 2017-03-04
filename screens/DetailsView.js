@@ -18,6 +18,7 @@ import SubHeader from '../components/detailsView/SubHeader';
 import Rating from '../components/detailsView/Rating';
 import Genres from '../components/detailsView/Genres';
 import CastList from '../components/detailsView/CastList';
+import CrewList from '../components/detailsView/CrewList';
 import Button from '../components/Button';
 import DeleteModal from '../components/DeleteModal';
 import { FontAwesome } from '@exponent/vector-icons';
@@ -98,6 +99,7 @@ export default class DetailsView extends React.Component {
                             <Text style={styles.overview}>{item.overview}</Text>
                             <Genres itemDetails={item} />
                             {item.credits && item.credits.cast.length > 0 && <CastList cast={item.credits.cast} />}
+                            {item.credits && item.credits.crew.length > 0 && <CrewList crew={item.credits.crew} />}
                             <View style={styles.deleteButton}>
                                 <Button color="#D32F2F" text="Delete" icon="trash" onClick={this.showDeleteModal} />
                             </View>
