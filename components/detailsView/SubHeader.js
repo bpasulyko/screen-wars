@@ -21,7 +21,7 @@ const SubHeader = React.createClass({
                     <Rating rating={item.vote_average} />
                 </View>
                 <View style={styles.detailsContainer}>
-                    {item.type == 'movie' && <Text style={styles.tagline}>{item.tagline}</Text>}
+                    {item.type == 'movie' && <Text style={styles.tagline}>{item.tagline.toUpperCase()}</Text>}
                     {item.type === 'tv' && <Text style={styles.seasons}>{item.number_of_seasons + ' seasons'}</Text>}
                     {item.type === 'tv' && <Text style={styles.seasons}>{item.number_of_episodes + ' episodes'}</Text>}
                 </View>
