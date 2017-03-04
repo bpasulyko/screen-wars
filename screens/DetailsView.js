@@ -17,6 +17,7 @@ import Header from '../components/detailsView/Header';
 import SubHeader from '../components/detailsView/SubHeader';
 import Rating from '../components/detailsView/Rating';
 import Genres from '../components/detailsView/Genres';
+import CastList from '../components/detailsView/CastList';
 import Button from '../components/Button';
 import DeleteModal from '../components/DeleteModal';
 import { FontAwesome } from '@exponent/vector-icons';
@@ -96,6 +97,7 @@ export default class DetailsView extends React.Component {
                             <SubHeader itemDetails={item} />
                             <Text style={styles.overview}>{item.overview}</Text>
                             <Genres itemDetails={item} />
+                            {item.credits && item.credits.cast.length > 0 && <CastList cast={item.credits.cast} />}
                             <View style={styles.deleteButton}>
                                 <Button color="#D32F2F" text="Delete" icon="trash" onClick={this.showDeleteModal} />
                             </View>
@@ -114,14 +116,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     content: {
-        flex: 1,
         padding: 10,
-        justifyContent: 'center',
     },
     overview: {
         color: '#EEE',
         lineHeight: 25,
-        paddingBottom: 25,
+        paddingBottom: 20,
     },
     deleteButton: {
         paddingHorizontal: 50,

@@ -2,7 +2,6 @@ import React from 'react';
 import _ from 'lodash';
 import {
   StyleSheet,
-  Image,
   View,
   Text,
 } from 'react-native';
@@ -39,6 +38,7 @@ const styles = StyleSheet.create({
     title: {
         fontWeight: '500',
         fontSize: 16,
-        color: '#EEE'
+        color: '#EEE',
+        paddingBottom: 5,
     },
 });
