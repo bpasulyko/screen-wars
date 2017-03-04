@@ -6,17 +6,11 @@ import {
   View,
   Text,
 } from 'react-native';
+import TextBubble from '../TextBubble';
 
 const Genres = React.createClass({
     propTypes: {
         itemDetails: React.PropTypes.shape(),
-    },
-
-    renderGenresList() {
-        const item = this.props.itemDetails;
-        return item.genres.map((genre, key) => {
-            return <Text key={key} style={styles.genre}>{window.genres[genre].name}</Text>;
-        });
     },
 
     render() {
@@ -24,7 +18,9 @@ const Genres = React.createClass({
             <View style={styles.container}>
                 <Text style={styles.title}>GENRES</Text>
                 <View style={styles.genreContainer}>
-                    {this.renderGenresList()}
+                    {this.props.itemDetails.genres.map((genre, key) => {
+                        return <TextBubble key={key}>{window.genres[genre].name}</TextBubble>;
+                    })}
                 </View>
             </View>
         );
@@ -44,15 +40,5 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         fontSize: 16,
         color: '#EEE'
-    },
-    genre: {
-        paddingVertical: 3,
-        paddingHorizontal: 10,
-        backgroundColor: '#444',
-        borderRadius: 3,
-        borderWidth: 1,
-        borderColor: '#555',
-        color: '#EEE',
-        margin: 2,
     },
 });
