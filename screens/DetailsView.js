@@ -22,6 +22,7 @@ import CrewList from '../components/detailsView/CrewList';
 import Button from '../components/Button';
 import DeleteModal from '../components/DeleteModal';
 import { FontAwesome } from '@exponent/vector-icons';
+import moment from 'moment';
 
 export default class DetailsView extends React.Component {
     static route = {
@@ -85,6 +86,12 @@ export default class DetailsView extends React.Component {
         );
     };
 
+    formatReleaseDate = () => {
+        if (this.state.itemDetails.releaseDate) {
+            return moment.utc(this.state.itemDetails.releaseDate).format('MMMM D, YYYY');
+        }
+    };
+
     render() {
         const item = this.state.itemDetails;
         return (
@@ -97,6 +104,10 @@ export default class DetailsView extends React.Component {
                             <Header itemDetails={item} />
                             <SubHeader itemDetails={item} />
                             <Text style={styles.overview}>{item.overview}</Text>
+                            <View style={styles.releaseDateContainer}>
+                                <Text style={styles.heading}>RELEASE DATE</Text>
+                                <Text style={{ color: '#EEE' }}>{this.formatReleaseDate()}</Text>
+                            </View>
                             <Genres itemDetails={item} />
                             {item.credits && item.credits.cast.length > 0 && <CastList cast={item.credits.cast} />}
                             {item.credits && item.credits.crew.length > 0 && <CrewList crew={item.credits.crew} />}
@@ -128,5 +139,14 @@ const styles = StyleSheet.create({
     deleteButton: {
         paddingHorizontal: 50,
         paddingTop: 30,
+    },
+    releaseDateContainer: {
+        paddingVertical: 10,
+    },
+    heading: {
+        fontWeight: '500',
+        fontSize: 16,
+        color: '#EEE',
+        paddingBottom: 5,
     },
 });
