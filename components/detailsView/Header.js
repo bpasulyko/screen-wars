@@ -15,11 +15,11 @@ const Header = React.createClass({
     formatYear() {
         const item = this.props.itemDetails;
         if (item.type === 'movie') {
-            return item.releaseDate.split('-')[0];
+            return item.release_date.split('-')[0];
         } else {
             return (item.status === 'Ended')
-                ? `${item.releaseDate.split('-')[0]}-${item.last_air_date.split('-')[0]}`
-                : `${item.releaseDate.split('-')[0]}-`;
+                ? `${item.first_air_date.split('-')[0]}-${item.last_air_date.split('-')[0]}`
+                : `${item.first_air_date.split('-')[0]}-`;
         }
     },
 
@@ -52,10 +52,10 @@ const Header = React.createClass({
         return (
             <View style={styles.headerContainer}>
                 <View style={styles.posterContainer}>
-                    <Image style={styles.poster} source={{ uri: `${baseUrl}${posterSize}${item.poster}` }} />
+                    <Image style={styles.poster} source={{ uri: `${baseUrl}${posterSize}${item.poster_path}` }} />
                 </View>
                 <View style={styles.headerContent}>
-                    <Text style={[styles.text, styles.title]}>{item.title} ({this.formatYear()})</Text>
+                    <Text style={[styles.text, styles.title]}>{item.title || item.name} ({this.formatYear()})</Text>
                     {this.renderDirectorSection()}
                     <Text style={[styles.text, styles.runtime]}>{this.formatRuntime()}</Text>
                 </View>
@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
     },
     headerContent: {
         flex: 1,
-        flexWrap: 'wrap',
         paddingLeft: 10,
         justifyContent: 'space-around',
     },

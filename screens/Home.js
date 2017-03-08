@@ -11,6 +11,7 @@ import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
 import AddButton from '../components/AddButton';
 import SearchResults from '../components/SearchResults';
+import Router from '../navigation/Router';
 
 export default class Home extends React.Component {
     static route = {
@@ -71,19 +72,12 @@ export default class Home extends React.Component {
             });
     };
 
-    handleResultSelect = (data) => {
-        const saveFunc = (data.media_type === 'movie') ? saveMovie : saveTvShow;
-        saveFunc(data).then(() => {
-            const title = data.title || data.name;
-            this.props.navigator.showLocalAlert(title + ' added!', {
-                text: { color: '#EEE' },
-                container: { backgroundColor: '#222' },
-            });
-        });
-        this.setState({
-            search: false,
-            searchResults: null,
-        });
+    goToDetails = (selectedItem) => {
+        this.props.navigator.push(Router.getRoute('details', {
+            item: selectedItem,
+            type: selectedItem.media_type,
+            inCollection: false,
+        }));
     };
 
     render() {
@@ -97,7 +91,7 @@ export default class Home extends React.Component {
                 {this.state.searchResults && (
                     <SearchResults
                         results={this.state.searchResults}
-                        onResultSelect={this.handleResultSelect}
+                        onResultSelect={this.goToDetails}
                     />
                 )}
             </View>

@@ -13,11 +13,12 @@ const Genres = React.createClass({
     },
 
     render() {
+        const genreList = this.props.itemDetails.genre_ids || this.props.itemDetails.genres;
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>GENRES</Text>
                 <View style={styles.genreContainer}>
-                    {this.props.itemDetails.genres.map((genre, key) => {
+                    {genreList.map((genre, key) => {
                         return <TextBubble key={key}>{window.genres[genre].name}</TextBubble>;
                     })}
                 </View>
@@ -34,6 +35,8 @@ const styles = StyleSheet.create({
     },
     genreContainer: {
         flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignItems:'center',
     },
     title: {
         fontWeight: '500',

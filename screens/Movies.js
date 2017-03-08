@@ -40,7 +40,11 @@ export default class Movies extends React.Component {
     }
 
     goToDetails = (selectedMovie) => {
-        this.props.navigator.push(Router.getRoute('details', { item: selectedMovie, type: 'movie' }));
+        this.props.navigator.push(Router.getRoute('details', {
+            item: selectedMovie,
+            type: 'movie',
+            inCollection: true,
+        }));
     };
 
     render() {

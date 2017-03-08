@@ -39,6 +39,7 @@ export default class DetailsView extends React.Component {
         loading: true,
         itemDetails: {},
         modalVisible: false,
+        inCollection: true,
     };
 
     componentDidMount() {
@@ -49,12 +50,28 @@ export default class DetailsView extends React.Component {
                 this.setState({
                     itemDetails: _.merge({}, responseJson, params.item, { type: params.type }),
                     loading: false,
+                    inCollection: params.inCollection,
                 });
             })
             .catch((error) => {
                 console.error(error);
             });
     }
+
+    addItemToCollection = () => {
+        const item = this.state.itemDetails;
+        const saveFunc = (item.media_type === 'movie') ? saveMovie : saveTvShow;
+        saveFunc(item).then(() => {
+            const title = item.title || item.name;
+            this.props.navigator.showLocalAlert(title + ' added!', {
+                text: { color: '#EEE' },
+                container: { backgroundColor: '#222' },
+            });
+            this.setState({
+                inCollection: true,
+            });
+        });
+    };
 
     showDeleteModal = () => {
         this.setState({
@@ -87,7 +104,9 @@ export default class DetailsView extends React.Component {
     };
 
     formatReleaseDate = () => {
-        if (this.state.itemDetails.releaseDate) {
+        const item = this.state.itemDetails;
+        const releaseDate = (item.type === 'movie') ? item.release_date : item.first_air_date;
+        if (releaseDate) {
             return moment.utc(this.state.itemDetails.releaseDate).format('MMMM D, YYYY');
         }
     };
@@ -102,6 +121,9 @@ export default class DetailsView extends React.Component {
                         <Backdrop path={item.backdrop_path} />
                         <View style={styles.content}>
                             <Header itemDetails={item} />
+                            {!this.state.inCollection && (
+                                <Button color="#D32F2F" text="Add to Collection" onClick={this.addItemToCollection} />
+                            )}
                             <SubHeader itemDetails={item} />
                             <Text style={styles.overview}>{item.overview}</Text>
                             <View style={styles.releaseDateContainer}>
@@ -111,15 +133,43 @@ export default class DetailsView extends React.Component {
                             <Genres itemDetails={item} />
                             {item.credits && item.credits.cast.length > 0 && <CastList cast={item.credits.cast} />}
                             {item.credits && item.credits.crew.length > 0 && <CrewList crew={item.credits.crew} />}
-                            <View style={styles.deleteButton}>
-                                <Button color="#D32F2F" text="Delete" icon="trash" onClick={this.showDeleteModal} />
-                            </View>
+                            {this.state.inCollection && (
+                                <View style={styles.deleteButton}>
+                                    <Button color="#D32F2F" text="Delete" icon="trash" onClick={this.showDeleteModal} />
+                                </View>
+                            )}
                         </View>
                     </ScrollView>
                 </LoadingContainer>
             </View>
         );
     };
+}
+
+
+
+function saveMovie(data) {
+    return window.firebase.database().ref('movie/' + data.id).set({
+        id: data.id,
+        title: data.title,
+        poster: data.poster_path,
+        releaseDate: data.release_date,
+        genres: data.genre_ids,
+        rating: data.vote_average.toFixed(1),
+        watched: true,
+    });
+}
+
+function saveTvShow(data) {
+    return window.firebase.database().ref('tv/' + data.id).set({
+        id: data.id,
+        title: data.name,
+        poster: data.poster_path,
+        releaseDate: data.first_air_date,
+        genres: data.genre_ids,
+        rating: data.vote_average.toFixed(1),
+        watched: true,
+    });
 }
 
 const styles = StyleSheet.create({
