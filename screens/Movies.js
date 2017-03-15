@@ -12,7 +12,7 @@ import {
 import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
 import ItemList from '../components/ItemList';
-import { FontAwesome } from '@exponent/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import Router from '../navigation/Router';
 
 export default class Movies extends React.Component {

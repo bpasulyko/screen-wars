@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { TextInput, StyleSheet, TouchableHighlight, Animated } from 'react-native';
-import { FontAwesome } from '@exponent/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 const AddButton = React.createClass({
     propTypes: {

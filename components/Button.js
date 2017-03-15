@@ -5,7 +5,7 @@ import {
   Text,
   TouchableNativeFeedback,
 } from 'react-native';
-import { FontAwesome } from '@exponent/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 const Button = React.createClass({
     propTypes: {

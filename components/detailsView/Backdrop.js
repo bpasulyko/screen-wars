@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import {
   Components
-} from 'exponent';
+} from 'expo';
 
 const Backdrop = React.createClass({
     propTypes: {

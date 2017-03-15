@@ -1,4 +1,4 @@
-import Exponent from 'exponent';
+import Expo from 'expo';
 import React from 'react';
 import {
     AppRegistry,
@@ -11,7 +11,7 @@ import {
 import {
     NavigationProvider,
     StackNavigation,
-} from '@exponent/ex-navigation';
+} from '@expo/ex-navigation';
 import Router from './navigation/Router';
 import Drawer from './navigation/Drawer';
 import * as firebase from 'firebase';
@@ -44,7 +44,7 @@ class App extends React.Component {
     }
 
     async loadAssetsAsync() {
-        await Exponent.Font.loadAsync({
+        await Expo.Font.loadAsync({
             'star-wars': require('./assets/fonts/SFDistantGalaxy.ttf'),
             'star-wars-outline': require('./assets/fonts/SFDistantGalaxyOutline.ttf'),
         });
@@ -95,7 +95,7 @@ class App extends React.Component {
             );
         } else {
             return (
-                <Exponent.Components.AppLoading />
+                <Expo.Components.AppLoading />
             );
         }
     }
@@ -112,4 +112,4 @@ const styles = StyleSheet.create({
     },
 });
 
-Exponent.registerRootComponent(App);
+Expo.registerRootComponent(App);

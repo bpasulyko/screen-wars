@@ -4,7 +4,7 @@ import {
   View,
   Text,
 } from 'react-native';
-import { FontAwesome } from '@exponent/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 const Rating = React.createClass({
     propTypes: {

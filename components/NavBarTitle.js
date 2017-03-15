@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
-import { FontAwesome } from '@exponent/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 const NavBarTitle = React.createClass({
     propTypes: {

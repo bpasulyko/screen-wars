@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import TextBubble from '../TextBubble';
-import { FontAwesome } from '@exponent/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 const CastList = React.createClass({
     propTypes: {

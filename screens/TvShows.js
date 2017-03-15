@@ -13,7 +13,7 @@ import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
 import ItemList from '../components/ItemList';
 import DeleteModal from '../components/DeleteModal';
-import { FontAwesome } from '@exponent/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import Router from '../navigation/Router';
 
 export default class TvShows extends React.Component {

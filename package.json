@@ -6,9 +6,9 @@
   "private": true,
   "main": "main.js",
   "dependencies": {
-    "@exponent/ex-navigation": "^2.7.1",
-    "@exponent/vector-icons": "~2.0.3",
-    "exponent": "^14.0.0",
+    "@expo/ex-navigation": "^2.9.2",
+    "@expo/vector-icons": "~4.0.0",
+    "expo": "^14.0.2",
     "firebase": "^3.6.8",
     "lodash": "^4.17.4",
     "react": "~15.4.0",

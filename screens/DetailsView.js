@@ -21,7 +21,7 @@ import CastList from '../components/detailsView/CastList';
 import CrewList from '../components/detailsView/CrewList';
 import Button from '../components/Button';
 import DeleteModal from '../components/DeleteModal';
-import { FontAwesome } from '@exponent/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import moment from 'moment';
 
 export default class DetailsView extends React.Component {
