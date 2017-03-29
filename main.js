@@ -95,7 +95,7 @@ class App extends React.Component {
             );
         } else {
             return (
-                <Expo.Components.AppLoading />
+                <Expo.AppLoading />
             );
         }
     }

@@ -6,7 +6,7 @@ import {
   Dimensions,
 } from 'react-native';
 import {
-  Components
+  Expo
 } from 'expo';
 
 const Backdrop = React.createClass({
@@ -20,7 +20,7 @@ const Backdrop = React.createClass({
         const backdropUrl = `${baseUrl}${backdropSize}${this.props.path}`;
         return (
             <View>
-                <Components.LinearGradient
+                <Expo.LinearGradient
                     style={styles.backdropImageGradient}
                     colors={['transparent', 'transparent', '#222']} />
                 <Image style={styles.backdropImage} source={{ uri: backdropUrl }} />
