@@ -23,7 +23,7 @@ const CollectionButton = React.createClass({
             <ActionButton
                 buttonColor="#D32F2F"
                 degrees={135}
-                autoInactive={false}
+                spacing={7}
                 useNativeFeedback={false}
                 bgColor="rgba(0,0,0,0.8)"
                 icon={<FontAwesome name="plus" style={styles.icon} />}

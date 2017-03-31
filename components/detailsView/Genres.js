@@ -18,8 +18,7 @@ const Genres = React.createClass({
                 <Text style={styles.title}>GENRES</Text>
                 <View style={styles.genreContainer}>
                     {this.props.itemDetails.genres.map((genre, key) => {
-                        const name = (Number(genre)) ? window.genres[genre].name : genre.name;
-                        return <TextBubble key={key}>{name}</TextBubble>;
+                        return <TextBubble key={key}>{genre.name}</TextBubble>;
                     })}
                 </View>
             </View>

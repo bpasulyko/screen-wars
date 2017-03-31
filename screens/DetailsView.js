@@ -63,7 +63,7 @@ export default class DetailsView extends React.Component {
 
     addItemToCollection = () => {
         const item = this.state.itemDetails;
-        const saveFunc = (item.media_type === 'movie') ? saveMovie : saveTvShow;
+        const saveFunc = (item.type === 'movie') ? saveMovie : saveTvShow;
         saveFunc(item).then(() => {
             const title = item.title || item.name;
             this.props.navigator.showLocalAlert(title + ' added to collection!', {
@@ -182,7 +182,7 @@ function saveMovie(data) {
         title: data.title,
         poster: data.poster_path,
         releaseDate: data.release_date,
-        genres: data.genre_ids,
+        genres: data.genres,
         rating: data.vote_average.toFixed(1),
         watched: false,
         favorite: false,
@@ -195,7 +195,7 @@ function saveTvShow(data) {
         title: data.name,
         poster: data.poster_path,
         releaseDate: data.first_air_date,
-        genres: data.genre_ids,
+        genres: data.genres,
         rating: data.vote_average.toFixed(1),
         watched: false,
         favorite: false,
