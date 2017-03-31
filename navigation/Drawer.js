@@ -40,7 +40,7 @@ const Drawer = React.createClass({
 
     render() {
         return (
-            <DrawerNavigation id='main' initialItem='home' drawerWidth={300} drawerStyle={styles.drawer} renderHeader={this.renderHeader}>
+            <DrawerNavigation id='main' initialItem='home' drawerWidth={280} drawerStyle={styles.drawer} renderHeader={this.renderHeader}>
                 <DrawerNavigationItem
                     id='home'
                     selectedStyle={styles.selectedItemStyle}
@@ -66,7 +66,6 @@ const Drawer = React.createClass({
 
 const styles = StyleSheet.create({
     header: {
-        flex: 1,
         height:180,
         backgroundColor: '#171717',
         justifyContent: 'center',

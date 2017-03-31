@@ -5,9 +5,7 @@ import {
   View,
   Dimensions,
 } from 'react-native';
-import {
-  Expo
-} from 'expo';
+import Expo from 'expo';
 
 const Backdrop = React.createClass({
     propTypes: {
