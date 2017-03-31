@@ -19,6 +19,7 @@ import Rating from '../components/detailsView/Rating';
 import Genres from '../components/detailsView/Genres';
 import CastList from '../components/detailsView/CastList';
 import CrewList from '../components/detailsView/CrewList';
+import CollectionButton from '../components/detailsView/CollectionButton';
 import Button from '../components/Button';
 import DeleteModal from '../components/DeleteModal';
 import { FontAwesome } from '@expo/vector-icons';
@@ -39,18 +40,20 @@ export default class DetailsView extends React.Component {
         loading: true,
         itemDetails: {},
         modalVisible: false,
-        inCollection: true,
+        inCollection: false,
     };
 
     componentDidMount() {
         const params = this.props.route.params;
-        return fetch(`${window.BASE_URL}/${params.type}/${params.item.id}?api_key=${window.API_KEY}&language=en-US&append_to_response=credits`)
+        return fetch(`${window.BASE_URL}/${params.type}/${params.id}?api_key=${window.API_KEY}&language=en-US&append_to_response=credits`)
             .then((response) => response.json())
             .then((responseJson) => {
-                this.setState({
-                    itemDetails: _.merge({}, responseJson, params.item, { type: params.type }),
-                    loading: false,
-                    inCollection: params.inCollection,
+                window.firebase.database().ref(`${params.type}/${params.id}/`).on('value', (details) => {
+                    this.setState({
+                        itemDetails: _.merge({}, responseJson, details.val(), { type: params.type }),
+                        loading: false,
+                        inCollection: details.val() !== null,
+                    });
                 });
             })
             .catch((error) => {
@@ -63,7 +66,7 @@ export default class DetailsView extends React.Component {
         const saveFunc = (item.media_type === 'movie') ? saveMovie : saveTvShow;
         saveFunc(item).then(() => {
             const title = item.title || item.name;
-            this.props.navigator.showLocalAlert(title + ' added!', {
+            this.props.navigator.showLocalAlert(title + ' added to collection!', {
                 text: { color: '#EEE' },
                 container: { backgroundColor: '#222' },
             });
@@ -82,7 +85,14 @@ export default class DetailsView extends React.Component {
     deleteItem = () => {
         return window.firebase.database().ref(`${this.state.itemDetails.type}/` + this.state.itemDetails.id).remove()
             .then(() => {
-                this.props.navigator.pop();
+                const title = item.title || item.name;
+                this.props.navigator.showLocalAlert(title + ' removed from collection!', {
+                    text: { color: '#EEE' },
+                    container: { backgroundColor: '#222' },
+                });
+                this.setState({
+                    inCollection: false,
+                });
             });
     };
 
@@ -111,35 +121,53 @@ export default class DetailsView extends React.Component {
         }
     };
 
+    toggleFavorite = () => {
+        console.log(this.state.itemDetails.favorite);
+    };
+
+    toggleWatchlist = () => {
+        console.log(this.state.itemDetails);
+    };
+
+    toggleCollection = () => {
+        if (this.state.inCollection) {
+            this.showDeleteModal();
+        } else {
+            this.addItemToCollection();
+        }
+    };
+
     render() {
         const item = this.state.itemDetails;
         return (
             <View style={styles.container}>
                 {this.renderModal()}
                 <LoadingContainer loading={this.state.loading}>
-                    <ScrollView>
-                        <Backdrop path={item.backdrop_path} />
-                        <View style={styles.content}>
-                            <Header itemDetails={item} />
-                            {!this.state.inCollection && (
-                                <Button color="#D32F2F" text="Add to Collection" onClick={this.addItemToCollection} />
-                            )}
-                            <SubHeader itemDetails={item} />
-                            <Text style={styles.overview}>{item.overview}</Text>
-                            <View style={styles.releaseDateContainer}>
-                                <Text style={styles.heading}>RELEASE DATE</Text>
-                                <Text style={{ color: '#EEE' }}>{this.formatReleaseDate()}</Text>
-                            </View>
-                            <Genres itemDetails={item} />
-                            {item.credits && item.credits.cast.length > 0 && <CastList cast={item.credits.cast} />}
-                            {item.credits && item.credits.crew.length > 0 && <CrewList crew={item.credits.crew} />}
-                            {this.state.inCollection && (
-                                <View style={styles.deleteButton}>
-                                    <Button color="#D32F2F" text="Delete" icon="trash" onClick={this.showDeleteModal} />
+                    <View>
+                        <ScrollView>
+                            <Backdrop path={item.backdrop_path} />
+                            <View style={styles.content}>
+                                <Header itemDetails={item} />
+                                <SubHeader itemDetails={item} />
+                                <Text style={styles.overview}>{item.overview}</Text>
+                                <View style={styles.releaseDateContainer}>
+                                    <Text style={styles.heading}>RELEASE DATE</Text>
+                                    <Text style={{ color: '#EEE' }}>{this.formatReleaseDate()}</Text>
                                 </View>
-                            )}
-                        </View>
-                    </ScrollView>
+                                <Genres itemDetails={item} />
+                                {item.credits && item.credits.cast.length > 0 && <CastList cast={item.credits.cast} />}
+                                {item.credits && item.credits.crew.length > 0 && <CrewList crew={item.credits.crew} />}
+                            </View>
+                        </ScrollView>
+                        <CollectionButton
+                            favorite={this.state.itemDetails.favorite}
+                            watched={this.state.itemDetails.watched}
+                            collection={this.state.inCollection}
+                            onFavoritesClick={this.toggleFavorite}
+                            onWatchlistClick={this.toggleWatchlist}
+                            onCollectionClick={this.toggleCollection}
+                        />
+                    </View>
                 </LoadingContainer>
             </View>
         );
@@ -156,7 +184,8 @@ function saveMovie(data) {
         releaseDate: data.release_date,
         genres: data.genre_ids,
         rating: data.vote_average.toFixed(1),
-        watched: true,
+        watched: false,
+        favorite: false,
     });
 }
 
@@ -168,7 +197,8 @@ function saveTvShow(data) {
         releaseDate: data.first_air_date,
         genres: data.genre_ids,
         rating: data.vote_average.toFixed(1),
-        watched: true,
+        watched: false,
+        favorite: false,
     });
 }
 

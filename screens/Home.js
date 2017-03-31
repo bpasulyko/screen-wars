@@ -74,9 +74,8 @@ export default class Home extends React.Component {
 
     goToDetails = (selectedItem) => {
         this.props.navigator.push(Router.getRoute('details', {
-            item: selectedItem,
+            id: selectedItem.id,
             type: selectedItem.media_type,
-            inCollection: false,
         }));
     };
 

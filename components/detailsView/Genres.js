@@ -13,13 +13,13 @@ const Genres = React.createClass({
     },
 
     render() {
-        const genreList = this.props.itemDetails.genre_ids || this.props.itemDetails.genres;
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>GENRES</Text>
                 <View style={styles.genreContainer}>
-                    {genreList.map((genre, key) => {
-                        return <TextBubble key={key}>{window.genres[genre].name}</TextBubble>;
+                    {this.props.itemDetails.genres.map((genre, key) => {
+                        const name = (Number(genre)) ? window.genres[genre].name : genre.name;
+                        return <TextBubble key={key}>{name}</TextBubble>;
                     })}
                 </View>
             </View>

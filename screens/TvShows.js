@@ -42,9 +42,8 @@ export default class TvShows extends React.Component {
 
     goToDetails = (selectedTvShow) => {
         this.props.navigator.push(Router.getRoute('details', {
-            item: selectedTvShow,
+            id: selectedTvShow.id,
             type: 'tv',
-            inCollection: true,
         }));
     };
 
