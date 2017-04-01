@@ -65,11 +65,6 @@ export default class DetailsView extends React.Component {
         const item = this.state.itemDetails;
         const saveFunc = (item.type === 'movie') ? saveMovie : saveTvShow;
         saveFunc(item).then(() => {
-            const title = item.title || item.name;
-            this.props.navigator.showLocalAlert(title + ' added to collection!', {
-                text: { color: '#EEE' },
-                container: { backgroundColor: '#222' },
-            });
             this.setState({
                 inCollection: true,
             });
@@ -85,11 +80,6 @@ export default class DetailsView extends React.Component {
     deleteItem = () => {
         return window.firebase.database().ref(`${this.state.itemDetails.type}/` + this.state.itemDetails.id).remove()
             .then(() => {
-                const title = item.title || item.name;
-                this.props.navigator.showLocalAlert(title + ' removed from collection!', {
-                    text: { color: '#EEE' },
-                    container: { backgroundColor: '#222' },
-                });
                 this.setState({
                     inCollection: false,
                 });
@@ -131,7 +121,7 @@ export default class DetailsView extends React.Component {
 
     toggleCollection = () => {
         if (this.state.inCollection) {
-            this.showDeleteModal();
+            this.deleteItem();
         } else {
             this.addItemToCollection();
         }

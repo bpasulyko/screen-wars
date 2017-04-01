@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import ActionButton from 'react-native-action-button';
 import {
   StyleSheet,
@@ -16,47 +17,53 @@ const CollectionButton = React.createClass({
     },
     render() {
         const favoriteIcon = (this.props.favorite) ? 'star' : 'star-o';
+        const favoriteIconStyle = (this.props.favorite) ? { color: '#FFC107' } : {};
         const watchedIcon = (this.props.watched) ? 'eye' : 'eye-slash';
-        const collectionIcon = (this.props.collection) ? 'trash' : 'plus';
-        const collectionText = (this.props.collection) ? 'Remove' : 'Add';
+        const watchedIconStyle = (this.props.watched) ? { color: '#388E3C' } : {};
+        const collectionIcon = (this.props.collection) ? 'delete' : 'playlist-add';
+        const collectionText = (this.props.collection) ? 'Remove' : 'Add to Collection';
         return (
             <ActionButton
                 buttonColor="#D32F2F"
                 degrees={135}
-                spacing={7}
+                spacing={5}
+                autoInactive={false}
                 useNativeFeedback={false}
                 bgColor="rgba(0,0,0,0.8)"
                 icon={<FontAwesome name="plus" style={styles.icon} />}
             >
                 <ActionButton.Item
                     useNativeFeedback={false}
+                    spaceBetween={5}
                     buttonColor="rgba(0,0,0,0)"
                     textContainerStyle={styles.itemContainer}
                     textStyle={styles.itemText}
                     title="Favorites"
                     onPress={this.props.onFavoritesClick}
                 >
-                    <FontAwesome name={favoriteIcon} style={styles.itemIcons} />
+                    <FontAwesome name={favoriteIcon} style={[styles.itemIcons, favoriteIconStyle]} />
                 </ActionButton.Item>
                 <ActionButton.Item
                     useNativeFeedback={false}
+                    spaceBetween={5}
                     buttonColor="rgba(0,0,0,0)"
                     textContainerStyle={styles.itemContainer}
                     textStyle={styles.itemText}
                     title="Watched"
                     onPress={this.props.onWatchlistClick}
                 >
-                    <FontAwesome name={watchedIcon} style={styles.itemIcons} />
+                    <FontAwesome name={watchedIcon} style={[styles.itemIcons, watchedIconStyle]} />
                 </ActionButton.Item>
                 <ActionButton.Item
                     useNativeFeedback={false}
+                    spaceBetween={5}
                     buttonColor="rgba(0,0,0,0)"
                     textContainerStyle={styles.itemContainer}
                     textStyle={styles.itemText}
                     title={collectionText}
                     onPress={this.props.onCollectionClick}
                 >
-                    <FontAwesome name={collectionIcon} style={styles.itemIcons} />
+                    <MaterialIcons name={collectionIcon} style={styles.itemIcons} />
                 </ActionButton.Item>
             </ActionButton>
         );
@@ -71,7 +78,7 @@ const styles = StyleSheet.create({
         color: '#EEE',
     },
     itemIcons: {
-        fontSize: 34,
+        fontSize: 28,
         color: '#EEE',
     },
     itemContainer: {
@@ -80,7 +87,6 @@ const styles = StyleSheet.create({
     },
     itemText: {
         color: "#EEE",
-        fontSize: 14,
         fontWeight: 'bold',
     },
 });
