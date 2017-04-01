@@ -112,11 +112,17 @@ export default class DetailsView extends React.Component {
     };
 
     toggleFavorite = () => {
-        console.log(this.state.itemDetails.favorite);
+        const data = this.state.itemDetails;
+        data.favorite = !data.favorite;
+        const saveFunc = (data.type === 'movie') ? saveMovie : saveTvShow;
+        saveFunc(data);
     };
 
     toggleWatchlist = () => {
-        console.log(this.state.itemDetails);
+        const data = this.state.itemDetails;
+        data.watched = !data.watched;
+        const saveFunc = (data.type === 'movie') ? saveMovie : saveTvShow;
+        saveFunc(data);
     };
 
     toggleCollection = () => {
@@ -174,8 +180,8 @@ function saveMovie(data) {
         releaseDate: data.release_date,
         genres: data.genres,
         rating: data.vote_average.toFixed(1),
-        watched: false,
-        favorite: false,
+        watched: data.watched || false,
+        favorite: data.favorite || false,
     });
 }
 
@@ -187,8 +193,8 @@ function saveTvShow(data) {
         releaseDate: data.first_air_date,
         genres: data.genres,
         rating: data.vote_average.toFixed(1),
-        watched: false,
-        favorite: false,
+        watched: data.watched || false,
+        favorite: data.favorite || false,
     });
 }
 
