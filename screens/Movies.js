@@ -12,6 +12,7 @@ import {
 import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
 import ItemList from '../components/ItemList';
+import NoItems from '../components/NoItems';
 import { FontAwesome } from '@expo/vector-icons';
 import Router from '../navigation/Router';
 
@@ -52,16 +53,13 @@ export default class Movies extends React.Component {
                 <ItemList list={this.state.movies} onClick={this.goToDetails} />
             </ScrollView>
         );
-        const NoMovies = (
-            <View style={styles.noMovies}>
-                <FontAwesome name="film" size={100} style={styles.icon} />
-                <Text style={styles.noMoviesText}>You haven't added any movies to your collection!</Text>
-            </View>
-        );
+        const content = (this.state.movies.length > 0)
+            ? MovieList
+            : <NoItems icon="film" text="You haven't added any movies to your collection!" />;
         return (
             <View style={styles.container}>
                 <LoadingContainer loading={this.state.loading}>
-                    {this.state.movies.length > 0 && MovieList || NoMovies}
+                    {content}
                 </LoadingContainer>
             </View>
         );
@@ -74,18 +72,5 @@ const styles = StyleSheet.create({
         backgroundColor: '#333',
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    noMovies: {
-        padding: 20,
-    },
-    icon: {
-        color: '#888',
-        textAlign: 'center',
-        marginBottom: 20,
-    },
-    noMoviesText: {
-        color: '#EEE',
-        fontSize: 20,
-        textAlign: 'center',
     },
 });
