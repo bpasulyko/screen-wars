@@ -1,21 +1,15 @@
 import React from 'react';
 import _ from 'lodash';
 import {
-  Image,
-  ScrollView,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 
 import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
-import ItemList from '../components/ItemList';
-import NoItems from '../components/NoItems';
 import DeleteModal from '../components/DeleteModal';
-import { FontAwesome } from '@expo/vector-icons';
 import Router from '../navigation/Router';
+import CollectionBreakdown from './CollectionBreakdown';
 
 export default class TvShows extends React.Component {
     static route = {
@@ -49,18 +43,10 @@ export default class TvShows extends React.Component {
     };
 
     render() {
-        const TvShowList = (
-            <ScrollView>
-                <ItemList list={this.state.tvShows} onClick={this.goToDetails} />
-            </ScrollView>
-        );
-        const content = (this.state.tvShows.length > 0)
-            ? TvShowList
-            : <NoItems icon="tv" text="You haven't added any TV shows to your collection!" />;
         return (
             <View style={styles.container}>
                 <LoadingContainer loading={this.state.loading}>
-                    {content}
+                    <CollectionBreakdown data={this.state.tvShows} onItemClick={this.goToDetails} />
                 </LoadingContainer>
             </View>
         );
@@ -71,7 +57,5 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#333',
-        alignItems: 'center',
-        justifyContent: 'center',
     },
 });
