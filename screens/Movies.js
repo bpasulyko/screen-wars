@@ -45,7 +45,7 @@ export default class Movies extends React.Component {
         return (
             <View style={styles.container}>
                 <LoadingContainer loading={this.state.loading}>
-                    <CollectionBreakdown data={this.state.movies} onItemClick={this.goToDetails} />
+                    <CollectionBreakdown type="movies" data={this.state.movies} onItemClick={this.goToDetails} />
                 </LoadingContainer>
             </View>
         );

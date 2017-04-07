@@ -46,7 +46,7 @@ export default class TvShows extends React.Component {
         return (
             <View style={styles.container}>
                 <LoadingContainer loading={this.state.loading}>
-                    <CollectionBreakdown data={this.state.tvShows} onItemClick={this.goToDetails} />
+                    <CollectionBreakdown type="TV shows" data={this.state.tvShows} onItemClick={this.goToDetails} />
                 </LoadingContainer>
             </View>
         );

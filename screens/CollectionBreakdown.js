@@ -13,24 +13,35 @@ import {
 import ItemList from '../components/ItemList';
 import NoItems from '../components/NoItems';
 
+const ListTypes = {
+    COLLECTION: 'collection',
+    WATCHLIST: 'watchlist',
+    FAVORITES: 'favorites',
+};
+
 const CollectionBreakdown = React.createClass({
     propTypes: {
         data: PropTypes.array,
         onItemClick: PropTypes.func,
+        type: PropTypes.string,
     },
 
     renderLabel({ route }) {
         return <Text style={styles.tabLabel}>{route.key.toUpperCase()}</Text>;
     },
 
-    renderItemList(data) {
+    renderItemList(data, listType) {
+        let icon = (this.props.type === 'movies') ? 'film' : 'tv';
+        if (listType === ListTypes.WATCHLIST) icon = 'eye-slash';
+        if (listType === ListTypes.FAVORITES) icon = 'star-o';
+        const noDataMessage = `You haven't added any ${this.props.type} to your ${listType}!`;
         const content = (data.length > 0)
             ? (
                 <ScrollView>
                     <ItemList list={data} onClick={this.props.onItemClick} />
                 </ScrollView>
             )
-            : <NoItems icon="film" text="You haven't added any movies to your collection!" />;
+            : <NoItems icon={icon} text={noDataMessage} />;
         return (
             <View style={styles.container}>
                 {content}
@@ -45,18 +56,18 @@ const CollectionBreakdown = React.createClass({
             <SlidingTabNavigation
                 id="sliding-tab-navigation"
                 navigatorUID="sliding-tab-navigation"
-                initialTab="collection"
+                initialTab={ListTypes.COLLECTION}
                 renderLabel={this.renderLabel}
                 barBackgroundColor="#171717"
                 indicatorStyle={styles.tabIndicator}>
-                <SlidingTabNavigationItem id="collection">
-                    {this.renderItemList(this.props.data)}
+                <SlidingTabNavigationItem id={ListTypes.COLLECTION}>
+                    {this.renderItemList(this.props.data, ListTypes.COLLECTION)}
                 </SlidingTabNavigationItem>
-                <SlidingTabNavigationItem id="watchlist">
-                    {this.renderItemList(watchlist)}
+                <SlidingTabNavigationItem id={ListTypes.WATCHLIST}>
+                    {this.renderItemList(watchlist, ListTypes.WATCHLIST)}
                 </SlidingTabNavigationItem>
-                <SlidingTabNavigationItem id="favorites">
-                    {this.renderItemList(favorites)}
+                <SlidingTabNavigationItem id={ListTypes.FAVORITES}>
+                    {this.renderItemList(favorites, ListTypes.FAVORITES)}
                 </SlidingTabNavigationItem>
             </SlidingTabNavigation>
         );
