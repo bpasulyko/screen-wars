@@ -173,6 +173,7 @@ export default class DetailsView extends React.Component {
 
 
 function saveMovie(data) {
+    const dateAdded = data.dateAdded || new Date().toDateString();
     return window.firebase.database().ref('movie/' + data.id).set({
         id: data.id,
         title: data.title,
@@ -182,10 +183,12 @@ function saveMovie(data) {
         rating: data.vote_average.toFixed(1),
         watched: data.watched || false,
         favorite: data.favorite || false,
+        dateAdded: dateAdded,
     });
 }
 
 function saveTvShow(data) {
+    const dateAdded = data.dateAdded || new Date().toDateString();
     return window.firebase.database().ref('tv/' + data.id).set({
         id: data.id,
         title: data.name,
@@ -195,6 +198,7 @@ function saveTvShow(data) {
         rating: data.vote_average.toFixed(1),
         watched: data.watched || false,
         favorite: data.favorite || false,
+        dateAdded: dateAdded,
     });
 }
 

@@ -98,30 +98,6 @@ export default class Home extends React.Component {
     };
 }
 
-function saveMovie(data) {
-    return window.firebase.database().ref('movie/' + data.id).set({
-        id: data.id,
-        title: data.title,
-        poster: data.poster_path,
-        releaseDate: data.release_date,
-        genres: data.genre_ids,
-        rating: data.vote_average.toFixed(1),
-        watched: true,
-    });
-}
-
-function saveTvShow(data) {
-    return window.firebase.database().ref('tv/' + data.id).set({
-        id: data.id,
-        title: data.name,
-        poster: data.poster_path,
-        releaseDate: data.first_air_date,
-        genres: data.genre_ids,
-        rating: data.vote_average.toFixed(1),
-        watched: true,
-    });
-}
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
