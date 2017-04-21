@@ -68,12 +68,15 @@ export default class TvShows extends React.Component {
         this.setState({ activeList });
     };
 
-    render() {
-        const filteredMovies = this.state.activeList.filter(this.state.tvShows);
+    renderContent = () => {
+        const filteredTvShows = this.state.activeList.filter(this.state.tvShows);
         const text = `You haven't added any TV shows to your ${this.state.activeList.name}!`
-        const content = (filteredMovies.length > 0)
-            ? <ItemList list={filteredMovies} onClick={this.goToDetails} />
+        return (filteredTvShows.length > 0)
+            ? <ItemList list={filteredTvShows} onClick={this.goToDetails} />
             : <NoItems icon={this.state.activeList.icon} text={text} />;
+    };
+
+    render() {
         return (
             <View style={styles.container}>
                 <FilterMenu show={this.state.showFilterMenu} />
@@ -82,7 +85,7 @@ export default class TvShows extends React.Component {
                     onListButtonClick={this.handleListButtonClick}
                 />
                 <LoadingContainer loading={this.state.loading}>
-                    {content}
+                    {this.renderContent()}
                 </LoadingContainer>
             </View>
         );

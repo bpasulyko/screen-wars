@@ -67,12 +67,15 @@ export default class Movies extends React.Component {
         this.setState({ activeList });
     };
 
-    render() {
+    renderContent = () => {
         const filteredMovies = this.state.activeList.filter(this.state.movies);
         const text = `You haven't added any movies to your ${this.state.activeList.name}!`
-        const content = (filteredMovies.length > 0)
+        return (filteredMovies.length > 0)
             ? <ItemList list={filteredMovies} onClick={this.goToDetails} />
             : <NoItems icon={this.state.activeList.icon} text={text} />;
+    };
+
+    render() {
         return (
             <View style={styles.container}>
                 <FilterMenu show={this.state.showFilterMenu} />
@@ -81,7 +84,7 @@ export default class Movies extends React.Component {
                     onListButtonClick={this.handleListButtonClick}
                 />
                 <LoadingContainer loading={this.state.loading}>
-                    {content}
+                    {this.renderContent()}
                 </LoadingContainer>
             </View>
         );
