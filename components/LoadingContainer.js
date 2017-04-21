@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 
 const LoadingContainer = React.createClass({
     propTypes: {
@@ -8,21 +8,9 @@ const LoadingContainer = React.createClass({
 
     render() {
         return (this.props.loading)
-            ? (
-                <View style={styles.spinner}>
-                    <ActivityIndicator style={[ { transform: [{ scale: 2 }] } ]} size="large" color="#D32F2F" />
-                </View>
-            )
+            ? <ActivityIndicator style={[ { transform: [{ scale: 2 }] } ]} size="large" color="#D32F2F" />
             : this.props.children;
     }
 });
 
 export default LoadingContainer;
-
-const styles = StyleSheet.create({
-    spinner: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 1,
-    }
-});
