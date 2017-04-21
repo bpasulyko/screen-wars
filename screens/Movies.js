@@ -4,7 +4,6 @@ import {
   Image,
   StyleSheet,
   Text,
-  ScrollView,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -48,13 +47,8 @@ export default class Movies extends React.Component {
     };
 
     render() {
-        const MovieList = (
-            <ScrollView>
-                <ItemList list={this.state.movies} onClick={this.goToDetails} />
-            </ScrollView>
-        );
         const content = (this.state.movies.length > 0)
-            ? MovieList
+            ? <ItemList list={this.state.movies} onClick={this.goToDetails} />
             : <NoItems icon="film" text="You haven't added any movies to your collection!" />;
         return (
             <View style={styles.container}>

@@ -69,7 +69,8 @@ export default Header;
 const styles = StyleSheet.create({
     headerContainer: {
         flexDirection: 'row',
-        paddingVertical: 10,
+        paddingBottom: 5,
+        paddingBottom: 10,
     },
     posterContainer: {
         elevation: 5,

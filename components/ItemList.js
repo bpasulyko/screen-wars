@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   StyleSheet,
+  ScrollView,
   View,
 } from 'react-native';
 import Item from './Item';
@@ -13,9 +14,11 @@ const ItemList = React.createClass({
 
     render() {
         return (
-            <View style={styles.listContainer}>
-                {this.props.list.map((item, index) => <Item key={index} item={item} onClick={this.props.onClick} />)}
-            </View>
+            <ScrollView>
+                <View style={styles.listContainer}>
+                    {this.props.list.map((item, index) => <Item key={index} item={item} onClick={this.props.onClick} />)}
+                </View>
+            </ScrollView>
         );
     }
 });

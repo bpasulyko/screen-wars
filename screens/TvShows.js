@@ -2,7 +2,6 @@ import React from 'react';
 import _ from 'lodash';
 import {
   Image,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -49,13 +48,8 @@ export default class TvShows extends React.Component {
     };
 
     render() {
-        const TvShowList = (
-            <ScrollView>
-                <ItemList list={this.state.tvShows} onClick={this.goToDetails} />
-            </ScrollView>
-        );
         const content = (this.state.tvShows.length > 0)
-            ? TvShowList
+            ? <ItemList list={this.state.tvShows} onClick={this.goToDetails} />
             : <NoItems icon="tv" text="You haven't added any TV shows to your collection!" />;
         return (
             <View style={styles.container}>
