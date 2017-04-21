@@ -29,6 +29,5 @@ const styles = StyleSheet.create({
     listContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        paddingVertical: 4,
     },
 });

@@ -17,7 +17,11 @@ export default function NoItems({ icon, text }) {
 
 const styles = StyleSheet.create({
     noItems: {
-        padding: 20,
+        paddingHorizontal: 20,
+        flex: 1,
+        backgroundColor: '#333',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     icon: {
         color: '#888',
