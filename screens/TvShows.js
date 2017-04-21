@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 
+import ListTypes from '../util/ListTypes'
 import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
 import ItemList from '../components/ItemList';
@@ -18,12 +19,6 @@ import Router from '../navigation/Router';
 import FilterButton from '../components/FilterButton';
 import FilterMenu from '../components/FilterMenu';
 import ListButtonGroup from '../components/ListButtonGroup';
-
-const ListTypes = {
-    COLLECTION: 'collection',
-    WATCHLIST: 'watchlist',
-    FAVORITES: 'favorites',
-};
 
 export default class TvShows extends React.Component {
     static route = {
@@ -74,14 +69,11 @@ export default class TvShows extends React.Component {
     };
 
     render() {
-        let filteredMovies = filterByActiveList(this.state.tvShows, this.state.activeList);
-        let icon = 'tv';
-        if (this.state.activeList === ListTypes.WATCHLIST) icon = 'eye-slash';
-        if (this.state.activeList === ListTypes.FAVORITES) icon = 'star-o';
-        const text = `You haven't added any TV shows to your ${this.state.activeList}!`
+        const filteredMovies = this.state.activeList.filter(this.state.tvShows);
+        const text = `You haven't added any TV shows to your ${this.state.activeList.name}!`
         const content = (filteredMovies.length > 0)
             ? <ItemList list={filteredMovies} onClick={this.goToDetails} />
-            : <NoItems icon={icon} text={text} />;
+            : <NoItems icon={this.state.activeList.icon} text={text} />;
         return (
             <View style={styles.container}>
                 <FilterMenu show={this.state.showFilterMenu} />
@@ -95,23 +87,6 @@ export default class TvShows extends React.Component {
             </View>
         );
     };
-}
-
-function filterByActiveList(items, activeList) {
-    switch (activeList) {
-        case ListTypes.COLLECTION:
-            return _.filter(items, { watched: true });
-            break;
-        case ListTypes.WATCHLIST:
-            return _.filter(items, { watched: false });
-            break;
-        case ListTypes.FAVORITES:
-            return _.filter(items, { favorite: true });
-            break;
-        default:
-            return items;
-            break;
-    }
 }
 
 const styles = StyleSheet.create({

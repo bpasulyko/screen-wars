@@ -1,22 +1,21 @@
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
-
 import {
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 
-const ListTypes = {
-    COLLECTION: 'Collection',
-    WATCHLIST: 'Watchlist',
-    FAVORITES: 'Favorites',
-};
+import ListTypes from '../util/ListTypes';
 
 const ListButtonGroup = React.createClass({
     propTypes: {
         onListButtonClick: PropTypes.func,
-        activeList: PropTypes.string,
+        activeList: PropTypes.shape({
+            name: PropTypes.string,
+            title: PropTypes.string,
+            icon: PropTypes.string,
+        }),
     },
 
     render() {
@@ -25,10 +24,10 @@ const ListButtonGroup = React.createClass({
                 <View style={styles.buttonGroup}>
                     {_.values(ListTypes).map((type, key) => {
                         const buttonStyles = [styles.button];
-                        if (type.toLowerCase() === this.props.activeList) {
+                        if (type.name === this.props.activeList.name) {
                             buttonStyles.push(styles.active);
                         }
-                        return <Text key={key} onPress={() => this.props.onListButtonClick(type.toLowerCase())} style={buttonStyles}>{type}</Text>
+                        return <Text key={key} onPress={() => this.props.onListButtonClick(type)} style={buttonStyles}>{type.title}</Text>
                     })}
                 </View>
             </View>
