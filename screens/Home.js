@@ -1,4 +1,6 @@
 import React from 'react';
+import _ from 'lodash';
+
 import {
   StyleSheet,
   Text,
@@ -65,7 +67,10 @@ export default class Home extends React.Component {
         return fetch(`${window.BASE_URL}/search/multi?api_key=${window.API_KEY}&language=en-US&query=${queryString}`)
             .then((response) => response.json())
             .then((responseJson) => {
-                this.setState({ searchResults: responseJson.results });
+                const filteredResults = _.filter(responseJson.results, (result) => {
+                    return result.media_type === 'movie' || result.media_type === 'tv';
+                });
+                this.setState({ searchResults: filteredResults });
             })
             .catch((error) => {
                 console.error(error);
