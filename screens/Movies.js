@@ -8,7 +8,9 @@ import {
   View,
 } from 'react-native';
 
-import ListTypes from '../util/ListTypes'
+import ListTypes from '../util/ListTypes';
+import SortOptions from '../util/SortOptions';
+import { filterByGenre } from '../util/Common';
 import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
 import ItemList from '../components/ItemList';
@@ -37,6 +39,8 @@ export default class Movies extends React.Component {
         movies: [],
         showFilterMenu: false,
         activeList: ListTypes.COLLECTION,
+        selectedGenre: null,
+        selectedSort: null,
     };
 
     componentWillMount() {
@@ -67,9 +71,19 @@ export default class Movies extends React.Component {
         this.setState({ activeList });
     };
 
+    handleGenreChange = (selectedGenre) => {
+        this.setState({ selectedGenre });
+    };
+
+    handleSortChange = (selectedSort) => {
+        this.setState({ selectedSort });
+    };
+
     renderContent = () => {
-        const filteredMovies = this.state.activeList.filter(this.state.movies);
         const text = `You haven't added any movies to your ${this.state.activeList.name}!`
+        let filteredMovies = this.state.activeList.filter(this.state.movies);
+        if (this.state.selectedGenre) filteredMovies = filterByGenre(filteredMovies, this.state.selectedGenre);
+        if (this.state.selectedSort !== null) filteredMovies = SortOptions[this.state.selectedSort].sort(filteredMovies);
         return (filteredMovies.length > 0)
             ? <ItemList list={filteredMovies} onClick={this.goToDetails} />
             : <NoItems icon={this.state.activeList.icon} text={text} />;
@@ -78,7 +92,14 @@ export default class Movies extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <FilterMenu show={this.state.showFilterMenu} />
+                <FilterMenu
+                    show={this.state.showFilterMenu}
+                    selectedGenre={this.state.selectedGenre}
+                    selectedSort={this.state.selectedSort}
+                    onGenreChange={this.handleGenreChange}
+                    onSortChange={this.handleSortChange}
+                    clearFilter={this.handleClearFilter}
+                />
                 <ListButtonGroup
                     activeList={this.state.activeList}
                     onListButtonClick={this.handleListButtonClick}

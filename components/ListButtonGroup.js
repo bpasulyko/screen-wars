@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     button: {
         flex: 1,
         textAlign: 'center',
-        fontSize: 16,
+        fontSize: 15,
         color: '#EEE',
         backgroundColor: '#555',
         paddingVertical: 10,
