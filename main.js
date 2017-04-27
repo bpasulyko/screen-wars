@@ -28,8 +28,6 @@ var config = {
 firebase.initializeApp(config);
 window.firebase = firebase;
 
-window.genres = {};
-
 class App extends React.Component {
     state = {
         appIsReady: false,

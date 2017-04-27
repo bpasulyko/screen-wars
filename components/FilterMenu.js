@@ -11,6 +11,7 @@ import {
 
 import { FontAwesome } from '@expo/vector-icons';
 import SortOptions from '../util/SortOptions'
+import { getGenres } from '../repository/tmdbRepo';
 
 const FilterMenu = React.createClass({
     propTypes: {
@@ -40,7 +41,7 @@ const FilterMenu = React.createClass({
         const allGenres = [{
             id: 0,
             name: 'All',
-        }].concat(_.values(_.sortBy(window.genres, 'name')));
+        }].concat(_.values(_.sortBy(getGenres(), 'name')));
         return (
             <View style={styles.pickerContainer}>
                 <Text style={styles.pickerLabel}>GENRE</Text>

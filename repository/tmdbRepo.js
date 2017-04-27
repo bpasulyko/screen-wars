@@ -3,9 +3,14 @@ import _ from 'lodash';
 const API_KEY = 'c61fe26ad89f613231e56e67cff3779d';
 const BASE_URL = 'https://api.themoviedb.org/3';
 let imageConfig;
+let genres;
 
 export function getImageConfig() {
     return imageConfig;
+}
+
+export function getGenres() {
+    return genres;
 }
 
 export function loadAppDefaults() {
@@ -51,7 +56,7 @@ function loadImageConfig() {
 function loadMovieGenres() {
     return fetch(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}`)
         .then((response) => response.json())
-        .then((responseJson) => window.genres = _.merge({}, _.keyBy(responseJson.genres, 'id'), window.genres))
+        .then((responseJson) => genres = _.merge({}, _.keyBy(responseJson.genres, 'id'), genres))
         .catch((error) => {
             console.error(error);
         });
@@ -60,7 +65,7 @@ function loadMovieGenres() {
 function loadTvGenres() {
     return fetch(`${BASE_URL}/genre/tv/list?api_key=${API_KEY}`)
         .then((response) => response.json())
-        .then((responseJson) => window.genres = _.merge({}, _.keyBy(responseJson.genres, 'id'), window.genres))
+        .then((responseJson) => genres = _.merge({}, _.keyBy(responseJson.genres, 'id'), genres))
         .catch((error) => {
             console.error(error);
         });
