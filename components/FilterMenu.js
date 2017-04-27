@@ -108,6 +108,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#333',
         borderRadius: 4,
         borderWidth: 1,
-        borderColor: '#777',
+        borderColor: '#444',
     },
 });
