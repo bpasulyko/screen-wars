@@ -24,6 +24,7 @@ import Button from '../components/Button';
 import DeleteModal from '../components/DeleteModal';
 import { FontAwesome } from '@expo/vector-icons';
 import moment from 'moment';
+import { getByType } from '../repository/tmdbRepo';
 
 export default class DetailsView extends React.Component {
     static route = {
@@ -45,8 +46,7 @@ export default class DetailsView extends React.Component {
 
     componentDidMount() {
         const params = this.props.route.params;
-        return fetch(`${window.BASE_URL}/${params.type}/${params.id}?api_key=${window.API_KEY}&language=en-US&append_to_response=credits`)
-            .then((response) => response.json())
+        return getByType(params.type, params.id)
             .then((responseJson) => {
                 window.firebase.database().ref(`${params.type}/${params.id}/`).on('value', (details) => {
                     this.setState({
@@ -55,9 +55,6 @@ export default class DetailsView extends React.Component {
                         inCollection: details.val() !== null,
                     });
                 });
-            })
-            .catch((error) => {
-                console.error(error);
             });
     }
 

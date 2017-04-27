@@ -14,6 +14,7 @@ import NavBarTitle from '../components/NavBarTitle';
 import AddButton from '../components/AddButton';
 import SearchResults from '../components/SearchResults';
 import Router from '../navigation/Router';
+import { multiSearch } from '../repository/tmdbRepo';
 
 export default class Home extends React.Component {
     static route = {
@@ -64,17 +65,7 @@ export default class Home extends React.Component {
     };
 
     handleSearchSubmit = (queryString) => {
-        return fetch(`${window.BASE_URL}/search/multi?api_key=${window.API_KEY}&language=en-US&query=${queryString}`)
-            .then((response) => response.json())
-            .then((responseJson) => {
-                const filteredResults = _.filter(responseJson.results, (result) => {
-                    return result.media_type === 'movie' || result.media_type === 'tv';
-                });
-                this.setState({ searchResults: filteredResults });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        return multiSearch(queryString).then((results) => this.setState({ searchResults: results }));
     };
 
     goToDetails = (selectedItem) => {
