@@ -104,7 +104,7 @@ export default class DetailsView extends React.Component {
         const item = this.state.itemDetails;
         const releaseDate = (item.type === 'movie') ? item.release_date : item.first_air_date;
         if (releaseDate) {
-            return moment.utc(this.state.itemDetails.releaseDate).format('MMMM D, YYYY');
+            return moment(releaseDate).format('MMMM D, YYYY');
         }
     };
 
