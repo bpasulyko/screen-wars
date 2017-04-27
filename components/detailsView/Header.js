@@ -6,6 +6,7 @@ import {
   View,
   Text,
 } from 'react-native';
+import { getImageConfig } from '../../repository/tmdbRepo';
 
 const Header = React.createClass({
     propTypes: {
@@ -46,9 +47,10 @@ const Header = React.createClass({
     },
 
     render() {
+        const imageConfig = getImageConfig();
         const item = this.props.itemDetails;
-        const baseUrl = window.imageConfig.base_url;
-        const posterSize = window.imageConfig.poster_sizes[2];
+        const baseUrl = imageConfig.base_url;
+        const posterSize = imageConfig.poster_sizes[2];
         return (
             <View style={styles.headerContainer}>
                 <View style={styles.posterContainer}>

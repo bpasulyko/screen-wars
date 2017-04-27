@@ -7,9 +7,9 @@ import {
   Animated,
   TouchableHighlight,
 } from 'react-native';
-import Item from './Item';
+import { getImageConfig } from '../repository/tmdbRepo';
 
-const ItemList = React.createClass({
+const Item = React.createClass({
     propTypes: {
         item: React.PropTypes.object,
         onClick: React.PropTypes.func,
@@ -28,8 +28,9 @@ const ItemList = React.createClass({
     },
 
     render() {
-        const baseUrl = window.imageConfig.base_url;
-        const size = window.imageConfig.poster_sizes[1];
+        const imageConfig = getImageConfig();
+        const baseUrl = imageConfig.base_url;
+        const size = imageConfig.poster_sizes[1];
         const imageUrl = `${baseUrl}${size}${this.props.item.poster}`;
         const animatedStyle = {
             transform: [{
@@ -49,7 +50,7 @@ const ItemList = React.createClass({
     }
 });
 
-export default ItemList;
+export default Item;
 
 const ITEM_WIDTH = (Dimensions.get('window').width - 40) / 4;
 const ITEM_HEIGHT = ITEM_WIDTH/(2/3);

@@ -7,6 +7,7 @@ import {
   Image,
 } from 'react-native';
 import Button from '../components/Button';
+import { getImageConfig } from '../repository/tmdbRepo';
 
 const DeleteModal = React.createClass({
     propTypes: {
@@ -17,8 +18,9 @@ const DeleteModal = React.createClass({
     },
 
     render() {
-        const baseUrl = window.imageConfig.base_url;
-        const size = window.imageConfig.poster_sizes[2];
+        const imageConfig = getImageConfig();
+        const baseUrl = imageConfig.base_url;
+        const size = imageConfig.poster_sizes[2];
         const imageUrl = `${baseUrl}${size}${this.props.selectedItem.poster}`;
         return (
             <Modal

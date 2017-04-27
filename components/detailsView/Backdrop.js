@@ -6,6 +6,7 @@ import {
   Dimensions,
 } from 'react-native';
 import Expo from 'expo';
+import { getImageConfig } from '../../repository/tmdbRepo';
 
 const Backdrop = React.createClass({
     propTypes: {
@@ -13,8 +14,9 @@ const Backdrop = React.createClass({
     },
 
     render() {
-        const baseUrl = window.imageConfig.base_url;
-        const backdropSize = window.imageConfig.backdrop_sizes[1];
+        const imageConfig = getImageConfig();
+        const baseUrl = imageConfig.base_url;
+        const backdropSize = imageConfig.backdrop_sizes[1];
         const backdropUrl = `${baseUrl}${backdropSize}${this.props.path}`;
         return (
             <View>

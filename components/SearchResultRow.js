@@ -6,6 +6,7 @@ import {
   Text,
   TouchableHighlight,
 } from 'react-native';
+import { getImageConfig } from '../repository/tmdbRepo';
 
 const SearchResultRow = React.createClass({
     propTypes: {
@@ -14,8 +15,9 @@ const SearchResultRow = React.createClass({
     },
 
     render() {
-        const baseUrl = window.imageConfig.base_url;
-        const size = window.imageConfig.poster_sizes[0];
+        const imageConfig = getImageConfig();
+        const baseUrl = imageConfig.base_url;
+        const size = imageConfig.poster_sizes[0];
         const imageUrl = `${baseUrl}${size}${this.props.rowData.poster_path}`;
         const releaseDate = this.props.rowData.first_air_date || this.props.rowData.release_date;
         const title = this.props.rowData.title || this.props.rowData.name;

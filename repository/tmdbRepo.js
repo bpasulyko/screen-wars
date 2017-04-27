@@ -2,6 +2,11 @@ import _ from 'lodash';
 
 const API_KEY = 'c61fe26ad89f613231e56e67cff3779d';
 const BASE_URL = 'https://api.themoviedb.org/3';
+let imageConfig;
+
+export function getImageConfig() {
+    return imageConfig;
+}
 
 export function loadAppDefaults() {
     return Promise.all([
@@ -36,7 +41,7 @@ function loadImageConfig() {
     return fetch(`${BASE_URL}/configuration?api_key=${API_KEY}`)
         .then((response) => response.json())
         .then((responseJson) => {
-            window.imageConfig = responseJson.images;
+            imageConfig = responseJson.images;
         })
         .catch((error) => {
             console.error(error);
