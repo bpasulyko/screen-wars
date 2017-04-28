@@ -23,7 +23,7 @@ const Rating = React.createClass({
         if (halfStar) {
             classes.push('star-half');
         }
-        return classes.map((iconClass, i) => <FontAwesome key={i} name={iconClass} size={16} style={styles.icon} />);
+        return classes.map((iconClass, i) => <FontAwesome key={i} name={iconClass} size={18} style={styles.icon} />);
     },
 
     render() {
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     rating: {
-        fontSize: 22,
+        fontSize: 28,
         color: '#EEE',
         fontFamily: 'star-wars',
     },

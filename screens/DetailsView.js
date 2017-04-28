@@ -120,13 +120,16 @@ export default class DetailsView extends React.Component {
                     <View>
                         <ScrollView>
                             <Backdrop path={item.backdrop_path} />
-                            <View style={styles.content}>
+                            <View>
                                 <Header itemDetails={item} />
                                 <SubHeader itemDetails={item} />
-                                <Text style={styles.overview}>{item.overview}</Text>
+                                <View style={styles.overview}>
+                                    <Text style={styles.heading}>Overview</Text>
+                                    <Text style={styles.overviewText}>{item.overview}</Text>
+                                </View>
                                 <View style={styles.releaseDateContainer}>
-                                    <Text style={styles.heading}>RELEASE DATE</Text>
-                                    <Text style={{ color: '#EEE' }}>{this.formatReleaseDate()}</Text>
+                                    <Text style={styles.heading}>Release Date</Text>
+                                    <Text style={styles.releaseDate}>{this.formatReleaseDate()}</Text>
                                 </View>
                                 <Genres itemDetails={item} />
                                 {item.credits && item.credits.cast.length > 0 && <CastList cast={item.credits.cast} />}
@@ -186,24 +189,26 @@ const styles = StyleSheet.create({
         backgroundColor: '#222',
         justifyContent: 'center',
     },
-    content: {
-        padding: 10,
-    },
     overview: {
-        color: '#EEE',
-        lineHeight: 25,
-        paddingBottom: 20,
+        paddingHorizontal: 20,
+        paddingVertical: 30,
+        backgroundColor: 'rgba(211, 47, 47, 0.75)',
     },
-    deleteButton: {
-        paddingHorizontal: 50,
-        paddingTop: 30,
+    overviewText: {
+        color: '#EEE',
+        fontSize: 15,
+        lineHeight: 25,
     },
     releaseDateContainer: {
-        paddingVertical: 10,
+        padding: 20,
+    },
+    releaseDate: {
+        color: '#EEE',
+        fontSize: 15,
     },
     heading: {
         fontWeight: '500',
-        fontSize: 16,
+        fontSize: 20,
         color: '#EEE',
         paddingBottom: 5,
     },

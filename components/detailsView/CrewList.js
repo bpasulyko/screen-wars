@@ -51,7 +51,7 @@ const CrewList = React.createClass({
         return (
             <View style={styles.container}>
                 <View style={styles.titleContainer}>
-                    <Text style={styles.title}>CREW</Text>
+                    <Text style={styles.title}>Crew</Text>
                     <TouchableOpacity onPress={this.toggleCrewList}>
                         <FontAwesome
                             name={toggleLabel}
@@ -72,6 +72,7 @@ export default CrewList;
 
 const styles = StyleSheet.create({
     container: {
+        paddingHorizontal: 20,
         paddingVertical: 10,
     },
     crewListContainer: {

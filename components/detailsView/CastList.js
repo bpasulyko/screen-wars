@@ -40,7 +40,7 @@ const CastList = React.createClass({
         return (
             <View style={styles.container}>
                 <View style={styles.titleContainer}>
-                    <Text style={styles.title}>CAST</Text>
+                    <Text style={styles.title}>Cast</Text>
                     <TouchableOpacity onPress={this.toggleCastList}>
                         <FontAwesome
                             name={toggleLabel}
@@ -61,6 +61,7 @@ export default CastList;
 
 const styles = StyleSheet.create({
     container: {
+        paddingHorizontal: 20,
         paddingVertical: 10,
     },
     castListContainer: {
@@ -77,6 +78,7 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         fontSize: 16,
         color: '#EEE',
+        paddingBottom: 5,
     },
     toggle: {
         color: '#EEE',

@@ -15,7 +15,7 @@ const Genres = React.createClass({
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>GENRES</Text>
+                <Text style={styles.title}>Genres</Text>
                 <View style={styles.genreContainer}>
                     {this.props.itemDetails.genres.map((genre, key) => {
                         return <TextBubble key={key}>{genre.name}</TextBubble>;
@@ -30,6 +30,7 @@ export default Genres;
 
 const styles = StyleSheet.create({
     container: {
+        paddingHorizontal: 20,
         paddingVertical: 10,
     },
     genreContainer: {

@@ -37,7 +37,8 @@ const WIDTH = Dimensions.get('window').width / 4;
 const styles = StyleSheet.create({
     subheader: {
         flexDirection: 'row',
-        paddingVertical: 10,
+        paddingHorizontal: 20,
+        paddingVertical: 25,
     },
     ratingContainer: {
         width: 100,
@@ -52,6 +53,7 @@ const styles = StyleSheet.create({
         color: '#EEE',
         fontStyle: 'italic',
         textAlign: 'center',
+        fontSize: 15,
     },
     seasons: {
         color: '#EEE',
