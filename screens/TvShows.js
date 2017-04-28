@@ -15,7 +15,6 @@ import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
 import ItemList from '../components/ItemList';
 import NoItems from '../components/NoItems';
-import DeleteModal from '../components/DeleteModal';
 import { FontAwesome } from '@expo/vector-icons';
 import Router from '../navigation/Router';
 import FilterButton from '../components/FilterButton';

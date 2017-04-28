@@ -21,7 +21,6 @@ import CastList from '../components/detailsView/CastList';
 import CrewList from '../components/detailsView/CrewList';
 import CollectionButton from '../components/detailsView/CollectionButton';
 import Button from '../components/Button';
-import DeleteModal from '../components/DeleteModal';
 import { FontAwesome } from '@expo/vector-icons';
 import moment from 'moment';
 import { getByType } from '../repository/tmdbRepo';
@@ -68,12 +67,6 @@ export default class DetailsView extends React.Component {
         });
     };
 
-    showDeleteModal = () => {
-        this.setState({
-            modalVisible: true,
-        });
-    };
-
     deleteItem = () => {
         return window.firebase.database().ref(`${this.state.itemDetails.type}/` + this.state.itemDetails.id).remove()
             .then(() => {
@@ -87,17 +80,6 @@ export default class DetailsView extends React.Component {
         this.setState({
             modalVisible: false,
         });
-    };
-
-    renderModal = () => {
-        return (
-            <DeleteModal
-                selectedItem={this.state.itemDetails}
-                visible={this.state.modalVisible}
-                onClose={this.closeModal}
-                onDelete={this.deleteItem}
-            />
-        );
     };
 
     formatReleaseDate = () => {
@@ -134,7 +116,6 @@ export default class DetailsView extends React.Component {
         const item = this.state.itemDetails;
         return (
             <View style={styles.container}>
-                {this.renderModal()}
                 <LoadingContainer loading={this.state.loading}>
                     <View>
                         <ScrollView>
