@@ -58,7 +58,9 @@ const Header = React.createClass({
                     <Image style={styles.poster} source={{ uri: `${baseUrl}${posterSize}${item.poster_path}` }} />
                 </View>
                 <View style={styles.headerContent}>
-                    <TitleText style={[styles.text, styles.title]}>{item.title || item.name} ({this.formatYear()})</TitleText>
+                    <TitleText style={[styles.text, styles.title]}>
+                        {item.title || item.name} <BodyText style={styles.year}>({this.formatYear()})</BodyText>
+                    </TitleText>
                     {this.renderDirectorSection()}
                     <BodyText style={[styles.text, styles.runtime]}>{this.formatRuntime()}</BodyText>
                 </View>
@@ -97,5 +99,9 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#EEE',
+    },
+    year: {
+        fontSize: 15,
+        fontWeight: 'normal',
     }
 });
