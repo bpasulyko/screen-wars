@@ -4,7 +4,6 @@ import {
   Image,
   ScrollView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
   Dimensions,
@@ -20,6 +19,8 @@ import Genres from '../components/detailsView/Genres';
 import CastList from '../components/detailsView/CastList';
 import CrewList from '../components/detailsView/CrewList';
 import CollectionButton from '../components/detailsView/CollectionButton';
+import BodyText from '../components/BodyText';
+import TitleText from '../components/TitleText';
 import Button from '../components/Button';
 import { FontAwesome } from '@expo/vector-icons';
 import moment from 'moment';
@@ -124,12 +125,12 @@ export default class DetailsView extends React.Component {
                                 <Header itemDetails={item} />
                                 <SubHeader itemDetails={item} />
                                 <View style={styles.overview}>
-                                    <Text style={styles.heading}>Overview</Text>
-                                    <Text style={styles.overviewText}>{item.overview}</Text>
+                                    <TitleText style={styles.heading}>Overview</TitleText>
+                                    <BodyText style={styles.overviewText}>{item.overview}</BodyText>
                                 </View>
                                 <View style={styles.releaseDateContainer}>
-                                    <Text style={styles.heading}>Release Date</Text>
-                                    <Text style={styles.releaseDate}>{this.formatReleaseDate()}</Text>
+                                    <TitleText style={styles.heading}>Release Date</TitleText>
+                                    <BodyText style={styles.releaseDate}>{this.formatReleaseDate()}</BodyText>
                                 </View>
                                 <Genres itemDetails={item} />
                                 {item.credits && item.credits.cast.length > 0 && <CastList cast={item.credits.cast} />}
@@ -207,7 +208,6 @@ const styles = StyleSheet.create({
         fontSize: 15,
     },
     heading: {
-        fontWeight: '500',
         fontSize: 20,
         color: '#EEE',
         paddingBottom: 5,

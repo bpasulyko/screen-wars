@@ -3,7 +3,6 @@ import _ from 'lodash';
 
 import {
   StyleSheet,
-  Text,
   Animated,
   View,
   Picker,
@@ -12,6 +11,7 @@ import {
 import { FontAwesome } from '@expo/vector-icons';
 import SortOptions from '../util/SortOptions'
 import { getGenres } from '../repository/tmdbRepo';
+import BodyText from './BodyText';
 
 const FilterMenu = React.createClass({
     propTypes: {
@@ -44,7 +44,7 @@ const FilterMenu = React.createClass({
         }].concat(_.values(_.sortBy(getGenres(), 'name')));
         return (
             <View style={styles.pickerContainer}>
-                <Text style={styles.pickerLabel}>GENRE</Text>
+                <BodyText style={styles.pickerLabel}>Genre</BodyText>
                 <View style={styles.wrapper}>
                     <Picker style={styles.picker} mode="dropdown" selectedValue={this.props.selectedGenre} onValueChange={this.props.onGenreChange}>
                         {allGenres.map((genre, key) => {
@@ -59,7 +59,7 @@ const FilterMenu = React.createClass({
     renderSortPicker() {
         return (
             <View style={styles.pickerContainer}>
-                <Text style={styles.pickerLabel}>SORT</Text>
+                <BodyText style={styles.pickerLabel}>Sort</BodyText>
                 <View style={styles.wrapper}>
                     <Picker style={styles.picker} mode="dropdown" selectedValue={this.props.selectedSort} onValueChange={this.props.onSortChange}>
                         {_.values(SortOptions).map((option, key) => {
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     },
     pickerLabel: {
         color: '#EEE',
-        fontSize: 9,
+        fontSize: 12,
         paddingBottom: 5,
     },
     picker: {

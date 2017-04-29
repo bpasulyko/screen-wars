@@ -3,10 +3,10 @@ import {
   StyleSheet,
   Image,
   View,
-  Text,
   Dimensions,
 } from 'react-native';
 import Rating from './Rating';
+import BodyText from '../BodyText';
 
 const SubHeader = React.createClass({
     propTypes: {
@@ -21,9 +21,9 @@ const SubHeader = React.createClass({
                     <Rating rating={item.vote_average} />
                 </View>
                 <View style={styles.detailsContainer}>
-                    {item.type == 'movie' && <Text style={styles.tagline}>{item.tagline.toUpperCase()}</Text>}
-                    {item.type === 'tv' && <Text style={styles.seasons}>{item.number_of_seasons + ' seasons'}</Text>}
-                    {item.type === 'tv' && <Text style={styles.seasons}>{item.number_of_episodes + ' episodes'}</Text>}
+                    {item.type == 'movie' && <BodyText style={styles.tagline}>{item.tagline.toUpperCase()}</BodyText>}
+                    {item.type === 'tv' && <BodyText style={styles.seasons}>{item.number_of_seasons + ' seasons'}</BodyText>}
+                    {item.type === 'tv' && <BodyText style={styles.seasons}>{item.number_of_episodes + ' episodes'}</BodyText>}
                 </View>
             </View>
         );

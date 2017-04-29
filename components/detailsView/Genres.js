@@ -3,9 +3,10 @@ import _ from 'lodash';
 import {
   StyleSheet,
   View,
-  Text,
 } from 'react-native';
 import TextBubble from '../TextBubble';
+import BodyText from '../BodyText';
+import TitleText from '../TitleText';
 
 const Genres = React.createClass({
     propTypes: {
@@ -15,7 +16,7 @@ const Genres = React.createClass({
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>Genres</Text>
+                <TitleText style={styles.title}>Genres</TitleText>
                 <View style={styles.genreContainer}>
                     {this.props.itemDetails.genres.map((genre, key) => {
                         return <TextBubble key={key}>{genre.name}</TextBubble>;
@@ -39,7 +40,6 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
     title: {
-        fontWeight: '500',
         fontSize: 16,
         color: '#EEE',
         paddingBottom: 5,

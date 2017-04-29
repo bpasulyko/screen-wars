@@ -43,6 +43,8 @@ class App extends React.Component {
         await Expo.Font.loadAsync({
             'star-wars': require('./assets/fonts/SFDistantGalaxy.ttf'),
             'star-wars-outline': require('./assets/fonts/SFDistantGalaxyOutline.ttf'),
+            'raleway-bold': require('./assets/fonts/Raleway-ExtraBold.ttf'),
+            'raleway': require('./assets/fonts/Raleway-Regular.ttf'),
         });
         this.setState({ fontLoaded: true })
     }

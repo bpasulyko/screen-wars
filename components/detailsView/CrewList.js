@@ -3,10 +3,11 @@ import _ from 'lodash';
 import {
   StyleSheet,
   View,
-  Text,
   TouchableOpacity,
 } from 'react-native';
 import TextBubble from '../TextBubble';
+import BodyText from '../BodyText';
+import TitleText from '../TitleText';
 import { FontAwesome } from '@expo/vector-icons';
 
 const CrewList = React.createClass({
@@ -32,7 +33,7 @@ const CrewList = React.createClass({
     renderDepartmentSection(dept, key, crew) {
         return (
             <View style={styles.departmentContainer} key={key}>
-                <Text style={styles.dept}>{dept.toUpperCase()}</Text>
+                <BodyText style={styles.dept}>{dept.toUpperCase()}</BodyText>
                 <View style={styles.crewListContainer}>
                     {crew[dept].map((person, i) => {
                         return <TextBubble key={i}>{person.name}</TextBubble>;
@@ -51,7 +52,7 @@ const CrewList = React.createClass({
         return (
             <View style={styles.container}>
                 <View style={styles.titleContainer}>
-                    <Text style={styles.title}>Crew</Text>
+                    <TitleText style={styles.title}>Crew</TitleText>
                     <TouchableOpacity onPress={this.toggleCrewList}>
                         <FontAwesome
                             name={toggleLabel}
@@ -86,7 +87,6 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
     },
     title: {
-        fontWeight: '500',
         fontSize: 16,
         color: '#EEE',
     },

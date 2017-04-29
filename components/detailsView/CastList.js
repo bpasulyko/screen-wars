@@ -3,10 +3,11 @@ import _ from 'lodash';
 import {
   StyleSheet,
   View,
-  Text,
   TouchableOpacity,
 } from 'react-native';
 import TextBubble from '../TextBubble';
+import BodyText from '../BodyText';
+import TitleText from '../TitleText';
 import { FontAwesome } from '@expo/vector-icons';
 
 const CastList = React.createClass({
@@ -40,7 +41,7 @@ const CastList = React.createClass({
         return (
             <View style={styles.container}>
                 <View style={styles.titleContainer}>
-                    <Text style={styles.title}>Cast</Text>
+                    <TitleText style={styles.title}>Cast</TitleText>
                     <TouchableOpacity onPress={this.toggleCastList}>
                         <FontAwesome
                             name={toggleLabel}
@@ -75,7 +76,6 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
     },
     title: {
-        fontWeight: '500',
         fontSize: 16,
         color: '#EEE',
         paddingBottom: 5,

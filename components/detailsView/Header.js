@@ -4,9 +4,10 @@ import {
   StyleSheet,
   Image,
   View,
-  Text,
 } from 'react-native';
 import { getImageConfig } from '../../repository/tmdbRepo';
+import BodyText from '../BodyText';
+import TitleText from '../TitleText';
 
 const Header = React.createClass({
     propTypes: {
@@ -40,8 +41,8 @@ const Header = React.createClass({
         const label = (item.type === 'movie') ? 'Directed by' : 'Created by';
         return (
             <View>
-                <Text style={[styles.text, { fontSize: 11 }]}>{label}</Text>
-                <Text style={[styles.text, { fontSize: 16 }]}>{directors.map((x) => x.name).join(', ')}</Text>
+                <BodyText style={[styles.text, { fontSize: 11 }]}>{label}</BodyText>
+                <BodyText style={[styles.text, { fontSize: 16 }]}>{directors.map((x) => x.name).join(', ')}</BodyText>
             </View>
         );
     },
@@ -57,9 +58,9 @@ const Header = React.createClass({
                     <Image style={styles.poster} source={{ uri: `${baseUrl}${posterSize}${item.poster_path}` }} />
                 </View>
                 <View style={styles.headerContent}>
-                    <Text style={[styles.text, styles.title]}>{item.title || item.name} ({this.formatYear()})</Text>
+                    <TitleText style={[styles.text, styles.title]}>{item.title || item.name} ({this.formatYear()})</TitleText>
                     {this.renderDirectorSection()}
-                    <Text style={[styles.text, styles.runtime]}>{this.formatRuntime()}</Text>
+                    <BodyText style={[styles.text, styles.runtime]}>{this.formatRuntime()}</BodyText>
                 </View>
             </View>
         );
@@ -90,7 +91,6 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
-        fontWeight: '500',
     },
     runtime: {
         fontSize: 16,

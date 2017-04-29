@@ -13,6 +13,8 @@ import {
 import { FontAwesome } from '@expo/vector-icons';
 import Router from './Router';
 import { Font } from 'expo';
+import BodyText from '../components/BodyText';
+import TitleText from '../components/TitleText';
 
 const Drawer = React.createClass({
     renderHeader() {
@@ -31,9 +33,9 @@ const Drawer = React.createClass({
                     name={icon}
                     size={24}
                 />
-                <Text style={[styles.titleText, isSelected ? styles.selectedTitleText : {}]}>
+                <TitleText style={[styles.titleText, isSelected ? styles.selectedTitleText : {}]}>
                     {title}
-                </Text>
+                </TitleText>
             </View>
         );
     },
@@ -93,7 +95,6 @@ const styles = StyleSheet.create({
     },
     titleText: {
         color: '#EEE',
-        fontWeight: 'bold',
         marginLeft: 18,
     },
     titleContainer: {

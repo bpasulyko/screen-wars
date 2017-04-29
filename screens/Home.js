@@ -3,7 +3,6 @@ import _ from 'lodash';
 
 import {
   StyleSheet,
-  Text,
   View,
   ListView,
   Image,
@@ -13,6 +12,7 @@ import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
 import AddButton from '../components/AddButton';
 import SearchResults from '../components/SearchResults';
+import BodyText from '../components/BodyText';
 import Router from '../navigation/Router';
 import { multiSearch } from '../repository/tmdbRepo';
 
@@ -80,7 +80,7 @@ export default class Home extends React.Component {
             <View style={styles.container}>
                 <View style={styles.content}>
                     <LoadingContainer loading={this.state.loading}>
-                        <Text style={{ color: '#fff' }}>CONTENT STUFF</Text>
+                        <BodyText style={{ color: '#fff' }}>CONTENT STUFF</BodyText>
                     </LoadingContainer>
                 </View>
                 {this.state.searchResults && (

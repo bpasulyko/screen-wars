@@ -3,10 +3,10 @@ import {
   StyleSheet,
   View,
   Image,
-  Text,
   TouchableHighlight,
 } from 'react-native';
 import { getImageConfig } from '../repository/tmdbRepo';
+import BodyText from './BodyText';
 
 const SearchResultRow = React.createClass({
     propTypes: {
@@ -29,8 +29,8 @@ const SearchResultRow = React.createClass({
                         <Image style={styles.image} source={{ uri: imageUrl }} />
                     </View>
                     <View style={styles.textContainer}>
-                        <Text style={styles.text} ellipsizeMode='tail' numberOfLines={1}>{title}</Text>
-                        {year && <Text style={styles.text}>{year}</Text>}
+                        <BodyText style={styles.text} ellipsizeMode='tail' numberOfLines={1}>{title}</BodyText>
+                        {year && <BodyText style={styles.text}>{year}</BodyText>}
                     </View>
                 </View>
             </TouchableHighlight>

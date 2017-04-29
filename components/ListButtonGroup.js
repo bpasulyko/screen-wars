@@ -2,11 +2,12 @@ import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import {
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
 
 import ListTypes from '../util/ListTypes';
+import BodyText from './BodyText';
+import TitleText from './TitleText';
 
 const ListButtonGroup = React.createClass({
     propTypes: {
@@ -27,7 +28,7 @@ const ListButtonGroup = React.createClass({
                         if (type.name === this.props.activeList.name) {
                             buttonStyles.push(styles.active);
                         }
-                        return <Text key={key} onPress={() => this.props.onListButtonClick(type)} style={buttonStyles}>{type.title}</Text>
+                        return <TitleText key={key} onPress={() => this.props.onListButtonClick(type)} style={buttonStyles}>{type.title}</TitleText>
                     })}
                 </View>
             </View>
@@ -60,7 +61,6 @@ const styles = StyleSheet.create({
         color: '#EEE',
         backgroundColor: '#444',
         paddingVertical: 10,
-        fontWeight: 'bold',
         opacity: 0.5,
     },
     active: {

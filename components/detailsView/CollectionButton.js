@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         color: '#EEE',
     },
     itemIcons: {
-        fontSize: 28,
+        fontSize: 30,
         color: '#EEE',
     },
     itemContainer: {
