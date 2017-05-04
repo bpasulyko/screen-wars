@@ -18,10 +18,7 @@ const CollectionSection = React.createClass({
             poster_path: PropTypes.string,
             backdrop_path: PropTypes.string,
         }),
-    },
-
-    goToCollection() {
-        console.log(this.props.collectionData.id);
+        onViewLinkClick: PropTypes.func,
     },
 
     render() {
@@ -33,7 +30,7 @@ const CollectionSection = React.createClass({
             <View>
                 <Image style={styles.collectionBackdrop} source={{ uri: backdropUrl }}>
                     <TitleText style={styles.collectionTitle}>{"Part of the " + this.props.collectionData.name}</TitleText>
-                    <TouchableHighlight onPress={this.goToCollection} style={styles.collectionLink}>
+                    <TouchableHighlight onPress={() => this.props.onViewLinkClick(this.props.collectionData.id)} style={styles.collectionLink}>
                         <View>
                             <TitleText style={styles.collectionLinkText}>View Collection</TitleText>
                         </View>

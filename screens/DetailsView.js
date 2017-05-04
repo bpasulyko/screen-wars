@@ -22,6 +22,7 @@ import CollectionButton from '../components/detailsView/CollectionButton';
 import BodyText from '../components/BodyText';
 import TitleText from '../components/TitleText';
 import Button from '../components/Button';
+import Router from '../navigation/Router';
 import { FontAwesome } from '@expo/vector-icons';
 import moment from 'moment';
 import { getByType } from '../repository/tmdbRepo';
@@ -113,6 +114,10 @@ export default class DetailsView extends React.Component {
         }
     };
 
+    goToCollection = (id) => {
+        this.props.navigator.replace(Router.getRoute('collection', { id: id }));
+    };
+
     render() {
         const item = this.state.itemDetails;
         return (
@@ -128,7 +133,9 @@ export default class DetailsView extends React.Component {
                                     <TitleText style={styles.heading}>Overview</TitleText>
                                     <BodyText style={styles.overviewText}>{item.overview}</BodyText>
                                 </View>
-                                {item.belongs_to_collection && <CollectionSection collectionData={item.belongs_to_collection} />}
+                                {item.belongs_to_collection && (
+                                    <CollectionSection collectionData={item.belongs_to_collection} onViewLinkClick={this.goToCollection} />
+                                )}
                                 <View style={styles.releaseDateContainer}>
                                     <TitleText style={styles.heading}>Release Date</TitleText>
                                     <BodyText style={styles.releaseDate}>{this.formatReleaseDate()}</BodyText>

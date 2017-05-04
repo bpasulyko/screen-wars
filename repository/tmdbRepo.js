@@ -42,6 +42,14 @@ export function getByType(type, id) {
         });
 }
 
+export function getCollection(id) {
+    return fetch(`${BASE_URL}/collection/${id}?api_key=${API_KEY}&language=en-US`)
+        .then((response) => response.json())
+        .catch((error) => {
+            console.error(error);
+        });
+}
+
 function loadImageConfig() {
     return fetch(`${BASE_URL}/configuration?api_key=${API_KEY}`)
         .then((response) => response.json())
