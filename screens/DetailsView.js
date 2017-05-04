@@ -6,7 +6,6 @@ import {
   StyleSheet,
   TouchableHighlight,
   View,
-  Dimensions,
 } from 'react-native';
 
 import LoadingContainer from '../components/LoadingContainer';
@@ -18,13 +17,14 @@ import Rating from '../components/detailsView/Rating';
 import Genres from '../components/detailsView/Genres';
 import CastList from '../components/detailsView/CastList';
 import CrewList from '../components/detailsView/CrewList';
+import CollectionSection from '../components/detailsView/CollectionSection';
 import CollectionButton from '../components/detailsView/CollectionButton';
 import BodyText from '../components/BodyText';
 import TitleText from '../components/TitleText';
 import Button from '../components/Button';
 import { FontAwesome } from '@expo/vector-icons';
 import moment from 'moment';
-import { getByType, getImageConfig } from '../repository/tmdbRepo';
+import { getByType } from '../repository/tmdbRepo';
 
 export default class DetailsView extends React.Component {
     static route = {
@@ -113,26 +113,6 @@ export default class DetailsView extends React.Component {
         }
     };
 
-    renderCollectionSection = () => {
-        const collection = this.state.itemDetails.belongs_to_collection;
-        const imageConfig = getImageConfig();
-        const baseUrl = imageConfig.base_url;
-        const backdropSize = imageConfig.backdrop_sizes[1];
-        const backdropUrl = `${baseUrl}${backdropSize}${collection.backdrop_path}`;
-        return (
-            <View>
-                <Image style={styles.collectionBackdrop} source={{ uri: backdropUrl }}>
-                    <TitleText style={styles.collectionTitle}>{"Part of the " + collection.name}</TitleText>
-                    <TouchableHighlight onPress={() => {}} style={styles.collectionLink}>
-                        <View>
-                            <TitleText style={styles.collectionLinkText}>View Collection</TitleText>
-                        </View>
-                    </TouchableHighlight>
-                </Image>
-            </View>
-        );
-    };
-
     render() {
         const item = this.state.itemDetails;
         return (
@@ -148,7 +128,7 @@ export default class DetailsView extends React.Component {
                                     <TitleText style={styles.heading}>Overview</TitleText>
                                     <BodyText style={styles.overviewText}>{item.overview}</BodyText>
                                 </View>
-                                {item.belongs_to_collection && this.renderCollectionSection()}
+                                {item.belongs_to_collection && <CollectionSection collectionData={item.belongs_to_collection} />}
                                 <View style={styles.releaseDateContainer}>
                                     <TitleText style={styles.heading}>Release Date</TitleText>
                                     <BodyText style={styles.releaseDate}>{this.formatReleaseDate()}</BodyText>
@@ -205,9 +185,6 @@ function saveTvShow(data) {
     });
 }
 
-const WIDTH = Dimensions.get('window').width;
-const BACKDROP_HEIGHT = WIDTH * 0.5625;
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -236,31 +213,4 @@ const styles = StyleSheet.create({
         color: '#EEE',
         paddingBottom: 5,
     },
-    collectionBackdrop: {
-        width: WIDTH,
-        height: BACKDROP_HEIGHT,
-        padding: 20,
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-    },
-    collectionTitle: {
-        color: '#EEE',
-        fontSize: 20,
-        textShadowColor: 'black',
-        textShadowOffset: {
-            width: 2,
-            height: 2,
-        },
-        textShadowRadius: 10,
-    },
-    collectionLink: {
-        backgroundColor: 'rgba(30, 30, 30, 0.8)',
-        borderRadius: 50,
-        padding: 10,
-    },
-    collectionLinkText: {
-        color: '#EEE',
-        fontSize: 20,
-        textAlign: 'center',
-    }
 });
