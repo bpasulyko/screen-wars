@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import {
   Image,
@@ -55,9 +55,9 @@ export default class Movies extends React.Component {
         });
     }
 
-    goToDetails = (selectedMovie) => {
+    goToDetails = (selectedMovieId) => {
         this.props.navigator.push(Router.getRoute('details', {
-            id: selectedMovie.id,
+            id: selectedMovieId,
             type: 'movie',
         }));
     };
@@ -84,8 +84,18 @@ export default class Movies extends React.Component {
         if (this.state.selectedGenre) filteredMovies = filterByGenre(filteredMovies, this.state.selectedGenre);
         if (this.state.selectedSort !== null) filteredMovies = SortOptions[this.state.selectedSort].sort(filteredMovies);
         return (filteredMovies.length > 0)
-            ? <ItemList list={filteredMovies} onClick={this.goToDetails} />
+            ? this.renderItemList(filteredMovies)
             : <NoItems icon={this.state.activeList.icon} text={text} />;
+    };
+
+    renderItemList = (items) => {
+        const itemList = items.map((item) => {
+            return {
+                id: item.id,
+                poster: item.poster,
+            };
+        });
+        return <ItemList list={itemList} onClick={this.goToDetails} />;
     };
 
     render() {

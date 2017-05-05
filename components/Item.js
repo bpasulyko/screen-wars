@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {
   StyleSheet,
   Image,
@@ -11,8 +11,11 @@ import { getImageConfig } from '../repository/tmdbRepo';
 
 const Item = React.createClass({
     propTypes: {
-        item: React.PropTypes.object,
-        onClick: React.PropTypes.func,
+        item: PropTypes.shape({
+            id: PropTypes.number,
+            poster: PropTypes.string,
+        }),
+        onClick: PropTypes.func,
     },
 
     componentWillMount() {
@@ -24,7 +27,7 @@ const Item = React.createClass({
             Animated.timing(this.animation, { toValue: 1, duration: 100 }),
             Animated.timing(this.animation, { toValue: 0, duration: 100 }),
         ]).start();
-        this.props.onClick(this.props.item);
+        this.props.onClick(this.props.item.id);
     },
 
     render() {

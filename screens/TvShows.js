@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import {
   Image,
@@ -55,9 +55,9 @@ export default class TvShows extends React.Component {
         });
     }
 
-    goToDetails = (selectedTvShow) => {
+    goToDetails = (selectedTvShowId) => {
         this.props.navigator.push(Router.getRoute('details', {
-            id: selectedTvShow.id,
+            id: selectedTvShowId,
             type: 'tv',
         }));
     };
@@ -84,8 +84,18 @@ export default class TvShows extends React.Component {
         if (this.state.selectedGenre) filteredTvShows = filterByGenre(filteredTvShows, this.state.selectedGenre);
         if (this.state.selectedSort !== null) filteredTvShows = SortOptions[this.state.selectedSort].sort(filteredTvShows);
         return (filteredTvShows.length > 0)
-            ? <ItemList list={filteredTvShows} onClick={this.goToDetails} />
+            ? this.renderItemList(filteredTvShows)
             : <NoItems icon={this.state.activeList.icon} text={text} />;
+    };
+
+    renderItemList = (items) => {
+        const itemList = items.map((item) => {
+            return {
+                id: item.id,
+                poster: item.poster,
+            };
+        });
+        return <ItemList list={itemList} onClick={this.goToDetails} />;
     };
 
     render() {

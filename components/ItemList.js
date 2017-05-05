@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -8,8 +8,11 @@ import Item from './Item';
 
 const ItemList = React.createClass({
     propTypes: {
-        list: React.PropTypes.array,
-        onClick: React.PropTypes.func,
+        list: PropTypes.arrayOf(PropTypes.shape({
+            id: PropTypes.number,
+            poster: PropTypes.string,
+        })),
+        onClick: PropTypes.func,
     },
 
     render() {
