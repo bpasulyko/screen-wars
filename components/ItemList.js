@@ -11,6 +11,7 @@ const ItemList = React.createClass({
         list: PropTypes.arrayOf(PropTypes.shape({
             id: PropTypes.number,
             poster: PropTypes.string,
+            title: PropTypes.string,
         })),
         onClick: PropTypes.func,
     },

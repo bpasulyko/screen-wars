@@ -8,12 +8,14 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import { getImageConfig } from '../repository/tmdbRepo';
+import TitleText from './TitleText';
 
 const Item = React.createClass({
     propTypes: {
         item: PropTypes.shape({
             id: PropTypes.number,
             poster: PropTypes.string,
+            title: PropTypes.string,
         }),
         onClick: PropTypes.func,
     },
@@ -43,10 +45,13 @@ const Item = React.createClass({
                 })
             }],
         };
+        const image = (this.props.item.poster)
+            ? <Image style={styles.image} source={{ uri: imageUrl }} />
+            : <View style={styles.image}><TitleText style={styles.title}>{this.props.item.title}</TitleText></View>
         return (
             <Animated.View style={[styles.imageContainer, animatedStyle]}>
                 <TouchableHighlight style={styles.image} onPress={this.handlePress}>
-                    <Image style={styles.image} source={{ uri: imageUrl }} />
+                    {image}
                 </TouchableHighlight>
             </Animated.View>
         );
@@ -71,5 +76,12 @@ const styles = StyleSheet.create({
         width: ITEM_WIDTH,
         height: ITEM_HEIGHT,
         borderRadius: 4,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#171717',
     },
+    title: {
+        color: '#EEE',
+        textAlign: 'center',
+    }
 });

@@ -78,6 +78,7 @@ export default class Collection extends React.Component {
             return {
                 id: item.id,
                 poster: item.poster_path,
+                title: item.title,
             };
         });
         return <ItemList list={itemList} onClick={this.goToDetails} />;
