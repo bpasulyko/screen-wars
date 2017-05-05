@@ -45,9 +45,9 @@ export default class Collection extends React.Component {
             });
     }
 
-    goToDetails = (selectedMovie) => {
-        this.props.navigator.push(Router.getRoute('details', {
-            id: selectedMovie.id,
+    goToDetails = (selectedMovieId) => {
+        this.props.navigator.replace(Router.getRoute('details', {
+            id: selectedMovieId,
             type: 'movie',
         }));
     };
@@ -60,14 +60,27 @@ export default class Collection extends React.Component {
         const posterSize = imageConfig.poster_sizes[2];
         const posterUrl = `${baseUrl}${posterSize}${this.state.data.poster_path}`;
         return (
-            <View style={styles.headerContainer}>
-                <Image style={styles.backdropImage} source={{ uri: backdropUrl }} />
-                <View style={styles.posterContainer}>
-                    <Image style={styles.poster} source={{ uri: posterUrl }} />
+            <View>
+                <View style={styles.headerContainer}>
+                    <Image style={styles.backdropImage} source={{ uri: backdropUrl }} />
+                    <View style={styles.posterContainer}>
+                        <Image style={styles.poster} source={{ uri: posterUrl }} />
+                    </View>
+                    <TitleText style={styles.title}>{this.state.data.name}</TitleText>
                 </View>
-                <TitleText style={styles.title}>{this.state.data.name}</TitleText>
+                {this.state.data.parts && this.renderItemList(this.state.data.parts)}
             </View>
         );
+    };
+
+    renderItemList = (items) => {
+        const itemList = _.sortBy(items, 'release_date').map((item) => {
+            return {
+                id: item.id,
+                poster: item.poster_path,
+            };
+        });
+        return <ItemList list={itemList} onClick={this.goToDetails} />;
     };
 
     render() {
