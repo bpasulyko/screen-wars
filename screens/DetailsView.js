@@ -118,6 +118,10 @@ export default class DetailsView extends React.Component {
         this.props.navigator.replace(Router.getRoute('collection', { id: id }));
     };
 
+    goToSeasons = () => {
+        console.log('seasons');
+    };
+
     render() {
         const item = this.state.itemDetails;
         return (
@@ -128,7 +132,7 @@ export default class DetailsView extends React.Component {
                             <Backdrop path={item.backdrop_path} />
                             <View>
                                 <Header itemDetails={item} />
-                                <SubHeader itemDetails={item} />
+                                <SubHeader itemDetails={item} onSeasonsClick={this.goToSeasons} />
                                 <View style={styles.overview}>
                                     <TitleText style={styles.heading}>Overview</TitleText>
                                     <BodyText style={styles.overviewText}>{item.overview}</BodyText>
