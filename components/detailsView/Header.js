@@ -5,6 +5,7 @@ import {
   Image,
   View,
 } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import { getImageConfig } from '../../repository/tmdbRepo';
 import BodyText from '../BodyText';
 import TitleText from '../TitleText';
@@ -52,10 +53,14 @@ const Header = React.createClass({
         const item = this.props.itemDetails;
         const baseUrl = imageConfig.base_url;
         const posterSize = imageConfig.poster_sizes[2];
+        const icon = (item.type === 'movie' ? 'film' : 'tv');
+        const posterImage = (item.poster_path)
+            ? <Image style={styles.poster} source={{ uri: `${baseUrl}${posterSize}${item.poster_path}` }} />
+            : <View style={styles.poster}><FontAwesome name={icon} size={50} style={styles.icon} /></View>
         return (
             <View style={styles.headerContainer}>
                 <View style={styles.posterContainer}>
-                    <Image style={styles.poster} source={{ uri: `${baseUrl}${posterSize}${item.poster_path}` }} />
+                    {posterImage}
                 </View>
                 <View style={styles.headerContent}>
                     <TitleText style={[styles.text, styles.title]}>
@@ -85,6 +90,9 @@ const styles = StyleSheet.create({
         width: 100,
         height: 150,
         borderRadius: 4,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#171717',
     },
     headerContent: {
         flex: 1,
@@ -103,5 +111,8 @@ const styles = StyleSheet.create({
     year: {
         fontSize: 15,
         fontWeight: 'normal',
+    },
+    icon: {
+        color: '#555',
     }
 });

@@ -5,6 +5,7 @@ import {
   Image,
   TouchableHighlight,
 } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import { getImageConfig } from '../repository/tmdbRepo';
 import BodyText from './BodyText';
 
@@ -22,11 +23,15 @@ const SearchResultRow = React.createClass({
         const releaseDate = this.props.rowData.first_air_date || this.props.rowData.release_date;
         const title = this.props.rowData.title || this.props.rowData.name;
         const year = (releaseDate) ? `(${releaseDate.split('-')[0]})` : null;
+        const icon = (this.props.rowData.media_type === 'movie' ? 'film' : 'tv');
+        const posterImage = (this.props.rowData.poster_path)
+            ? <Image style={styles.image} source={{ uri: imageUrl }} />
+            : <View style={styles.image}><FontAwesome name={icon} size={20} style={styles.icon} /></View>
         return (
             <TouchableHighlight onPress={this.props.onResultSelect}>
                 <View style={styles.resultRow}>
                     <View style={styles.imageContainer}>
-                        <Image style={styles.image} source={{ uri: imageUrl }} />
+                        {posterImage}
                     </View>
                     <View style={styles.textContainer}>
                         <BodyText style={styles.text} ellipsizeMode='tail' numberOfLines={1}>{title}</BodyText>
@@ -59,6 +64,9 @@ const styles = StyleSheet.create({
         width: 39,
         height: 60,
         borderRadius: 4,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#171717',
     },
     textContainer: {
         paddingLeft: 10,
@@ -67,5 +75,8 @@ const styles = StyleSheet.create({
     text: {
         color: '#EEE',
         fontSize: 16,
+    },
+    icon: {
+        color: '#555',
     }
 });
