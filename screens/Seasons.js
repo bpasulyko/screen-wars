@@ -32,10 +32,9 @@ export default class Collection extends React.Component {
 
     componentDidMount() {
         const params = this.props.route.params;
-        this.props.route.params.seasons.shift();
         this.setState({
             loading: false,
-            seasons: this.props.route.params.seasons,
+            seasons: _.filter(this.props.route.params.seasons, (season) => season.season_number > 0),
         });
     }
 
