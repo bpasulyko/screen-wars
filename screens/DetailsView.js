@@ -119,7 +119,7 @@ export default class DetailsView extends React.Component {
     };
 
     goToSeasons = () => {
-        console.log('seasons');
+        this.props.navigator.push(Router.getRoute('seasons', { seasons: this.state.itemDetails.seasons }));
     };
 
     render() {
@@ -163,8 +163,6 @@ export default class DetailsView extends React.Component {
         );
     };
 }
-
-
 
 function saveMovie(data) {
     const dateAdded = data.dateAdded || Date.now();

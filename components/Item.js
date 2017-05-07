@@ -47,7 +47,7 @@ const Item = React.createClass({
         };
         const image = (this.props.item.poster)
             ? <Image style={styles.image} source={{ uri: imageUrl }} />
-            : <View style={styles.image}><TitleText style={styles.title}>{this.props.item.title}</TitleText></View>
+            : <View style={[styles.image, styles.noImage]}><TitleText style={styles.title}>{this.props.item.title}</TitleText></View>
         return (
             <Animated.View style={[styles.imageContainer, animatedStyle]}>
                 <TouchableHighlight style={styles.image} onPress={this.handlePress}>
@@ -78,6 +78,8 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    noImage: {
         backgroundColor: '#171717',
     },
     title: {
