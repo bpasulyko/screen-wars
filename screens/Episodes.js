@@ -14,7 +14,7 @@ import BodyText from '../components/BodyText';
 import { FontAwesome } from '@expo/vector-icons';
 import Router from '../navigation/Router';
 import { getImageConfig, getSeason } from '../repository/tmdbRepo';
-import moment from 'moment';
+import EpisodeRow from '../components/episodes/EpisodeRow';
 
 export default class Episodes extends React.Component {
     static route = {
@@ -70,29 +70,7 @@ export default class Episodes extends React.Component {
     renderEpisodeList = () => {
         return (
             <View>
-                {this.state.seasonData.episodes.map((episode, key) => {
-                    const imageConfig = getImageConfig();
-                    const baseUrl = imageConfig.base_url;
-                    const stillSize = imageConfig.still_sizes[1];
-                    const stillUrl = `${baseUrl}${stillSize}${episode.still_path}`;
-                    const stillImage = (episode.still_path)
-                        ? <Image style={styles.stillImage} source={{ uri: stillUrl }} />
-                        : <View style={[styles.stillImage, styles.noImage]}><FontAwesome name="tv" size={20} style={styles.icon} /></View>
-                    return (
-                        <View key={key} style={styles.episodeRow}>
-                            <View style={styles.episodeSummary}>
-                                {stillImage}
-                                <View style={styles.episodeHeading}>
-                                    <TitleText style={[styles.text, styles.episodeTitle]}>{episode.episode_number + '. ' + episode.name}</TitleText>
-                                    <BodyText style={styles.text}>{moment(episode.air_date).format('MMMM D, YYYY')}</BodyText>
-                                </View>
-                            </View>
-                            <View style={styles.episodeDetails}>
-                                <BodyText>DETAILS</BodyText>
-                            </View>
-                        </View>
-                    );
-                })}
+                {this.state.seasonData.episodes.map((episode, key) => <EpisodeRow key={key} episode={episode} />)}
             </View>
         );
     };
@@ -134,10 +112,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    stillImage: {
-        width: 100,
-        height: 56,
-    },
     noImage: {
         backgroundColor: '#171717',
     },
@@ -162,24 +136,5 @@ const styles = StyleSheet.create({
     },
     icon: {
         color: '#555',
-    },
-    episodeRow: {
-        padding: 10,
-        borderTopWidth: 1,
-        borderTopColor: '#555',
-    },
-    episodeSummary: {
-        flexDirection: 'row',
-    },
-    episodeHeading: {
-        flex: 1,
-        paddingLeft: 10,
-        justifyContent: 'space-around',
-    },
-    episodeTitle: {
-        fontSize: 16,
-    },
-    episodeDetails: {
-        height: 0,
     },
 });
