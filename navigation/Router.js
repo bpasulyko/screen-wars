@@ -5,6 +5,7 @@ import TvShows from '../screens/TvShows';
 import DetailsView from '../screens/DetailsView';
 import Collection from '../screens/Collection';
 import Seasons from '../screens/Seasons';
+import Episodes from '../screens/Episodes';
 
 export default createRouter(() => ({
     home: () => Home,
@@ -13,4 +14,5 @@ export default createRouter(() => ({
     details: () => DetailsView,
     collection: () => Collection,
     seasons: () => Seasons,
+    episodes: () => Episodes,
 }));

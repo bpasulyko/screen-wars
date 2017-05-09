@@ -14,7 +14,7 @@ import Router from '../navigation/Router';
 
 import { getImageConfig } from '../repository/tmdbRepo';
 
-export default class Collection extends React.Component {
+export default class Seasons extends React.Component {
     static route = {
         navigationBar: {
             backgroundColor: '#171717',
@@ -27,6 +27,7 @@ export default class Collection extends React.Component {
 
     state = {
         loading: true,
+        id: null,
         seasons: [],
     };
 
@@ -35,13 +36,13 @@ export default class Collection extends React.Component {
         this.setState({
             loading: false,
             seasons: _.filter(this.props.route.params.seasons, (season) => season.season_number > 0),
+            id: params.id,
         });
     }
 
-    goToSeason = (seasonId) => {
-        // this.props.navigator.replace(Router.getRoute('episodeList', {
-        //     id: seasonId,
-        // }));
+    goToEpisodes = (seasonId) => {
+        const seasonNumber = _.find(this.state.seasons, { id: seasonId }).season_number;
+        this.props.navigator.push(Router.getRoute('episodes', { tvId: this.state.id, seasonNumber: seasonNumber }));
     };
 
     renderItemList = () => {
@@ -49,10 +50,10 @@ export default class Collection extends React.Component {
             return {
                 id: item.id,
                 poster: item.poster_path,
-                title: item.title,
+                title: 'Season ' + item.season_number,
             };
         });
-        return <ItemList list={itemList} onClick={this.goToSeason} />;
+        return <ItemList list={itemList} onClick={this.goToEpisodes} />;
     };
 
     render() {

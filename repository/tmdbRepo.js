@@ -50,6 +50,14 @@ export function getCollection(id) {
         });
 }
 
+export function getSeason(tvId, seasonNumber) {
+    return fetch(`${BASE_URL}/tv/${tvId}/season/${seasonNumber}?api_key=${API_KEY}&language=en-US`)
+        .then((response) => response.json())
+        .catch((error) => {
+            console.error(error);
+        });
+}
+
 function loadImageConfig() {
     return fetch(`${BASE_URL}/configuration?api_key=${API_KEY}`)
         .then((response) => response.json())
