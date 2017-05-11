@@ -56,7 +56,7 @@ const Header = React.createClass({
         const icon = (item.type === 'movie' ? 'film' : 'tv');
         const posterImage = (item.poster_path)
             ? <Image style={styles.poster} source={{ uri: `${baseUrl}${posterSize}${item.poster_path}` }} />
-            : <View style={styles.poster}><FontAwesome name={icon} size={50} style={styles.icon} /></View>
+            : <View style={[styles.poster, styles.noImage]}><FontAwesome name={icon} size={50} style={styles.icon} /></View>
         return (
             <View style={styles.headerContainer}>
                 <View style={styles.posterContainer}>
@@ -92,6 +92,8 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    noImage: {    
         backgroundColor: '#171717',
     },
     headerContent: {
