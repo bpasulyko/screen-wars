@@ -42,6 +42,9 @@ const EpisodeRow = React.createClass({
                 <Switch
                     onValueChange={(value) => this.props.onEpisodeStatusUpdate(value, episode.id)}
                     value={this.props.episodeStatus}
+                    onTintColor="rgba(211, 47, 47, 0.7)"
+                    thumbTintColor="rgba(211, 47, 47, 1)"
+                    tintColor="#111"
                 />
             </View>
         );
