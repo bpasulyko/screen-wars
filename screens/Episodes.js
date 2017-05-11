@@ -28,20 +28,35 @@ export default class Episodes extends React.Component {
     }
 
     state = {
+        tvId: null,
         loading: true,
         seasonData: null,
+        episodeStatus: null,
     };
 
     componentDidMount() {
         const params = this.props.route.params;
         return getSeason(params.tvId, params.seasonNumber)
             .then((responseJson) => {
-                this.setState({
-                    seasonData: responseJson,
-                    loading: false,
+                window.firebase.database().ref(`tv/${params.tvId}/episodeStatus`).once('value').then((details) => {
+                    this.setState({
+                        tvId: params.tvId,
+                        seasonData: responseJson,
+                        loading: false,
+                        episodeStatus: details.val(),
+                    });
                 });
             });
     }
+
+    handleUpdateEpisodeStatus = (value, episodeId) => {
+        const updates = {};
+        updates['tv/' + this.state.tvId + '/episodeStatus/' + episodeId] = value;
+        window.firebase.database().ref().update(updates);
+        const newEpisodeStatus = { ...this.state.episodeStatus };
+        newEpisodeStatus[episodeId] = value;
+        this.setState({ episodeStatus: newEpisodeStatus });
+    };
 
     renderSeasonSummary = () => {
         const imageConfig = getImageConfig();
@@ -70,7 +85,10 @@ export default class Episodes extends React.Component {
     renderEpisodeList = () => {
         return (
             <View>
-                {this.state.seasonData.episodes.map((episode, key) => <EpisodeRow key={key} episode={episode} />)}
+                {this.state.seasonData.episodes.map((episode, key) => {
+                    const episodeStatus = (this.state.episodeStatus) ? this.state.episodeStatus[episode.id] : false;
+                    return <EpisodeRow key={key} episode={episode} episodeStatus={episodeStatus} onEpisodeStatusUpdate={this.handleUpdateEpisodeStatus} />;
+                })}
             </View>
         );
     };

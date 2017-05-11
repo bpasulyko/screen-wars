@@ -5,6 +5,7 @@ import {
   View,
   TouchableHighlight,
   Animated,
+  Switch,
   Image,
 } from 'react-native';
 
@@ -18,6 +19,8 @@ import Accordion from 'react-native-accordion';
 const EpisodeRow = React.createClass({
     propTypes: {
         episode: PropTypes.object,
+        episodeStatus: PropTypes.bool,
+        onEpisodeStatusUpdate: PropTypes.func,
     },
 
     renderHeader() {
@@ -36,6 +39,10 @@ const EpisodeRow = React.createClass({
                     <TitleText style={[styles.text, styles.episodeTitle]}>{episode.episode_number + '. ' + episode.name}</TitleText>
                     <BodyText style={styles.text}>{moment(episode.air_date).format('MMMM D, YYYY')}</BodyText>
                 </View>
+                <Switch
+                    onValueChange={(value) => this.props.onEpisodeStatusUpdate(value, episode.id)}
+                    value={this.props.episodeStatus}
+                />
             </View>
         );
     },
@@ -47,10 +54,9 @@ const EpisodeRow = React.createClass({
     render() {
         return (
             <Accordion
-                animationDuration={1500}
                 header={this.renderHeader()}
                 content={this.renderContent()}
-                easing="easeOutElastic"
+                easing="easeOutCubic"
             />
         );
     }
