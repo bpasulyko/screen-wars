@@ -20,6 +20,7 @@ const EpisodeRow = React.createClass({
     propTypes: {
         episode: PropTypes.object,
         episodeStatus: PropTypes.bool,
+        showSwitch: PropTypes.bool,
         onEpisodeStatusUpdate: PropTypes.func,
     },
 
@@ -39,13 +40,13 @@ const EpisodeRow = React.createClass({
                     <TitleText style={[styles.text, styles.episodeTitle]}>{episode.episode_number + '. ' + episode.name}</TitleText>
                     <BodyText style={styles.text}>{moment(episode.air_date).format('MMMM D, YYYY')}</BodyText>
                 </View>
-                <Switch
+                {this.props.showSwitch && <Switch
                     onValueChange={(value) => this.props.onEpisodeStatusUpdate(value, episode.id)}
                     value={this.props.episodeStatus}
                     onTintColor="rgba(211, 47, 47, 0.7)"
                     thumbTintColor="rgba(211, 47, 47, 1)"
                     tintColor="#111"
-                />
+                />}
             </View>
         );
     },

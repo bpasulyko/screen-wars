@@ -122,6 +122,7 @@ export default class DetailsView extends React.Component {
         this.props.navigator.push(Router.getRoute('seasons', {
             id: this.state.itemDetails.id,
             seasons: this.state.itemDetails.seasons,
+            inCollection: this.state.inCollection,
         }));
     };
 

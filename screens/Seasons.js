@@ -29,6 +29,7 @@ export default class Seasons extends React.Component {
         loading: true,
         id: null,
         seasons: [],
+        inCollection: false,
     };
 
     componentDidMount() {
@@ -37,12 +38,17 @@ export default class Seasons extends React.Component {
             loading: false,
             seasons: _.filter(this.props.route.params.seasons, (season) => season.season_number > 0),
             id: params.id,
+            inCollection: params.inCollection,
         });
     }
 
     goToEpisodes = (seasonId) => {
         const seasonNumber = _.find(this.state.seasons, { id: seasonId }).season_number;
-        this.props.navigator.push(Router.getRoute('episodes', { tvId: this.state.id, seasonNumber: seasonNumber }));
+        this.props.navigator.push(Router.getRoute('episodes', {
+            tvId: this.state.id,
+            seasonNumber: seasonNumber,
+            inCollection: this.state.inCollection
+        }));
     };
 
     renderItemList = () => {

@@ -32,6 +32,7 @@ export default class Episodes extends React.Component {
         loading: true,
         seasonData: null,
         episodeStatus: null,
+        inCollection: false,
     };
 
     componentDidMount() {
@@ -44,6 +45,7 @@ export default class Episodes extends React.Component {
                         seasonData: responseJson,
                         loading: false,
                         episodeStatus: details.val(),
+                        inCollection: params.inCollection,
                     });
                 });
             });
@@ -87,7 +89,15 @@ export default class Episodes extends React.Component {
             <View>
                 {this.state.seasonData.episodes.map((episode, key) => {
                     const episodeStatus = (this.state.episodeStatus) ? this.state.episodeStatus[episode.id] : false;
-                    return <EpisodeRow key={key} episode={episode} episodeStatus={episodeStatus} onEpisodeStatusUpdate={this.handleUpdateEpisodeStatus} />;
+                    return (
+                        <EpisodeRow
+                            key={key}
+                            episode={episode}
+                            episodeStatus={episodeStatus}
+                            onEpisodeStatusUpdate={this.handleUpdateEpisodeStatus}
+                            showSwitch={this.state.inCollection}
+                        />
+                    );
                 })}
             </View>
         );
