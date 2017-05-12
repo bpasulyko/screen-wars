@@ -40,7 +40,7 @@ const EpisodeRow = React.createClass({
                 {stillImage}
                 <View style={styles.episodeHeading}>
                     <TitleText style={[styles.text, styles.episodeTitle]}>{episode.episode_number + '. ' + episode.name}</TitleText>
-                    <BodyText style={styles.text}>{rating + ' | ' + airDate}</BodyText>
+                    <BodyText style={styles.text}><FontAwesome name="star" size={12} style={styles.starIcon} />{rating + ' | ' + airDate}</BodyText>
                 </View>
                 {this.props.showSwitch && <Switch
                     onValueChange={(value) => this.props.onEpisodeStatusUpdate(value, episode.id)}
@@ -99,5 +99,8 @@ const styles = StyleSheet.create({
     },
     noImage: {
         backgroundColor: '#171717',
+    },
+    starIcon: {
+        color: '#FFC107',
     },
 })
