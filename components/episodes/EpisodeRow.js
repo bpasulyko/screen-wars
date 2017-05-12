@@ -33,12 +33,14 @@ const EpisodeRow = React.createClass({
         const stillImage = (episode.still_path)
             ? <Image style={styles.stillImage} source={{ uri: stillUrl }} />
             : <View style={[styles.stillImage, styles.noImage]}><FontAwesome name="tv" size={20} style={styles.icon} /></View>
+        const airDate = moment(episode.air_date).format('MMMM D, YYYY');
+        const rating = episode.vote_average.toFixed(1);
         return (
             <View style={styles.episodeSummary}>
                 {stillImage}
                 <View style={styles.episodeHeading}>
                     <TitleText style={[styles.text, styles.episodeTitle]}>{episode.episode_number + '. ' + episode.name}</TitleText>
-                    <BodyText style={styles.text}>{moment(episode.air_date).format('MMMM D, YYYY')}</BodyText>
+                    <BodyText style={styles.text}>{rating + ' | ' + airDate}</BodyText>
                 </View>
                 {this.props.showSwitch && <Switch
                     onValueChange={(value) => this.props.onEpisodeStatusUpdate(value, episode.id)}
