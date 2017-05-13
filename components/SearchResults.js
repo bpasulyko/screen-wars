@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
         height: HEIGHT,
         backgroundColor: 'rgba(0,0,0,0.7)',
         alignItems: 'center',
+        elevation: 10,
     },
     list: {
         maxHeight: 400,

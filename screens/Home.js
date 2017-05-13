@@ -6,14 +6,15 @@ import {
   View,
   ListView,
   Image,
+  Button,
+  TextInput,
 } from 'react-native';
-
+import { FontAwesome } from '@expo/vector-icons';
 import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
 import AddButton from '../components/AddButton';
 import SearchResults from '../components/SearchResults';
 import TitleText from '../components/TitleText';
-import BodyText from '../components/BodyText';
 import ItemList from '../components/ItemList';
 import Router from '../navigation/Router';
 import { multiSearch } from '../repository/tmdbRepo';
@@ -51,18 +52,8 @@ export default class Home extends React.Component {
     }
 
     componentDidMount() {
-        return Promise.all([
-            this.getMovies(),
-            this.getTvShows(),
-        ]).
-            then((results) => {
-                this.setState({
-                    loading: false,
-                    movies: _.sortBy(_.values(results[0].val()), 'dateAdded').reverse(),
-                    tvShows: _.sortBy(_.values(results[1].val()), 'dateAdded').reverse(),
-                });
-            })
-            .catch((error) => console.error(error));
+        this.getMovies();
+        this.getTvShows();
     }
 
     componentDidUpdate() {
@@ -73,11 +64,21 @@ export default class Home extends React.Component {
     }
 
     getMovies = () => {
-        return window.firebase.database().ref('movie/').once('value');
+        window.firebase.database().ref('movie/').on('value', (movies) => {
+            this.setState({
+                loading: this.state.tvShows.length === 0,
+                movies: _.sortBy(_.values(movies.val()), 'dateAdded').reverse(),
+            });
+        });
     };
 
     getTvShows = () => {
-        return window.firebase.database().ref('tv/').once('value');
+        window.firebase.database().ref('tv/').on('value', (tvShows) => {
+            this.setState({
+                loading: this.state.movies.length === 0,
+                tvShows: _.sortBy(_.values(tvShows.val()), 'dateAdded').reverse(),
+            });
+        });
     };
 
     handleSearch = () => {
@@ -98,12 +99,20 @@ export default class Home extends React.Component {
         }));
     };
 
+    goToMovies = () => {
+        this.props.navigator.push(Router.getRoute('movies'));
+    };
+
+    goToTvShows = () => {
+        this.props.navigator.push(Router.getRoute('tvshows'));
+    };
+
     renderRecentlyAddedMovies = () => {
         return (
             <View style={styles.scrollList}>
                 <View style={styles.headingContainer}>
                     <TitleText style={styles.heading}>My Recent Movies</TitleText>
-                    <BodyText style={styles.viewMoreLink}>View More</BodyText>
+                    <Button color="#D32F2F" onPress={this.goToMovies} title="View More" />
                 </View>
                 {this.renderItemList(this.state.movies, 'movie')}
             </View>
@@ -115,7 +124,7 @@ export default class Home extends React.Component {
             <View style={styles.scrollList}>
                 <View style={styles.headingContainer}>
                     <TitleText style={styles.heading}>My Recent TV Shows</TitleText>
-                    <BodyText style={styles.viewMoreLink}>View More</BodyText>
+                    <Button color="#D32F2F" onPress={this.goToTvShows} title="View More" />
                 </View>
                 {this.renderItemList(this.state.tvShows, 'tv')}
             </View>
@@ -174,8 +183,5 @@ const styles = StyleSheet.create({
     },
     scrollList: {
         paddingVertical: 10,
-    },
-    viewMoreLink: {
-        color: '#EEE',
     },
 });
