@@ -7,6 +7,7 @@ import {
   Dimensions,
 } from 'react-native';
 import SearchResultRow from './SearchResultRow';
+import BodyText from './BodyText';
 
 const SearchResults = React.createClass({
     propTypes: {
@@ -22,28 +23,42 @@ const SearchResults = React.createClass({
         Animated.spring(this.animation, { toValue: 400 }).start();
     },
 
+    renderListView() {
+        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+        const results = ds.cloneWithRows(this.props.results);
+        return (
+            <ListView
+                dataSource={results}
+                style={styles.list}
+                renderRow={(rowData) => {
+                    return (
+                        <SearchResultRow
+                            rowData={rowData}
+                            onResultSelect={() => this.props.onResultSelect(rowData.id, rowData.media_type)}
+                        />
+                    );
+                }}
+            />
+        );
+    },
+
+    renderNoResults() {
+        return (
+            <View style={styles.noResultsContainer}>
+                <BodyText style={styles.noResults}>No Results Found</BodyText>
+            </View>
+        );
+    },
+
     render() {
         const animatedStyle = {
             maxHeight: this.animation,
         };
-
-        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-        const results = ds.cloneWithRows(this.props.results);
+        const content = (this.props.results.length === 0) ? this.renderNoResults() : this.renderListView();
         return (
             <View style={styles.listContainer}>
                 <Animated.View style={animatedStyle}>
-                    <ListView
-                        dataSource={results}
-                        style={styles.list}
-                        renderRow={(rowData) => {
-                            return (
-                                <SearchResultRow
-                                    rowData={rowData}
-                                    onResultSelect={() => this.props.onResultSelect(rowData.id, rowData.media_type)}
-                                />
-                            );
-                        }}
-                    />
+                    {content}
                 </Animated.View>
             </View>
         );
@@ -69,5 +84,16 @@ const styles = StyleSheet.create({
         maxHeight: 400,
         width: 300,
         elevation: 7,
+    },
+    noResultsContainer: {
+        height: 50,
+        width: 300,
+        elevation: 7,
+        backgroundColor: '#444',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    noResults: {
+        color: '#EEE',
     },
 });
