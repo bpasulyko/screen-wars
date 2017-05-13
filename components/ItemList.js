@@ -14,9 +14,23 @@ const ItemList = React.createClass({
             title: PropTypes.string,
         })),
         onClick: PropTypes.func,
+        noWrap: PropTypes.bool,
+    },
+
+    getDefaultProps() {
+        return {
+            noWrap: false,
+        };
     },
 
     render() {
+        if (this.props.noWrap) {
+            return (
+                <ScrollView horizontal>
+                    {this.props.list.map((item, index) => <Item key={index} item={item} onClick={this.props.onClick} />)}
+                </ScrollView>
+            );
+        }
         return (
             <ScrollView>
                 <View style={styles.listContainer}>

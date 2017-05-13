@@ -39,7 +39,7 @@ const SearchResults = React.createClass({
                             return (
                                 <SearchResultRow
                                     rowData={rowData}
-                                    onResultSelect={() => this.props.onResultSelect(rowData)}
+                                    onResultSelect={() => this.props.onResultSelect(rowData.id, rowData.media_type)}
                                 />
                             );
                         }}
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         top: 0,
         width: WIDTH,
         height: HEIGHT,
-        backgroundColor: 'rgba(0,0,0,0.25)',
+        backgroundColor: 'rgba(0,0,0,0.7)',
         alignItems: 'center',
     },
     list: {
