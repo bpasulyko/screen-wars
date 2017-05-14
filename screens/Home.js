@@ -4,6 +4,7 @@ import _ from 'lodash';
 import {
   StyleSheet,
   View,
+  ScrollView,
   ListView,
   Image,
   Button,
@@ -17,7 +18,7 @@ import SearchResults from '../components/SearchResults';
 import TitleText from '../components/TitleText';
 import ItemList from '../components/ItemList';
 import Router from '../navigation/Router';
-import { multiSearch } from '../repository/tmdbRepo';
+import { multiSearch, discoverMatchingGenre } from '../repository/tmdbRepo';
 
 export default class Home extends React.Component {
     static route = {
@@ -43,7 +44,9 @@ export default class Home extends React.Component {
         search: false,
         searchResults: null,
         movies: [],
+        recommendedMovies: [],
         tvShows: [],
+        recommendedTvShows: [],
     };
 
     componentWillMount() {
@@ -65,19 +68,29 @@ export default class Home extends React.Component {
 
     getMovies = () => {
         window.firebase.database().ref('movie/').on('value', (movies) => {
-            this.setState({
-                loading: this.state.tvShows.length === 0,
-                movies: _.sortBy(_.values(movies.val()), 'dateAdded').reverse(),
-            });
+            const sortedMovies = _.sortBy(_.values(movies.val()), 'dateAdded').reverse();
+            discoverMatchingGenre('movie', getGenreId(sortedMovies))
+                .then((result) => {
+                    this.setState({
+                        loading: this.state.tvShows.length === 0,
+                        movies: sortedMovies,
+                        recommendedMovies: _.slice(result.results, 0, 10),
+                    });
+                });
         });
     };
 
     getTvShows = () => {
         window.firebase.database().ref('tv/').on('value', (tvShows) => {
-            this.setState({
-                loading: this.state.movies.length === 0,
-                tvShows: _.sortBy(_.values(tvShows.val()), 'dateAdded').reverse(),
-            });
+            const sortedTvShows = _.sortBy(_.values(tvShows.val()), 'dateAdded').reverse()
+            discoverMatchingGenre('tv', getGenreId(sortedTvShows))
+                .then((result) => {
+                    this.setState({
+                        loading: this.state.movies.length === 0,
+                        tvShows: sortedTvShows,
+                        recommendedTvShows: _.slice(result.results, 0, 10),
+                    });
+                });
         });
     };
 
@@ -119,6 +132,17 @@ export default class Home extends React.Component {
         );
     };
 
+    renderRecommendedMovies = () => {
+        return (
+            <View style={styles.scrollList}>
+                <View style={styles.headingContainer}>
+                    <TitleText style={styles.heading}>Recommended Movies</TitleText>
+                </View>
+                {this.renderItemList(this.state.recommendedMovies, 'movie')}
+            </View>
+        );
+    };
+
     renderRecentlyAddedTvShows = () => {
         return (
             <View style={styles.scrollList}>
@@ -131,12 +155,23 @@ export default class Home extends React.Component {
         );
     };
 
+    renderRecommendedTvShows = () => {
+        return (
+            <View style={styles.scrollList}>
+                <View style={styles.headingContainer}>
+                    <TitleText style={styles.heading}>Recommended TV Shows</TitleText>
+                </View>
+                {this.renderItemList(this.state.recommendedTvShows, 'tv')}
+            </View>
+        );
+    };
+
     renderItemList = (items, type) => {
         const itemList = _.slice(items, 0, 10).map((item) => {
             return {
                 id: item.id,
-                poster: item.poster,
-                title: item.title,
+                poster: item.poster || item.poster_path,
+                title: item.title || item.name,
             };
         });
         return <ItemList list={itemList} onClick={(id) => this.goToDetails(id, type)} noWrap />;
@@ -146,10 +181,12 @@ export default class Home extends React.Component {
         return (
             <View style={styles.container}>
                 <LoadingContainer loading={this.state.loading}>
-                    <View style={styles.content}>
+                    <ScrollView style={styles.content}>
                         {this.renderRecentlyAddedMovies()}
+                        {this.renderRecommendedMovies()}
                         {this.renderRecentlyAddedTvShows()}
-                    </View>
+                        {this.renderRecommendedTvShows()}
+                    </ScrollView>
                 </LoadingContainer>
                 {this.state.searchResults && (
                     <SearchResults
@@ -160,6 +197,13 @@ export default class Home extends React.Component {
             </View>
         );
     };
+}
+
+function getGenreId(items) {
+    const genreIds = _.uniq(_.flatten(items.map(item => {
+        return item.genres.map(g => g.id);
+    })));
+    return (genreIds.length > 1) ? genreIds[Math.floor(Math.random() * genreIds.length)] : genreIds[0];
 }
 
 const styles = StyleSheet.create({

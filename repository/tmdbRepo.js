@@ -58,6 +58,14 @@ export function getSeason(tvId, seasonNumber) {
         });
 }
 
+export function discoverMatchingGenre(type, genreId) {
+    return fetch(`${BASE_URL}/discover/${type}?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genreId}`)
+        .then((response) => response.json())
+        .catch((error) => {
+            console.error(error);
+        });
+}
+
 function loadImageConfig() {
     return fetch(`${BASE_URL}/configuration?api_key=${API_KEY}`)
         .then((response) => response.json())
