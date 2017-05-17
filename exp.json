@@ -21,6 +21,9 @@
     "assetExts": ["ttf", "mp4"]
   },
   "ios": {
-    "supportsTablet": true
+    "bundleIdentifier": "com.bradypasulyko.screenwars"
+  },
+  "android": {
+    "package": "com.bradypasulyko.screenwars"
   }
 }
