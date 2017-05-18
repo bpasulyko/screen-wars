@@ -20,9 +20,6 @@
   "packagerOpts": {
     "assetExts": ["ttf", "mp4"]
   },
-  "ios": {
-    "bundleIdentifier": "com.bradypasulyko.screenwars"
-  },
   "android": {
     "package": "com.bradypasulyko.screenwars"
   }
