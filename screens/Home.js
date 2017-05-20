@@ -17,6 +17,7 @@ import AddButton from '../components/AddButton';
 import SearchResults from '../components/SearchResults';
 import TitleText from '../components/TitleText';
 import ItemList from '../components/ItemList';
+import Router from '../navigation/Router';
 import { multiSearch, discoverMatchingGenre } from '../repository/tmdbRepo';
 
 export default class Home extends React.Component {
@@ -105,10 +106,10 @@ export default class Home extends React.Component {
     };
 
     goToDetails = (selectedItemId, type) => {
-        this.props.navigator.push('details', {
+        this.props.navigator.push(Router.getRoute('details', {
             id: selectedItemId,
             type: type,
-        });
+        }));
     };
 
     goToMovies = () => {
