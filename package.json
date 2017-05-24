@@ -6,13 +6,13 @@
   "private": true,
   "main": "main.js",
   "dependencies": {
-    "@expo/ex-navigation": "^2.10.0",
+    "@expo/ex-navigation": "^2.9.2",
     "@expo/vector-icons": "~4.0.0",
-    "expo": "^16.0.0",
+    "expo": "^15.0.2",
     "firebase": "^3.6.8",
     "lodash": "^4.17.4",
-    "react": "16.0.0-alpha.6",
-    "react-native": "git+https://github.com/exponentjs/react-native#sdk-16.0.0",
+    "react": "~15.4.0",
+    "react-native": "git+https://github.com/exponentjs/react-native#sdk-15.0.0",
     "react-native-accordion": "^1.0.1",
     "react-native-action-button": "^2.6.5"
   }
