@@ -9,11 +9,11 @@ import {
   Image,
   Button,
   TextInput,
+  TouchableOpacity,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
-import AddButton from '../components/AddButton';
 import SearchResults from '../components/SearchResults';
 import TitleText from '../components/TitleText';
 import ItemList from '../components/ItemList';
@@ -25,23 +25,14 @@ export default class Home extends React.Component {
         navigationBar: {
             backgroundColor: '#171717',
             renderTitle: ({ config: { eventEmitter }, params }) => {
-                return <NavBarTitle title="Home" emitter={eventEmitter} searchEnabled={params.search}/>;
-            },
-            renderRight: ({ config: { eventEmitter }, params }) => {
-                return (
-                    <AddButton
-                        emitter={eventEmitter}
-                        searchEnabled={params.search}
-                        reset={params.searchResults === null}
-                    />
-                );
+                return <NavBarTitle title="Screen Wars" emitter={eventEmitter}/>;
             },
         }
     }
 
     state = {
         loading: true,
-        search: false,
+        queryString: null,
         searchResults: null,
         movies: [],
         recommendedMovies: [],
@@ -49,21 +40,9 @@ export default class Home extends React.Component {
         recommendedTvShows: [],
     };
 
-    componentWillMount() {
-        this.props.route.getEventEmitter().addListener('search', this.handleSearch);
-        this.props.route.getEventEmitter().addListener('searchSubmitted', this.handleSearchSubmit);
-    }
-
     componentDidMount() {
         this.getMovies();
         this.getTvShows();
-    }
-
-    componentDidUpdate() {
-        this.props.navigator.updateCurrentRouteParams({
-            search: this.state.search,
-            searchResults: this.state.searchResults,
-        });
     }
 
     getMovies = () => {
@@ -94,15 +73,21 @@ export default class Home extends React.Component {
         });
     };
 
-    handleSearch = () => {
-        this.setState({
-            search: !this.state.search,
-            searchResults: null,
-        });
+    setQueryString = (queryString) => {
+        this.setState({ queryString });
     };
 
-    handleSearchSubmit = (queryString) => {
-        return multiSearch(queryString).then((results) => this.setState({ searchResults: results }));
+    handleSearchSubmit = (e) => {
+        return multiSearch(e.nativeEvent.text).then((results) => this.setState({ searchResults: results }));
+    };
+
+    clearSearch = () => {
+        this.refs['search_input'].blur();
+        this.refs['search_input'].clear();
+        this.setState({
+            searchResults: null,
+            queryString: null,
+        });
     };
 
     goToDetails = (selectedItemId, type) => {
@@ -177,23 +162,58 @@ export default class Home extends React.Component {
         return <ItemList list={itemList} onClick={(id) => this.goToDetails(id, type)} noWrap />;
     };
 
+    renderSearchBox = () => {
+        return (
+            <View style={styles.searchContainer}>
+                <FontAwesome name="search" size={18} style={styles.searchIcon} />
+                <TextInput
+                    ref="search_input"
+                    style={styles.input}
+                    editable={!this.state.loading}
+                    placeholder="Search"
+                    returnKeyType='search'
+                    selectTextOnFocus
+                    onChangeText={this.setQueryString}
+                    onSubmitEditing={this.handleSearchSubmit}
+                    underlineColorAndroid='rgba(0,0,0,0)'
+                />
+                {this.state.queryString && (
+                    <TouchableOpacity onPress={this.clearSearch}>
+                        <FontAwesome name="times" size={18} style={styles.searchIcon} />
+                    </TouchableOpacity>
+                )}
+            </View>
+        );
+    };
+
+    renderHomeContent = () => {
+        return (
+            <ScrollView style={styles.content}>
+                {this.renderRecentlyAddedMovies()}
+                {this.renderRecommendedMovies()}
+                {this.renderRecentlyAddedTvShows()}
+                {this.renderRecommendedTvShows()}
+            </ScrollView>
+        );
+    };
+
+    renderSearchResults = () => {
+        return (
+            <SearchResults
+                results={this.state.searchResults}
+                onResultSelect={this.goToDetails}
+            />
+        );
+    };
+
     render() {
         return (
             <View style={styles.container}>
+                {this.renderSearchBox()}
                 <LoadingContainer loading={this.state.loading}>
-                    <ScrollView style={styles.content}>
-                        {this.renderRecentlyAddedMovies()}
-                        {this.renderRecommendedMovies()}
-                        {this.renderRecentlyAddedTvShows()}
-                        {this.renderRecommendedTvShows()}
-                    </ScrollView>
+                    {this.renderHomeContent()}
                 </LoadingContainer>
-                {this.state.searchResults && (
-                    <SearchResults
-                        results={this.state.searchResults}
-                        onResultSelect={this.goToDetails}
-                    />
-                )}
+                {this.state.searchResults && this.renderSearchResults()}
             </View>
         );
     };
@@ -227,5 +247,23 @@ const styles = StyleSheet.create({
     },
     scrollList: {
         paddingVertical: 10,
+    },
+    searchContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#171717',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        height: 50,
+        elevation: 5,
+    },
+    input: {
+        flex: 1,
+        color: '#EEE',
+        fontFamily: 'raleway',
+    },
+    searchIcon: {
+        color:'#BBB',
+        marginRight: 5,
     },
 });
