@@ -5,6 +5,7 @@ import {
   View,
 } from 'react-native';
 import Item from './Item';
+import BodyText from './BodyText';
 
 const ItemList = React.createClass({
     propTypes: {
@@ -15,6 +16,7 @@ const ItemList = React.createClass({
         })),
         onClick: PropTypes.func,
         noWrap: PropTypes.bool,
+        type: PropTypes.string,
     },
 
     getDefaultProps() {
@@ -36,6 +38,7 @@ const ItemList = React.createClass({
                 <View style={styles.listContainer}>
                     {this.props.list.map((item, index) => <Item key={index} item={item} onClick={this.props.onClick} />)}
                 </View>
+                <BodyText style={styles.countLabel}>{this.props.list.length} {this.props.type}</BodyText>
             </ScrollView>
         );
     }
@@ -47,5 +50,11 @@ const styles = StyleSheet.create({
     listContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
+    },
+    countLabel: {
+        color: '#EEE',
+        fontSize: 16,
+        paddingVertical: 15,
+        textAlign: 'center',
     },
 });

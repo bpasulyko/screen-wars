@@ -96,7 +96,7 @@ export default class Movies extends React.Component {
                 title: item.title,
             };
         });
-        return <ItemList list={itemList} onClick={this.goToDetails} />;
+        return <ItemList list={itemList} onClick={this.goToDetails} type="Movies" />;
     };
 
     render() {
