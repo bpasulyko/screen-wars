@@ -63,7 +63,11 @@ export default class TvShows extends React.Component {
     };
 
     handleFilter = () => {
-        this.setState({ showFilterMenu: !this.state.showFilterMenu });
+        this.setState({
+            showFilterMenu: !this.state.showFilterMenu,
+            selectedGenre: null,
+            selectedSort: null,
+        });
     };
 
     handleListButtonClick = (activeList) => {
