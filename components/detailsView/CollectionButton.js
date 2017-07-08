@@ -48,7 +48,7 @@ class CollectionButton extends React.Component {
                     title="Watchlist"
                     onPress={() => this.props.onAdd({ watched: false })}
                 >
-                    <FontAwesome name="eye-slash" style={styles.itemIcons} />
+                    <FontAwesome name="eye" style={styles.itemIcons} />
                 </ActionButton.Item>
             </ActionButton>
         );
