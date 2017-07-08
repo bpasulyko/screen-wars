@@ -59,7 +59,7 @@ export default class Seasons extends React.Component {
                 title: 'Season ' + item.season_number,
             };
         });
-        return <ItemList list={itemList} onClick={this.goToEpisodes} />;
+        return <ItemList list={itemList} onClick={this.goToEpisodes} type="Seasons" />;
     };
 
     render() {
