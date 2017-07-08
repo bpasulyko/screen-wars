@@ -1,33 +1,29 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import ActionButton from 'react-native-action-button';
 import {
-  StyleSheet,
+    View,
+    StyleSheet,
 } from 'react-native';
 
-const CollectionButton = React.createClass({
-    propTypes: {
-        favorite: PropTypes.bool,
-        watched: PropTypes.bool,
-        collection: PropTypes.bool,
-        onFavoritesClick: PropTypes.func,
-        onWatchlistClick: PropTypes.func,
-        onCollectionClick: PropTypes.func,
-    },
-    render() {
-        const favoriteIcon = (this.props.favorite) ? 'star' : 'star-o';
-        const favoriteIconStyle = (this.props.favorite) ? { color: '#FFC107' } : {};
-        const watchedIcon = (this.props.watched) ? 'eye' : 'eye-slash';
-        const watchedIconStyle = (this.props.watched) ? { color: '#388E3C' } : {};
-        const collectionIcon = (this.props.collection) ? 'delete' : 'playlist-add';
-        const collectionText = (this.props.collection) ? 'Remove' : 'Add to Collection';
+class CollectionButton extends React.Component {
+    static propTypes = {
+        inCollection: PropTypes.bool,
+        inWatchlist: PropTypes.bool,
+        inFavorites: PropTypes.bool,
+        onAdd: PropTypes.func,
+        onDelete: PropTypes.func,
+        toggleFavorite: PropTypes.func,
+    }
+
+    renderDefaultView = () => {
         return (
             <ActionButton
                 buttonColor="#D32F2F"
                 degrees={135}
                 spacing={5}
-                autoInactive={false}
                 useNativeFeedback={false}
                 bgColor="rgba(0,0,0,0.8)"
                 icon={<FontAwesome name="plus" style={styles.icon} />}
@@ -38,8 +34,46 @@ const CollectionButton = React.createClass({
                     buttonColor="rgba(0,0,0,0)"
                     textContainerStyle={styles.itemContainer}
                     textStyle={styles.itemText}
-                    title="Favorites"
-                    onPress={this.props.onFavoritesClick}
+                    title="Collection"
+                    onPress={() => this.props.onAdd({ watched: true })}
+                >
+                    <MaterialIcons name="playlist-add" style={styles.itemIcons} />
+                </ActionButton.Item>
+                <ActionButton.Item
+                    useNativeFeedback={false}
+                    spaceBetween={5}
+                    buttonColor="rgba(0,0,0,0)"
+                    textContainerStyle={styles.itemContainer}
+                    textStyle={styles.itemText}
+                    title="Watchlist"
+                    onPress={() => this.props.onAdd({ watched: false })}
+                >
+                    <FontAwesome name="eye-slash" style={styles.itemIcons} />
+                </ActionButton.Item>
+            </ActionButton>
+        );
+    };
+
+    renderInCollectionView = () => {
+        const favoriteIcon = (this.props.inFavorites) ? 'star' : 'star-o';
+        const favoriteIconStyle = (this.props.inFavorites) ? { color: '#FFC107' } : {};
+        return (
+            <ActionButton
+                buttonColor="#D32F2F"
+                degrees={135}
+                spacing={5}
+                useNativeFeedback={false}
+                bgColor="rgba(0,0,0,0.8)"
+                icon={<FontAwesome name="plus" style={styles.icon} />}
+            >
+                <ActionButton.Item
+                    useNativeFeedback={false}
+                    spaceBetween={5}
+                    buttonColor="rgba(0,0,0,0)"
+                    textContainerStyle={styles.itemContainer}
+                    textStyle={styles.itemText}
+                    title="Favorite"
+                    onPress={this.props.toggleFavorite}
                 >
                     <FontAwesome name={favoriteIcon} style={[styles.itemIcons, favoriteIconStyle]} />
                 </ActionButton.Item>
@@ -49,10 +83,35 @@ const CollectionButton = React.createClass({
                     buttonColor="rgba(0,0,0,0)"
                     textContainerStyle={styles.itemContainer}
                     textStyle={styles.itemText}
-                    title="Watched"
-                    onPress={this.props.onWatchlistClick}
+                    title="Remove"
+                    onPress={this.props.onDelete}
                 >
-                    <FontAwesome name={watchedIcon} style={[styles.itemIcons, watchedIconStyle]} />
+                    <MaterialIcons name="delete" style={styles.itemIcons} />
+                </ActionButton.Item>
+            </ActionButton>
+        );
+    };
+
+    renderInWatchlistView = () => {
+        return (
+            <ActionButton
+                buttonColor="#D32F2F"
+                degrees={135}
+                spacing={5}
+                useNativeFeedback={false}
+                bgColor="rgba(0,0,0,0.8)"
+                icon={<FontAwesome name="plus" style={styles.icon} />}
+            >
+                <ActionButton.Item
+                    useNativeFeedback={false}
+                    spaceBetween={5}
+                    buttonColor="rgba(0,0,0,0)"
+                    textContainerStyle={styles.itemContainer}
+                    textStyle={styles.itemText}
+                    title="Move to Collection"
+                    onPress={() => this.props.onAdd({ watched: true })}
+                >
+                    <MaterialIcons name="playlist-add" style={styles.itemIcons} />
                 </ActionButton.Item>
                 <ActionButton.Item
                     useNativeFeedback={false}
@@ -60,15 +119,25 @@ const CollectionButton = React.createClass({
                     buttonColor="rgba(0,0,0,0)"
                     textContainerStyle={styles.itemContainer}
                     textStyle={styles.itemText}
-                    title={collectionText}
-                    onPress={this.props.onCollectionClick}
+                    title="Remove"
+                    onPress={this.props.onDelete}
                 >
-                    <MaterialIcons name={collectionIcon} style={styles.itemIcons} />
+                    <MaterialIcons name="delete" style={styles.itemIcons} />
                 </ActionButton.Item>
             </ActionButton>
         );
+    };
+
+    render() {
+        if (this.props.inWatchlist) {
+            return this.renderInWatchlistView();
+        } else if (this.props.inCollection) {
+            return this.renderInCollectionView();
+        } else {
+            return this.renderDefaultView();
+        }
     }
-});
+}
 
 export default CollectionButton;
 

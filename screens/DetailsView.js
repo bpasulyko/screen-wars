@@ -41,7 +41,6 @@ export default class DetailsView extends React.Component {
     state = {
         loading: true,
         itemDetails: {},
-        modalVisible: false,
         inCollection: false,
     };
 
@@ -59,59 +58,39 @@ export default class DetailsView extends React.Component {
             });
     }
 
-    addItemToCollection = () => {
+    showAlert = (message) => {
+        this.props.navigator.showLocalAlert(message, {
+            text: { color: '#fff' },
+            container: { backgroundColor: '#D32F2F' },
+        });
+    };
+
+    addItem = ({ watched }) => {
         const item = this.state.itemDetails;
+        item.watched = watched;
         const saveFunc = (item.type === 'movie') ? saveMovie : saveTvShow;
+        const list = watched ? 'Collection' : 'Watchlist';
+        this.showAlert(`Added to ${list}!`);
         saveFunc(item).then(() => {
-            this.setState({
-                inCollection: true,
-            });
+            this.setState({ inCollection: true });
         });
     };
 
     deleteItem = () => {
+        const list = this.state.itemDetails.watched ? 'Collection' : 'Watchlist';
+        this.showAlert(`Revomed from ${list}!`);
         return window.firebase.database().ref(`${this.state.itemDetails.type}/` + this.state.itemDetails.id).remove()
             .then(() => {
-                this.setState({
-                    inCollection: false,
-                });
+                this.setState({ inCollection: false });
             });
-    };
-
-    closeModal = () => {
-        this.setState({
-            modalVisible: false,
-        });
-    };
-
-    formatReleaseDate = () => {
-        const item = this.state.itemDetails;
-        const releaseDate = (item.type === 'movie') ? item.release_date : item.first_air_date;
-        if (releaseDate) {
-            return moment(releaseDate).format('MMMM D, YYYY');
-        }
     };
 
     toggleFavorite = () => {
         const data = this.state.itemDetails;
         data.favorite = !data.favorite;
+        this.showAlert(`${data.favorite ? 'Added to' : 'Revomed from'} favorites!`);
         const saveFunc = (data.type === 'movie') ? saveMovie : saveTvShow;
         saveFunc(data);
-    };
-
-    toggleWatchlist = () => {
-        const data = this.state.itemDetails;
-        data.watched = !data.watched;
-        const saveFunc = (data.type === 'movie') ? saveMovie : saveTvShow;
-        saveFunc(data);
-    };
-
-    toggleCollection = () => {
-        if (this.state.inCollection) {
-            this.deleteItem();
-        } else {
-            this.addItemToCollection();
-        }
     };
 
     goToCollection = (id) => {
@@ -124,6 +103,14 @@ export default class DetailsView extends React.Component {
             seasons: this.state.itemDetails.seasons,
             inCollection: this.state.inCollection,
         }));
+    };
+
+    formatReleaseDate = () => {
+        const item = this.state.itemDetails;
+        const releaseDate = (item.type === 'movie') ? item.release_date : item.first_air_date;
+        if (releaseDate) {
+            return moment(releaseDate).format('MMMM D, YYYY');
+        }
     };
 
     render() {
@@ -154,12 +141,12 @@ export default class DetailsView extends React.Component {
                             </View>
                         </ScrollView>
                         <CollectionButton
-                            favorite={this.state.itemDetails.favorite}
-                            watched={this.state.itemDetails.watched}
-                            collection={this.state.inCollection}
-                            onFavoritesClick={this.toggleFavorite}
-                            onWatchlistClick={this.toggleWatchlist}
-                            onCollectionClick={this.toggleCollection}
+                            inCollection={this.state.inCollection}
+                            inWatchlist={this.state.inCollection && !this.state.itemDetails.watched}
+                            inFavorites={this.state.itemDetails.favorite}
+                            onAdd={this.addItem}
+                            onDelete={this.deleteItem}
+                            toggleFavorite={this.toggleFavorite}
                         />
                     </View>
                 </LoadingContainer>
