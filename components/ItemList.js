@@ -56,5 +56,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         paddingVertical: 15,
         textAlign: 'center',
+        opacity: 0.5,
     },
 });
