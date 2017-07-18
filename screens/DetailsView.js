@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableHighlight,
   View,
+  ToastAndroid,
 } from 'react-native';
 
 import LoadingContainer from '../components/LoadingContainer';
@@ -59,10 +60,7 @@ export default class DetailsView extends React.Component {
     }
 
     showAlert = (message) => {
-        this.props.navigator.showLocalAlert(message, {
-            text: { color: '#fff' },
-            container: { backgroundColor: '#D32F2F' },
-        });
+        ToastAndroid.show(message, ToastAndroid.SHORT);
     };
 
     addItem = ({ watched }) => {

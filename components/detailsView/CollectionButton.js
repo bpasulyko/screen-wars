@@ -21,6 +21,7 @@ class CollectionButton extends React.Component {
     renderDefaultView = () => {
         return (
             <ActionButton
+                autoInactive={false}
                 buttonColor="#D32F2F"
                 degrees={135}
                 spacing={5}
@@ -59,6 +60,7 @@ class CollectionButton extends React.Component {
         const favoriteIconStyle = (this.props.inFavorites) ? { color: '#FFC107' } : {};
         return (
             <ActionButton
+                autoInactive={false}
                 buttonColor="#D32F2F"
                 degrees={135}
                 spacing={5}
@@ -95,6 +97,7 @@ class CollectionButton extends React.Component {
     renderInWatchlistView = () => {
         return (
             <ActionButton
+                autoInactive={false}
                 buttonColor="#D32F2F"
                 degrees={135}
                 spacing={5}
