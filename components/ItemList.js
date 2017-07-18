@@ -38,7 +38,7 @@ const ItemList = React.createClass({
                 <View style={styles.listContainer}>
                     {this.props.list.map((item, index) => <Item key={index} item={item} onClick={this.props.onClick} />)}
                 </View>
-                <BodyText style={styles.countLabel}>{this.props.list.length} {this.props.type}</BodyText>
+                {this.props.type && <BodyText style={styles.countLabel}>{this.props.list.length} {this.props.type}</BodyText>}
             </ScrollView>
         );
     }
