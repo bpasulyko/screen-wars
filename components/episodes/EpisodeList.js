@@ -1,10 +1,9 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import {
   StyleSheet,
   View,
-  TouchableHighlight,
-  Animated,
   Switch,
   Image,
 } from 'react-native';
@@ -14,18 +13,17 @@ import BodyText from '../BodyText';
 import { FontAwesome } from '@expo/vector-icons';
 import { getImageConfig } from '../../repository/tmdbRepo';
 import moment from 'moment';
-import Accordion from 'react-native-accordion';
+import Accordion from 'react-native-collapsible/Accordion';
 
-const EpisodeRow = React.createClass({
-    propTypes: {
-        episode: PropTypes.object,
-        episodeStatus: PropTypes.bool,
+class EpisodeList extends React.Component {
+    static propTypes = {
+        episodes: PropTypes.array,
+        episodeStatus: PropTypes.object,
         showSwitch: PropTypes.bool,
         onEpisodeStatusUpdate: PropTypes.func,
-    },
+    }
 
-    renderHeader() {
-        const episode = this.props.episode;
+    renderHeader = (episode) => {
         const imageConfig = getImageConfig();
         const baseUrl = imageConfig.base_url;
         const stillSize = imageConfig.still_sizes[1];
@@ -44,31 +42,33 @@ const EpisodeRow = React.createClass({
                 </View>
                 {this.props.showSwitch && <Switch
                     onValueChange={(value) => this.props.onEpisodeStatusUpdate(value, episode.id)}
-                    value={this.props.episodeStatus}
-                    onTintColor="rgba(211, 47, 47, 0.7)"
-                    thumbTintColor="rgba(211, 47, 47, 1)"
-                    tintColor="#111"
+                    value={episode.status}
+                    onTintColor="rgba(56, 142, 60, 0.7)"
+                    thumbTintColor={episode.status ? "#388E3C" : "#D32F2F"}
+                    tintColor="rgba(211, 47, 47, 0.7)"
                 />}
             </View>
         );
-    },
+    };
 
-    renderContent() {
-        return <BodyText style={[styles.text, styles.overview]}>{this.props.episode.overview}</BodyText>;
-    },
+    renderContent = (episode) => {
+        return <BodyText style={[styles.text, styles.overview]}>{episode.overview}</BodyText>;
+    };
 
     render() {
-        return (
-            <Accordion
-                header={this.renderHeader()}
-                content={this.renderContent()}
-                easing="easeOutCubic"
-            />
-        );
+        const data = generateData(this.props.episodes, this.props.episodeStatus);
+        return <Accordion sections={data} renderHeader={this.renderHeader} renderContent={this.renderContent} />;
     }
-});
+}
 
-export default EpisodeRow;
+export default EpisodeList;
+
+function generateData(episodes, episodesStatus) {
+    return episodes.map(e => ({
+        ...e,
+        status: (episodesStatus) ? episodesStatus[e.id] : false,
+    }))
+}
 
 const styles = StyleSheet.create({
     episodeSummary: {
@@ -103,4 +103,4 @@ const styles = StyleSheet.create({
     starIcon: {
         color: '#FFC107',
     },
-})
+});

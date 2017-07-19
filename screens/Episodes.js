@@ -14,7 +14,7 @@ import BodyText from '../components/BodyText';
 import { FontAwesome } from '@expo/vector-icons';
 import Router from '../navigation/Router';
 import { getImageConfig, getSeason } from '../repository/tmdbRepo';
-import EpisodeRow from '../components/episodes/EpisodeRow';
+import EpisodeList from '../components/episodes/EpisodeList';
 
 export default class Episodes extends React.Component {
     static route = {
@@ -87,18 +87,12 @@ export default class Episodes extends React.Component {
     renderEpisodeList = () => {
         return (
             <View>
-                {this.state.seasonData.episodes.map((episode, key) => {
-                    const episodeStatus = (this.state.episodeStatus) ? this.state.episodeStatus[episode.id] : false;
-                    return (
-                        <EpisodeRow
-                            key={key}
-                            episode={episode}
-                            episodeStatus={episodeStatus}
-                            onEpisodeStatusUpdate={this.handleUpdateEpisodeStatus}
-                            showSwitch={this.state.inCollection}
-                        />
-                    );
-                })}
+                <EpisodeList
+                    episodes={this.state.seasonData.episodes}
+                    episodeStatus={this.state.episodeStatus}
+                    onEpisodeStatusUpdate={this.handleUpdateEpisodeStatus}
+                    showSwitch={this.state.inCollection}
+                />
             </View>
         );
     };
