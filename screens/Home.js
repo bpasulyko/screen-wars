@@ -59,6 +59,13 @@ export default class Home extends React.Component {
         });
     };
 
+    refreshRecommendedMovies = () => {
+        discoverMatchingGenre('movie', getGenreId(this.state.movies))
+            .then((result) => {
+                this.setState({ recommendedMovies: _.slice(result.results, 0, 10) });
+            });
+    };
+
     getTvShows = () => {
         window.firebase.database().ref('tv/').on('value', (tvShows) => {
             const sortedTvShows = _.sortBy(_.values(tvShows.val()), 'dateAdded').reverse()
@@ -71,6 +78,13 @@ export default class Home extends React.Component {
                     });
                 });
         });
+    };
+
+    refreshRecommendedTvShows = () => {
+        discoverMatchingGenre('tv', getGenreId(this.state.tvShows))
+            .then((result) => {
+                this.setState({ recommendedTvShows: _.slice(result.results, 0, 10) });
+            });
     };
 
     setQueryString = (queryString) => {
@@ -122,6 +136,9 @@ export default class Home extends React.Component {
             <View style={styles.scrollList}>
                 <View style={styles.headingContainer}>
                     <TitleText style={styles.heading}>Recommended Movies</TitleText>
+                    <TouchableOpacity onPress={this.refreshRecommendedMovies}>
+                        <FontAwesome name="refresh" size={24} style={{ color: '#EEE' }} />
+                    </TouchableOpacity>
                 </View>
                 {this.renderItemList(this.state.recommendedMovies, 'movie')}
             </View>
@@ -145,6 +162,9 @@ export default class Home extends React.Component {
             <View style={styles.scrollList}>
                 <View style={styles.headingContainer}>
                     <TitleText style={styles.heading}>Recommended TV Shows</TitleText>
+                    <TouchableOpacity onPress={this.refreshRecommendedTvShows}>
+                        <FontAwesome name="refresh" size={24} style={{ color: '#EEE' }} />
+                    </TouchableOpacity>
                 </View>
                 {this.renderItemList(this.state.recommendedTvShows, 'tv')}
             </View>
