@@ -15,17 +15,11 @@ import {
 import Router from './navigation/Router';
 import Drawer from './navigation/Drawer';
 import * as firebase from 'firebase';
+import { firebaseConfig } from './util/firebaseUtil';
 import _ from 'lodash';
 import { loadAppDefaults } from './repository/tmdbRepo';
 
-var config = {
-    apiKey: "AIzaSyDxIqLoE2tSxlm76VsnomRdccAyKRg8VA0",
-    authDomain: "screen-wars.firebaseapp.com",
-    databaseURL: "https://screen-wars.firebaseio.com",
-    storageBucket: "screen-wars.appspot.com",
-    messagingSenderId: "82685205616"
-};
-firebase.initializeApp(config);
+firebase.initializeApp(firebaseConfig);
 window.firebase = firebase;
 
 class App extends React.Component {

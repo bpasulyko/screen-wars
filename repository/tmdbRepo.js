@@ -1,6 +1,7 @@
 import _ from 'lodash';
+import { repoConfig } from '../util/repoUtil';
 
-const API_KEY = 'c61fe26ad89f613231e56e67cff3779d';
+const API_KEY = repoConfig;
 const BASE_URL = 'https://api.themoviedb.org/3';
 let imageConfig;
 let genres;
