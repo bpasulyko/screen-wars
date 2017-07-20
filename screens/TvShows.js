@@ -9,7 +9,7 @@ import {
 
 import ListTypes from '../util/ListTypes';
 import SortOptions from '../util/SortOptions';
-import { filterByGenre } from '../util/Common';
+import { filterByGenre, filterByString } from '../util/Common';
 import LoadingContainer from '../components/LoadingContainer';
 import NavBarTitle from '../components/NavBarTitle';
 import ItemList from '../components/ItemList';
@@ -19,6 +19,7 @@ import Router from '../navigation/Router';
 import FilterButton from '../components/FilterButton';
 import FilterMenu from '../components/FilterMenu';
 import ListButtonGroup from '../components/ListButtonGroup';
+import SearchBox from '../components/SearchBox';
 
 export default class TvShows extends React.Component {
     static route = {
@@ -40,6 +41,7 @@ export default class TvShows extends React.Component {
         activeList: ListTypes.COLLECTION,
         selectedGenre: null,
         selectedSort: null,
+        searchString: null,
     };
 
     componentWillMount() {
@@ -82,11 +84,16 @@ export default class TvShows extends React.Component {
         this.setState({ selectedSort });
     };
 
+    handleSearchChange = (searchString) => {
+        this.setState({ searchString });
+    };
+
     renderContent = () => {
         const text = `You haven't added any TV shows to your ${this.state.activeList.name}!`
         let filteredTvShows = this.state.activeList.filter(this.state.tvShows);
         if (this.state.selectedGenre) filteredTvShows = filterByGenre(filteredTvShows, this.state.selectedGenre);
         if (this.state.selectedSort !== null) filteredTvShows = SortOptions[this.state.selectedSort].sort(filteredTvShows);
+        if (this.state.searchString) filteredTvShows = filterByString(filteredTvShows, this.state.searchString);
         return (filteredTvShows.length > 0)
             ? this.renderItemList(filteredTvShows)
             : <NoItems icon={this.state.activeList.icon} text={text} />;
@@ -113,6 +120,12 @@ export default class TvShows extends React.Component {
                     onGenreChange={this.handleGenreChange}
                     onSortChange={this.handleSortChange}
                     clearFilter={this.handleClearFilter}
+                />
+                <SearchBox
+                    value={this.state.searchString}
+                    onClear={() => this.handleSearchChange(null)}
+                    onChange={(searchString) => this.handleSearchChange(searchString)}
+                    onSubmit={() => {}}
                 />
                 <ListButtonGroup
                     activeList={this.state.activeList}

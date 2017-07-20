@@ -7,3 +7,9 @@ export function filterByGenre(items, genreId) {
         }
     });
 };
+
+export function filterByString(items, searchString) {
+    return _.filter(items, (item) => {
+        return item.title.toLowerCase().indexOf(searchString.toLowerCase()) !== -1;
+    });
+};

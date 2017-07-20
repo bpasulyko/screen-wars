@@ -17,6 +17,7 @@ import NavBarTitle from '../components/NavBarTitle';
 import SearchResults from '../components/SearchResults';
 import TitleText from '../components/TitleText';
 import ItemList from '../components/ItemList';
+import SearchBox from '../components/SearchBox';
 import Router from '../navigation/Router';
 import { multiSearch, discoverMatchingGenre } from '../repository/tmdbRepo';
 
@@ -96,8 +97,6 @@ export default class Home extends React.Component {
     };
 
     clearSearch = () => {
-        this.refs['search_input'].blur();
-        this.refs['search_input'].clear();
         this.setState({
             searchResults: null,
             queryString: null,
@@ -184,25 +183,13 @@ export default class Home extends React.Component {
 
     renderSearchBox = () => {
         return (
-            <View style={styles.searchContainer}>
-                <FontAwesome name="search" size={18} style={styles.searchIcon} />
-                <TextInput
-                    ref="search_input"
-                    style={styles.input}
-                    editable={!this.state.loading}
-                    placeholder="Search"
-                    returnKeyType='search'
-                    selectTextOnFocus
-                    onChangeText={this.setQueryString}
-                    onSubmitEditing={this.handleSearchSubmit}
-                    underlineColorAndroid='rgba(0,0,0,0)'
-                />
-                {this.state.queryString && (
-                    <TouchableOpacity onPress={this.clearSearch}>
-                        <FontAwesome name="times" size={18} style={styles.searchIcon} />
-                    </TouchableOpacity>
-                )}
-            </View>
+            <SearchBox
+                value={this.state.queryString}
+                onClear={this.clearSearch}
+                editable={!this.state.loading}
+                onChange={this.setQueryString}
+                onSubmit={this.handleSearchSubmit}
+            />
         );
     };
 
@@ -267,23 +254,5 @@ const styles = StyleSheet.create({
     },
     scrollList: {
         paddingVertical: 10,
-    },
-    searchContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#171717',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        height: 50,
-        elevation: 5,
-    },
-    input: {
-        flex: 1,
-        color: '#EEE',
-        fontFamily: 'raleway',
-    },
-    searchIcon: {
-        color:'#BBB',
-        marginRight: 5,
     },
 });
