@@ -18,19 +18,9 @@ import SearchResults from '../components/SearchResults';
 import TitleText from '../components/TitleText';
 import ItemList from '../components/ItemList';
 import SearchBox from '../components/SearchBox';
-import Router from '../navigation/Router';
 import { multiSearch, discoverMatchingGenre } from '../repository/tmdbRepo';
 
 export default class Home extends React.Component {
-    static route = {
-        navigationBar: {
-            backgroundColor: '#171717',
-            renderTitle: ({ config: { eventEmitter }, params }) => {
-                return <NavBarTitle title="Screen Wars" emitter={eventEmitter}/>;
-            },
-        }
-    }
-
     state = {
         loading: true,
         queryString: null,
@@ -104,18 +94,18 @@ export default class Home extends React.Component {
     };
 
     goToDetails = (selectedItemId, type) => {
-        this.props.navigator.push(Router.getRoute('details', {
+        this.props.navigation.navigate('Details', {
             id: selectedItemId,
             type: type,
-        }));
+        });
     };
 
     goToMovies = () => {
-        this.props.navigation.getNavigator('main').jumpToItem('movies');
+        this.props.navigation.navigate('Movies');
     };
 
     goToTvShows = () => {
-        this.props.navigation.getNavigator('main').jumpToItem('tvshows');
+        this.props.navigation.navigate('Tvshows');
     };
 
     renderRecentlyAddedMovies = () => {

@@ -22,17 +22,17 @@ import ListButtonGroup from '../components/ListButtonGroup';
 import SearchBox from '../components/SearchBox';
 
 export default class Movies extends React.Component {
-    static route = {
-        navigationBar: {
-            backgroundColor: '#171717',
-            renderTitle: ({ config: { eventEmitter }, params }) => {
-                return <NavBarTitle title="Movies" emitter={eventEmitter}/>;
-            },
-            renderRight: ({ config: { eventEmitter }, params }) => {
-                return <FilterButton emitter={eventEmitter} />;
-            },
-        },
-    }
+    // static route = {
+    //     navigationBar: {
+    //         backgroundColor: '#171717',
+    //         renderTitle: ({ config: { eventEmitter }, params }) => {
+    //             return <NavBarTitle title="Movies" emitter={eventEmitter}/>;
+    //         },
+    //         renderRight: ({ config: { eventEmitter }, params }) => {
+    //             return <FilterButton emitter={eventEmitter} />;
+    //         },
+    //     },
+    // }
 
     state = {
         loading: true,
@@ -45,7 +45,7 @@ export default class Movies extends React.Component {
     };
 
     componentWillMount() {
-        this.props.route.getEventEmitter().addListener('filter', this.handleFilter);
+        // this.props.route.getEventEmitter().addListener('filter', this.handleFilter);
     }
 
     componentDidMount() {
@@ -58,10 +58,10 @@ export default class Movies extends React.Component {
     }
 
     goToDetails = (selectedMovieId) => {
-        this.props.navigator.push(Router.getRoute('details', {
+        this.props.navigation.navigate('Details', {
             id: selectedMovieId,
             type: 'movie',
-        }));
+        });
     };
 
     handleFilter = () => {

@@ -19,23 +19,13 @@ import TitleText from '../components/TitleText';
 import { getImageConfig, getCollection } from '../repository/tmdbRepo';
 
 export default class Collection extends React.Component {
-    static route = {
-        navigationBar: {
-            backgroundColor: '#171717',
-            tintColor: '#EEE',
-            renderTitle: ({ config: { eventEmitter }, params }) => {
-                return <NavBarTitle title="Screen Wars" emitter={eventEmitter} />;
-            },
-        },
-    }
-
     state = {
         loading: true,
         data: {},
     };
 
     componentDidMount() {
-        const params = this.props.route.params;
+        const params = this.props.navigation.state.params;
         return getCollection(params.id)
             .then((responseJson) => {
                 this.setState({

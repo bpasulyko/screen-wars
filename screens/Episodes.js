@@ -17,16 +17,6 @@ import { getImageConfig, getSeason } from '../repository/tmdbRepo';
 import EpisodeList from '../components/episodes/EpisodeList';
 
 export default class Episodes extends React.Component {
-    static route = {
-        navigationBar: {
-            backgroundColor: '#171717',
-            tintColor: '#EEE',
-            renderTitle: ({ config: { eventEmitter }, params }) => {
-                return <NavBarTitle title="Episodes" emitter={eventEmitter} />;
-            },
-        },
-    }
-
     state = {
         tvId: null,
         loading: true,
@@ -36,7 +26,7 @@ export default class Episodes extends React.Component {
     };
 
     componentDidMount() {
-        const params = this.props.route.params;
+        const params = this.props.navigation.state.params;
         return getSeason(params.tvId, params.seasonNumber)
             .then((responseJson) => {
                 window.firebase.database().ref(`tv/${params.tvId}/episodeStatus`).once('value').then((details) => {

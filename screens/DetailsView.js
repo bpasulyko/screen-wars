@@ -29,16 +29,6 @@ import moment from 'moment';
 import { getByType } from '../repository/tmdbRepo';
 
 export default class DetailsView extends React.Component {
-    static route = {
-        navigationBar: {
-            backgroundColor: '#171717',
-            tintColor: '#EEE',
-            renderTitle: ({ config: { eventEmitter }, params }) => {
-                return <NavBarTitle title="Screen Wars" emitter={eventEmitter}/>;
-            },
-        },
-    }
-
     state = {
         loading: true,
         itemDetails: {},
@@ -46,7 +36,7 @@ export default class DetailsView extends React.Component {
     };
 
     componentDidMount() {
-        const params = this.props.route.params;
+        const params = this.props.navigation.state.params;
         return getByType(params.type, params.id)
             .then((responseJson) => {
                 window.firebase.database().ref(`${params.type}/${params.id}/`).on('value', (details) => {
@@ -96,11 +86,11 @@ export default class DetailsView extends React.Component {
     };
 
     goToSeasons = () => {
-        this.props.navigator.push(Router.getRoute('seasons', {
+        this.props.navigation.navigate('Seasons', {
             id: this.state.itemDetails.id,
             seasons: this.state.itemDetails.seasons,
             inCollection: this.state.inCollection,
-        }));
+        });
     };
 
     formatReleaseDate = () => {

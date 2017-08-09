@@ -8,11 +8,6 @@ import {
     Platform,
     StatusBar,
 } from 'react-native';
-import {
-    NavigationProvider,
-    StackNavigation,
-} from '@expo/ex-navigation';
-import Router from './navigation/Router';
 import Drawer from './navigation/Drawer';
 import * as firebase from 'firebase';
 import { firebaseConfig } from './util/firebaseUtil';
@@ -47,12 +42,8 @@ class App extends React.Component {
         if (this.state.appIsReady && this.state.fontLoaded) {
             return (
                 <View style={styles.container}>
-                    <NavigationProvider router={Router}>
-                        <Drawer/>
-                    </NavigationProvider>
-
-                    {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-                    {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
+                    <View style={styles.statusBarUnderlay} />
+                    <Drawer/>
                 </View>
             );
         } else {
@@ -70,7 +61,7 @@ const styles = StyleSheet.create({
     },
     statusBarUnderlay: {
         height: 24,
-        backgroundColor: 'rgba(0,0,0,0.2)',
+        backgroundColor: '#171717',
     },
 });
 
