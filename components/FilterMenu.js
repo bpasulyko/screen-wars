@@ -12,6 +12,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import SortOptions from '../util/SortOptions'
 import { getGenres } from '../repository/tmdbRepo';
 import BodyText from './BodyText';
+import SearchBox from './SearchBox';
 
 const FilterMenu = React.createClass({
     propTypes: {
@@ -20,6 +21,8 @@ const FilterMenu = React.createClass({
         selectedSort: PropTypes.number,
         onGenreChange: PropTypes.func,
         onSortChange: PropTypes.func,
+        searchString: PropTypes.string,
+        onSearchChange: PropTypes.func,
     },
 
     getDefaultProps() {
@@ -33,7 +36,7 @@ const FilterMenu = React.createClass({
     },
 
     componentDidUpdate() {
-        const value = (this.props.show) ? 80 : 0;
+        const value = (this.props.show) ? 120 : 0;
         Animated.timing(this.animation, { toValue: value, duration: 250 }).start();
     },
 
@@ -75,8 +78,16 @@ const FilterMenu = React.createClass({
         const animatedStyle = { height: this.animation };
         return (
             <Animated.View style={[styles.container, animatedStyle]}>
-                {this.renderGenrePicker()}
-                {this.renderSortPicker()}
+                <SearchBox
+                    value={this.props.searchString}
+                    onClear={() => this.props.onSearchChange(null)}
+                    onChange={(searchString) => this.props.onSearchChange(searchString)}
+                    onSubmit={() => {}}
+                />
+                <View style={styles.dropdownContainer}>
+                    {this.renderGenrePicker()}
+                    {this.renderSortPicker()}
+                </View>
             </Animated.View>
         );
     }
@@ -86,8 +97,11 @@ export default FilterMenu;
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
         backgroundColor: '#171717',
+        alignSelf: 'stretch',
+    },
+    dropdownContainer: {
+        flexDirection: 'row',
         alignSelf: 'stretch',
         alignItems: 'center',
         justifyContent: 'space-between',

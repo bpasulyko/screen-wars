@@ -16,24 +16,10 @@ import ItemList from '../components/ItemList';
 import NoItems from '../components/NoItems';
 import { FontAwesome } from '@expo/vector-icons';
 import Router from '../navigation/Router';
-import FilterButton from '../components/FilterButton';
 import FilterMenu from '../components/FilterMenu';
 import ListButtonGroup from '../components/ListButtonGroup';
-import SearchBox from '../components/SearchBox';
 
 export default class Movies extends React.Component {
-    // static route = {
-    //     navigationBar: {
-    //         backgroundColor: '#171717',
-    //         renderTitle: ({ config: { eventEmitter }, params }) => {
-    //             return <NavBarTitle title="Movies" emitter={eventEmitter}/>;
-    //         },
-    //         renderRight: ({ config: { eventEmitter }, params }) => {
-    //             return <FilterButton emitter={eventEmitter} />;
-    //         },
-    //     },
-    // }
-
     state = {
         loading: true,
         movies: [],
@@ -44,10 +30,6 @@ export default class Movies extends React.Component {
         searchString: null,
     };
 
-    componentWillMount() {
-        // this.props.route.getEventEmitter().addListener('filter', this.handleFilter);
-    }
-
     componentDidMount() {
         window.firebase.database().ref('movie/').on('value', (movies) => {
             this.setState({
@@ -55,6 +37,12 @@ export default class Movies extends React.Component {
                 movies: _.sortBy(_.values(movies.val()), 'title'),
             })
         });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.navigation.state.params) {
+            this.handleFilter();
+        }
     }
 
     goToDetails = (selectedMovieId) => {
@@ -120,12 +108,8 @@ export default class Movies extends React.Component {
                     onGenreChange={this.handleGenreChange}
                     onSortChange={this.handleSortChange}
                     clearFilter={this.handleClearFilter}
-                />
-                <SearchBox
-                    value={this.state.searchString}
-                    onClear={() => this.handleSearchChange(null)}
-                    onChange={(searchString) => this.handleSearchChange(searchString)}
-                    onSubmit={() => {}}
+                    searchString={this.state.searchString}
+                    onSearchChange={this.handleSearchChange}
                 />
                 <ListButtonGroup
                     activeList={this.state.activeList}

@@ -2,6 +2,7 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import NavBarTitle from '../components/NavBarTitle';
+import FilterButton from '../components/FilterButton';
 import { StackNavigator } from 'react-navigation';
 import Home from '../screens/Home';
 import Movies from '../screens/Movies';
@@ -45,7 +46,7 @@ export const MoviesStack = StackNavigator({
             headerStyle: {
                 backgroundColor: '#171717',
             },
-            // headerRight FilterButton
+            headerRight: <FilterButton onPress={() => navigation.setParams({ filter: true })} />,
         }),
     },
     Details: {
@@ -80,7 +81,7 @@ export const TvStack = StackNavigator({
             headerStyle: {
                 backgroundColor: '#171717',
             },
-            // headerRight FilterButton
+            headerRight: <FilterButton onPress={() => navigation.setParams({ filter: true })} />,
         }),
     },
     Details: {
