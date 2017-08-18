@@ -5,126 +5,72 @@ import {
   Text,
   Image,
 } from 'react-native';
-import { DrawerNavigator } from 'react-navigation';
+import { DrawerNavigator, DrawerItems } from 'react-navigation';
 import { FontAwesome } from '@expo/vector-icons';
 import { HomeStack, MoviesStack, TvStack } from './Router';
 import { Font } from 'expo';
 import BodyText from '../components/BodyText';
 import TitleText from '../components/TitleText';
 
-// const Drawer = React.createClass({
-//     renderHeader() {
-//         return (
-//             <View style={styles.header}>
-//                 <Text style={styles.headerTitle}>SCREEN WARS</Text>
-//             </View>
-//         );
-//     },
-//
-//     renderTitle(title, icon, isSelected) {
-//         return (
-//             <View style={styles.titleContainer}>
-//                 <FontAwesome
-//                     style={[styles.icon, isSelected ? styles.selectedTitleText : {}]}
-//                     name={icon}
-//                     size={24}
-//                 />
-//                 <TitleText style={[styles.titleText, isSelected ? styles.selectedTitleText : {}]}>
-//                     {title}
-//                 </TitleText>
-//             </View>
-//         );
-//     },
-//
-//     render() {
-//         return (
-//             <DrawerNavigation id='main' initialItem='home' drawerWidth={280} drawerStyle={styles.drawer} renderHeader={this.renderHeader}>
-//                 <DrawerNavigationItem
-//                     id='home'
-//                     selectedStyle={styles.selectedItemStyle}
-//                     renderTitle={isSelected => this.renderTitle('Home', 'home', isSelected)}>
-//                     <HomeStack />
-//                 </DrawerNavigationItem>
-//                 <DrawerNavigationItem
-//                     id='movies'
-//                     selectedStyle={styles.selectedItemStyle}
-//                     renderTitle={isSelected => this.renderTitle('Movies', 'film', isSelected)}>
-//                     <MoviesStack />
-//                 </DrawerNavigationItem>
-//                 <DrawerNavigationItem
-//                     id='tvshows'
-//                     selectedStyle={styles.selectedItemStyle}
-//                     renderTitle={isSelected => this.renderTitle('TV Shows', 'tv', isSelected)}>
-//                     <TvStack />
-//                 </DrawerNavigationItem>
-//             </DrawerNavigation>
-//         );
-//     }
-// });
-//
-// const styles = StyleSheet.create({
-//     header: {
-//         height:180,
-//         backgroundColor: '#171717',
-//         justifyContent: 'center',
-//     },
-//     headerTitle: {
-//         position: 'absolute',
-//         bottom: 30,
-//         fontFamily: 'star-wars-outline',
-//         fontSize: 55,
-//         textAlign: 'center',
-//         lineHeight: 50,
-//         color: '#D32F2F',
-//     },
-//     drawer: {
-//         backgroundColor: '#333',
-//     },
-//     selectedItemStyle: {
-//         backgroundColor: '#555',
-//     },
-//     selectedTitleText: {
-//         color: '#EEE'
-//     },
-//     icon: {
-//         color: '#EEE',
-//     },
-//     titleText: {
-//         color: '#EEE',
-//         marginLeft: 18,
-//     },
-//     titleContainer: {
-//         flexDirection: 'row',
-//         flex: 1,
-//         height: 40,
-//         alignItems: 'center',
-//     },
-// });
+const SideDrawer = (props) => {
+    return (
+        <View style={styles.drawer}>
+            <View style={styles.header}>
+                <Text style={styles.headerTitle}>SCREEN WARS</Text>
+            </View>
+            <DrawerItems {...props} />
+        </View>
+    );
+};
 
 const Drawer = DrawerNavigator({
     Home: {
         screen: HomeStack,
         navigationOptions: {
-            drawer: {
-                label: 'Home',
-            },
+            drawerLabel: 'Home',
+            drawerIcon: ({ tintColor }) => (<FontAwesome name="home" size={22} style={{ color: tintColor }} />),
         },
     },
     Movies: {
         screen: MoviesStack,
         navigationOptions: {
-            drawer: {
-                label: 'Movies',
-            },
+            drawerLabel: 'Movies',
+            drawerIcon: ({ tintColor }) => (<FontAwesome name="film" size={22} style={{ color: tintColor }} />),
         },
     },
     TvShows: {
         screen: TvStack,
         navigationOptions: {
-            drawer: {
-                label: 'TV Shows',
-            },
+            drawerLabel: 'TV Shows',
+            drawerIcon: ({ tintColor }) => (<FontAwesome name="tv" size={22} style={{ color: tintColor }} />),
         },
+    },
+}, {
+    drawerWidth: 280,
+    contentComponent: SideDrawer,
+    contentOptions: {
+        activeTintColor: '#FFF',
+        activeBackgroundColor: '#555',
+        inactiveTintColor: '#EEE',
+    }
+});
+
+const styles = StyleSheet.create({
+    header: {
+        height:180,
+        backgroundColor: '#171717',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    headerTitle: {
+        fontFamily: 'star-wars-outline',
+        fontSize: 55,
+        textAlign: 'center',
+        color: '#D32F2F',
+    },
+    drawer: {
+        flex: 1,
+        backgroundColor: '#333',
     },
 });
 
