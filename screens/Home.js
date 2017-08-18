@@ -161,11 +161,16 @@ export default class Home extends React.Component {
     };
 
     renderItemList = (items, type) => {
+        const moviesMap = _.keyBy(this.state.movies, 'id');
+        const tvMap = _.keyBy(this.state.tvShows, 'id');
         const itemList = _.slice(items, 0, 10).map((item) => {
             return {
                 id: item.id,
                 poster: item.poster || item.poster_path,
                 title: item.title || item.name,
+                inCollection: (type === 'movie')
+                    ? !!moviesMap[item.id]
+                    : !!tvMap[item.id],
             };
         });
         return <ItemList list={itemList} onClick={(id) => this.goToDetails(id, type)} noWrap />;

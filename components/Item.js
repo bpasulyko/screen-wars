@@ -7,6 +7,7 @@ import {
   Animated,
   TouchableHighlight,
 } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import { getImageConfig } from '../repository/tmdbRepo';
 import TitleText from './TitleText';
 
@@ -16,6 +17,7 @@ const Item = React.createClass({
             id: PropTypes.number,
             poster: PropTypes.string,
             title: PropTypes.string,
+            inCollection: PropTypes.bool,
         }),
         onClick: PropTypes.func,
     },
@@ -32,11 +34,23 @@ const Item = React.createClass({
         this.props.onClick(this.props.item.id);
     },
 
-    render() {
+    renderImage() {
         const imageConfig = getImageConfig();
         const baseUrl = imageConfig.base_url;
         const size = imageConfig.poster_sizes[1];
         const imageUrl = `${baseUrl}${size}${this.props.item.poster}`;
+        const image = (this.props.item.poster)
+            ? <Image style={styles.image} source={{ uri: imageUrl }} />
+            : <View style={[styles.image, styles.noImage]}><TitleText style={styles.title}>{this.props.item.title}</TitleText></View>
+        return (
+            <View>
+                {image}
+                {this.props.item.inCollection && <FontAwesome size={16} name="check" style={styles.checkMark} />}
+            </View>
+        );
+    },
+
+    render() {
         const animatedStyle = {
             transform: [{
                 scale: this.animation.interpolate({
@@ -45,13 +59,11 @@ const Item = React.createClass({
                 })
             }],
         };
-        const image = (this.props.item.poster)
-            ? <Image style={styles.image} source={{ uri: imageUrl }} />
-            : <View style={[styles.image, styles.noImage]}><TitleText style={styles.title}>{this.props.item.title}</TitleText></View>
+
         return (
             <Animated.View style={[styles.imageContainer, animatedStyle]}>
                 <TouchableHighlight style={styles.image} onPress={this.handlePress}>
-                    {image}
+                    {this.renderImage()}
                 </TouchableHighlight>
             </Animated.View>
         );
@@ -85,5 +97,11 @@ const styles = StyleSheet.create({
     title: {
         color: '#EEE',
         textAlign: 'center',
-    }
+    },
+    checkMark: {
+        position: 'absolute',
+        color: '#EEE',
+        bottom: 1,
+        right: 1,
+    },
 });

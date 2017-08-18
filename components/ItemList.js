@@ -13,6 +13,7 @@ const ItemList = React.createClass({
             id: PropTypes.number,
             poster: PropTypes.string,
             title: PropTypes.string,
+            inCollection: PropTypes.bool,
         })),
         onClick: PropTypes.func,
         noWrap: PropTypes.bool,
