@@ -82,7 +82,7 @@ export default class DetailsView extends React.Component {
     };
 
     goToCollection = (id) => {
-        this.props.navigator.replace(Router.getRoute('collection', { id: id }));
+        this.props.navigation.navigate('Collection', { id: id });
     };
 
     goToSeasons = () => {

@@ -36,10 +36,10 @@ export default class Collection extends React.Component {
     }
 
     goToDetails = (selectedMovieId) => {
-        this.props.navigator.replace(Router.getRoute('details', {
+        this.props.navigation.navigate('Details', {
             id: selectedMovieId,
             type: 'movie',
-        }));
+        });
     };
 
     renderContent = () => {
