@@ -27,6 +27,7 @@ export default class Seasons extends React.Component {
         this.setState({
             loading: false,
             seasons: _.filter(this.props.navigation.state.params.seasons, (season) => season.season_number > 0),
+            seasonStatus: params.seasonStatus,
             id: params.id,
             inCollection: params.inCollection,
         });
@@ -47,6 +48,7 @@ export default class Seasons extends React.Component {
                 id: item.id,
                 poster: item.poster_path,
                 title: 'Season ' + item.season_number,
+                inCollection: _.values(this.state.seasonStatus[item.season_number]).filter(x => x).length === item.episode_count,
             };
         });
         return <ItemList list={itemList} onClick={this.goToEpisodes} type="Seasons" />;

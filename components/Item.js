@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     checkMark: {
         position: 'absolute',
         color: '#EEE',
-        bottom: 1,
-        right: 1,
+        bottom: 5,
+        right: 5,
     },
 });
