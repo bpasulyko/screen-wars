@@ -46,7 +46,7 @@ export default class TvShows extends React.Component {
     }
 
     goToDetails = (selectedTvShowId) => {
-        this.props.navigation.navigate('Details', {
+        this.props.navigation.navigate('TvDetails', {
             id: selectedTvShowId,
             type: 'tv',
         });

@@ -32,6 +32,16 @@ export const HomeStack = StackNavigator({
             },
         }),
     },
+    HomeDetails: {
+        screen: DetailsView,
+        navigationOptions: ({ navigation }) => ({
+            headerTintColor: '#EEE',
+            headerTitle: <NavBarTitle title="Screen Wars" />,
+            headerStyle: {
+                backgroundColor: '#171717',
+            },
+        }),
+    },
     ...MoviesStack,
     ...TvStack,
 });
@@ -49,7 +59,7 @@ export const MoviesStack = StackNavigator({
             headerRight: <FilterButton onPress={() => navigation.setParams({ filter: true })} />,
         }),
     },
-    Details: {
+    MovieDetails: {
         screen: DetailsView,
         navigationOptions: ({ navigation }) => ({
             headerTintColor: '#EEE',
@@ -84,7 +94,7 @@ export const TvStack = StackNavigator({
             headerRight: <FilterButton onPress={() => navigation.setParams({ filter: true })} />,
         }),
     },
-    Details: {
+    TvDetails: {
         screen: DetailsView,
         navigationOptions: ({ navigation }) => ({
             headerTintColor: '#EEE',

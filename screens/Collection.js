@@ -36,7 +36,7 @@ export default class Collection extends React.Component {
     }
 
     goToDetails = (selectedMovieId) => {
-        this.props.navigation.navigate('Details', {
+        this.props.navigation.navigate('MovieDetails', {
             id: selectedMovieId,
             type: 'movie',
         });
