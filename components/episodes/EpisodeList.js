@@ -41,7 +41,7 @@ class EpisodeList extends React.Component {
                     <BodyText style={styles.text}><FontAwesome name="star" size={12} style={styles.starIcon} />{rating + ' | ' + airDate}</BodyText>
                 </View>
                 {this.props.showSwitch && <Switch
-                    onValueChange={(value) => this.props.onEpisodeStatusUpdate(value, episode.id)}
+                    onValueChange={(value) => this.props.onEpisodeStatusUpdate(value, [episode.id])}
                     value={episode.status}
                     onTintColor="rgba(56, 142, 60, 0.7)"
                     thumbTintColor={episode.status ? "#388E3C" : "#D32F2F"}

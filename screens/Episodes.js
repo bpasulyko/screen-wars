@@ -5,6 +5,7 @@ import {
   View,
   ScrollView,
   Image,
+  Switch,
 } from 'react-native';
 
 import LoadingContainer from '../components/LoadingContainer';
@@ -29,7 +30,7 @@ export default class Episodes extends React.Component {
         const params = this.props.navigation.state.params;
         return getSeason(params.tvId, params.seasonNumber)
             .then((responseJson) => {
-                window.firebase.database().ref(`tv/${params.tvId}/episodeStatus`).once('value').then((details) => {
+                window.firebase.database().ref(`tv/${params.tvId}/seasonStatus/${params.seasonNumber}`).once('value').then((details) => {
                     this.setState({
                         tvId: params.tvId,
                         seasonData: responseJson,
@@ -41,12 +42,16 @@ export default class Episodes extends React.Component {
             });
     }
 
-    handleUpdateEpisodeStatus = (value, episodeId) => {
+    handleUpdateEpisodeStatus = (value, episodeIds) => {
         const updates = {};
-        updates['tv/' + this.state.tvId + '/episodeStatus/' + episodeId] = value;
+        episodeIds.forEach(episodeId => {
+            updates[`tv/${this.state.tvId}/seasonStatus/${this.state.seasonData.season_number}/${episodeId}`] = value;
+        });
         window.firebase.database().ref().update(updates);
         const newEpisodeStatus = { ...this.state.episodeStatus };
-        newEpisodeStatus[episodeId] = value;
+        episodeIds.forEach(episodeId => {
+            newEpisodeStatus[episodeId] = value;
+        });
         this.setState({ episodeStatus: newEpisodeStatus });
     };
 
@@ -58,6 +63,7 @@ export default class Episodes extends React.Component {
         const posterImage = (season.poster_path)
             ? <Image style={styles.poster} source={{ uri: `${baseUrl}${posterSize}${season.poster_path}` }} />
             : <View style={[styles.poster, styles.noImage]}><FontAwesome name="tv" size={50} style={styles.icon} /></View>
+        const allEpisodesWatched = this.state.episodeStatus && _.values(this.state.episodeStatus).filter(x => x).length === season.episodes.length;
         return (
             <View style={styles.summary}>
                 <View style={styles.headerContainer}>
@@ -67,6 +73,14 @@ export default class Episodes extends React.Component {
                             {season.name} <BodyText style={styles.year}>({season.air_date.split('-')[0]})</BodyText>
                         </TitleText>
                         <BodyText style={styles.text}>{season.episodes.length + ' Episodes'}</BodyText>
+                        {this.state.inCollection && <Switch
+                            style={styles.toggle}
+                            onValueChange={(value) => this.handleUpdateEpisodeStatus(value, season.episodes.map(x => x.id))}
+                            value={allEpisodesWatched}
+                            onTintColor="rgba(56, 142, 60, 0.7)"
+                            thumbTintColor={allEpisodesWatched ? "#388E3C" : "#D32F2F"}
+                            tintColor="rgba(211, 47, 47, 0.7)"
+                        />}
                     </View>
                 </View>
                 <BodyText style={[styles.text, styles.overview]}>{season.overview}</BodyText>
@@ -148,5 +162,8 @@ const styles = StyleSheet.create({
     },
     icon: {
         color: '#555',
+    },
+    toggle: {
+        alignSelf: 'flex-start',
     },
 });
