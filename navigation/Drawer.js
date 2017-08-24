@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { DrawerNavigator, DrawerItems } from 'react-navigation';
 import { FontAwesome } from '@expo/vector-icons';
-import { HomeStack, MoviesStack, TvStack } from './Router';
+import { HomeStack, MoviesStack, TvStack, SettingsStack } from './Router';
 import { Font } from 'expo';
 import BodyText from '../components/BodyText';
 import TitleText from '../components/TitleText';
@@ -43,6 +43,13 @@ const Drawer = DrawerNavigator({
         navigationOptions: {
             drawerLabel: 'TV Shows',
             drawerIcon: ({ tintColor }) => (<FontAwesome name="tv" size={22} style={{ color: tintColor }} />),
+        },
+    },
+    Settings: {
+        screen: SettingsStack,
+        navigationOptions: {
+            drawerLabel: 'Settings',
+            drawerIcon: ({ tintColor }) => (<FontAwesome name="cogs" size={22} style={{ color: tintColor }} />),
         },
     },
 }, {
