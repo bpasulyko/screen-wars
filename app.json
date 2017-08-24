@@ -8,13 +8,13 @@
       "version": "1.2.0",
       "orientation": "portrait",
       "primaryColor": "#171717",
-      "icon": "./screenWarsIcon.png",
+      "icon": "./screenWarsIcon2.png",
       "notification": {
         "icon": "https://s3.amazonaws.com/exp-us-standard/placeholder-push-icon-blue-circle.png",
         "color": "#000000"
       },
       "loading": {
-        "icon": "./screenWarsIcon.png",
+        "icon": "./screenWarsIcon2.png",
         "backgroundColor": "#171717",
         "hideExponentText": false
       },
