@@ -6,7 +6,6 @@
   "private": true,
   "main": "main.js",
   "dependencies": {
-    "@expo/ex-navigation": "^2.10.0",
     "@expo/vector-icons": "~5.0.0",
     "expo": "^18.0.1",
     "firebase": "^3.6.8",
