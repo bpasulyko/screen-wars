@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import ActionButton from 'react-native-action-button';
+import { getMainColor } from '../../util/themeUtil';
 import {
     View,
     StyleSheet,
@@ -22,7 +23,7 @@ class CollectionButton extends React.Component {
         return (
             <ActionButton
                 autoInactive={false}
-                buttonColor="#D32F2F"
+                buttonColor={getMainColor()}
                 degrees={135}
                 spacing={5}
                 useNativeFeedback={false}
@@ -61,7 +62,7 @@ class CollectionButton extends React.Component {
         return (
             <ActionButton
                 autoInactive={false}
-                buttonColor="#D32F2F"
+                buttonColor={getMainColor()}
                 degrees={135}
                 spacing={5}
                 useNativeFeedback={false}
@@ -98,7 +99,7 @@ class CollectionButton extends React.Component {
         return (
             <ActionButton
                 autoInactive={false}
-                buttonColor="#D32F2F"
+                buttonColor={getMainColor()}
                 degrees={135}
                 spacing={5}
                 useNativeFeedback={false}

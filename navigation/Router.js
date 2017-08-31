@@ -130,7 +130,6 @@ export const SettingsStack = StackNavigator({
         screen: Settings,
         navigationOptions: ({ navigation }) => ({
             headerTintColor: '#EEE',
-            headerTitle: <NavBarTitle title="Settings" />,
             headerLeft: <DrawerIcon {...navigation} />,
             headerStyle: {
                 backgroundColor: '#171717',

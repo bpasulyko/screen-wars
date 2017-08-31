@@ -27,6 +27,7 @@ import Router from '../navigation/Router';
 import { FontAwesome } from '@expo/vector-icons';
 import moment from 'moment';
 import { getByType } from '../repository/tmdbRepo';
+import { getMainColor } from '../util/themeUtil';
 
 export default class DetailsView extends React.Component {
     state = {
@@ -113,7 +114,7 @@ export default class DetailsView extends React.Component {
                             <View>
                                 <Header itemDetails={item} />
                                 <SubHeader itemDetails={item} onSeasonsClick={this.goToSeasons} />
-                                <View style={styles.overview}>
+                                <View style={[styles.overview, { backgroundColor: getMainColor(0.7) }]}>
                                     <TitleText style={styles.heading}>Overview</TitleText>
                                     <BodyText style={styles.overviewText}>{item.overview}</BodyText>
                                 </View>
@@ -183,7 +184,6 @@ const styles = StyleSheet.create({
     overview: {
         paddingHorizontal: 20,
         paddingVertical: 30,
-        backgroundColor: 'rgba(211, 47, 47, 0.75)',
     },
     overviewText: {
         color: '#EEE',

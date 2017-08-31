@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { ActivityIndicator, View, StyleSheet } from 'react-native';
+import { getMainColor } from '../util/themeUtil';
 
 const LoadingContainer = React.createClass({
     propTypes: {
@@ -10,7 +11,7 @@ const LoadingContainer = React.createClass({
         return (this.props.loading)
             ? (
                 <View style={styles.spinner}>
-                    <ActivityIndicator style={[ { transform: [{ scale: 2 }] } ]} size="large" color="#D32F2F" />
+                    <ActivityIndicator style={[ { transform: [{ scale: 2 }] } ]} size="large" color={getMainColor()} />
                 </View>
             )
             : this.props.children;

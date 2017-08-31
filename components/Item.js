@@ -7,7 +7,7 @@ import {
   Animated,
   TouchableHighlight,
 } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { getImageConfig } from '../repository/tmdbRepo';
 import TitleText from './TitleText';
 
@@ -45,7 +45,7 @@ const Item = React.createClass({
         return (
             <View>
                 {image}
-                {this.props.item.inCollection && <FontAwesome size={16} name="check" style={styles.checkMark} />}
+                {this.props.item.inCollection && <MaterialIcons size={16} name="check" style={styles.checkMark} />}
             </View>
         );
     },

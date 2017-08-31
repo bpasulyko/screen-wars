@@ -11,6 +11,7 @@ import { HomeStack, MoviesStack, TvStack, SettingsStack } from './Router';
 import { Font } from 'expo';
 import BodyText from '../components/BodyText';
 import TitleText from '../components/TitleText';
+import { getMainColor } from '../util/themeUtil';
 
 const SideDrawer = (props) => {
     return (
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
         fontFamily: 'star-wars-outline',
         fontSize: 55,
         textAlign: 'center',
-        color: '#D32F2F',
+        color: '#ffe919',
     },
     drawer: {
         flex: 1,

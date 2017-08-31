@@ -19,6 +19,7 @@ import TitleText from '../components/TitleText';
 import ItemList from '../components/ItemList';
 import SearchBox from '../components/SearchBox';
 import { multiSearch, discoverMatchingGenre } from '../repository/tmdbRepo';
+import { getMainColor } from '../util/themeUtil';
 
 export default class Home extends React.Component {
     state = {
@@ -114,7 +115,7 @@ export default class Home extends React.Component {
             <View style={styles.scrollList}>
                 <View style={styles.headingContainer}>
                     <TitleText style={styles.heading}>My Recent Movies</TitleText>
-                    <Button color="#D32F2F" onPress={this.goToMovies} title="View More" />
+                    <Button color={getMainColor()} onPress={this.goToMovies} title="View More" />
                 </View>
                 {this.renderItemList(this.state.movies, 'movie')}
             </View>
@@ -140,7 +141,7 @@ export default class Home extends React.Component {
             <View style={styles.scrollList}>
                 <View style={styles.headingContainer}>
                     <TitleText style={styles.heading}>My Recent TV Shows</TitleText>
-                    <Button color="#D32F2F" onPress={this.goToTvShows} title="View More" />
+                    <Button color={getMainColor()} onPress={this.goToTvShows} title="View More" />
                 </View>
                 {this.renderItemList(this.state.tvShows, 'tv')}
             </View>

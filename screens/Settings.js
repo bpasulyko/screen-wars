@@ -8,6 +8,7 @@ import {
 import { FontAwesome } from '@expo/vector-icons';
 import LoadingContainer from '../components/LoadingContainer';
 import TitleText from '../components/TitleText';
+import { colors } from '../util/themeUtil';
 
 class Settings extends React.Component {
     state = {
@@ -25,11 +26,8 @@ class Settings extends React.Component {
     }
 
     handleClick = (icon) => {
+        window.firebase.database().ref('icon').set(icon);
         this.setState({ icon });
-    }
-
-    handleSave = () => {
-        window.firebase.database().ref('icon').set(this.state.icon);
     }
 
     renderRebelButton = () => {
@@ -105,10 +103,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#171717',
     },
     rebelIconContainer: {
-        backgroundColor: '#D32F2F',
+        backgroundColor: `rgb(${colors.rebel.join(',')})`,
     },
     empireIconContainer: {
-        backgroundColor: '#1976D2',
+        backgroundColor: `rgb(${colors.empire.join(',')})`,
     },
     iconActive: {
         color: '#171717',

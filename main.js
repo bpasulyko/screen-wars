@@ -11,6 +11,7 @@ import {
 import Drawer from './navigation/Drawer';
 import * as firebase from 'firebase';
 import { firebaseConfig } from './util/firebaseUtil';
+import { setIcon } from './util/themeUtil';
 import _ from 'lodash';
 import { loadAppDefaults } from './repository/tmdbRepo';
 
@@ -21,11 +22,20 @@ class App extends React.Component {
     state = {
         appIsReady: false,
         fontLoaded: false,
+        iconLoaded: false,
     }
 
     componentWillMount() {
         this.loadAssetsAsync();
+        this.loadIcon();
         loadAppDefaults().then(() => this.setState({ appIsReady: true }));
+    }
+
+    loadIcon = () => {
+        window.firebase.database().ref('icon/').on('value', (icon) => {
+            setIcon(icon.val());
+            this.setState({ iconLoaded: true });
+        });
     }
 
     async loadAssetsAsync() {
@@ -35,11 +45,11 @@ class App extends React.Component {
             'raleway-bold': require('./assets/fonts/Raleway-ExtraBold.ttf'),
             'raleway': require('./assets/fonts/Raleway-Regular.ttf'),
         });
-        this.setState({ fontLoaded: true })
+        this.setState({ fontLoaded: true });
     }
 
     render() {
-        if (this.state.appIsReady && this.state.fontLoaded) {
+        if (this.state.appIsReady && this.state.fontLoaded && this.state.iconLoaded) {
             return (
                 <View style={styles.container}>
                     <View style={styles.statusBarUnderlay} />
