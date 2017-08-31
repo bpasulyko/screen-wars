@@ -4,6 +4,8 @@ export const colors = {
     headerBackground: '#171717',
     background: '#333',
     text: '#EEE',
+    red: '#D32F2F',
+    blue: '#1976D2',
 };
 
 let currentIcon;

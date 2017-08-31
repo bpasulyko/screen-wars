@@ -103,10 +103,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#171717',
     },
     rebelIconContainer: {
-        backgroundColor: `rgb(${colors.rebel.join(',')})`,
+        backgroundColor: colors.red,
     },
     empireIconContainer: {
-        backgroundColor: `rgb(${colors.empire.join(',')})`,
+        backgroundColor: colors.blue,
     },
     iconActive: {
         color: '#171717',
