@@ -56,9 +56,13 @@ export const MoviesStack = StackNavigator({
         screen: DetailsView,
         navigationOptions: ({ navigation }) => ({
             headerTintColor: '#EEE',
-            headerTitle: <NavBarTitle title="Screen Wars" />,
             headerStyle: {
-                backgroundColor: '#171717',
+                position: 'absolute',
+                backgroundColor: 'transparent',
+                zIndex: 100,
+                top: 0,
+                left: 0,
+                right: 0,
                 elevation: 0,
             },
         }),
@@ -67,9 +71,13 @@ export const MoviesStack = StackNavigator({
         screen: Collection,
         navigationOptions: ({ navigation }) => ({
             headerTintColor: '#EEE',
-            headerTitle: <NavBarTitle title="Screen Wars" />,
             headerStyle: {
-                backgroundColor: '#171717',
+                position: 'absolute',
+                backgroundColor: 'transparent',
+                zIndex: 100,
+                top: 0,
+                left: 0,
+                right: 0,
                 elevation: 0,
             },
         }),
@@ -94,9 +102,13 @@ export const TvStack = StackNavigator({
         screen: DetailsView,
         navigationOptions: ({ navigation }) => ({
             headerTintColor: '#EEE',
-            headerTitle: <NavBarTitle title="Screen Wars" />,
             headerStyle: {
-                backgroundColor: '#171717',
+                position: 'absolute',
+                backgroundColor: 'transparent',
+                zIndex: 100,
+                top: 0,
+                left: 0,
+                right: 0,
                 elevation: 0,
             },
         }),
@@ -130,6 +142,7 @@ export const SettingsStack = StackNavigator({
         screen: Settings,
         navigationOptions: ({ navigation }) => ({
             headerTintColor: '#EEE',
+            headerTitle: <NavBarTitle title="Settings" noIcon />,
             headerLeft: <DrawerIcon {...navigation} />,
             headerStyle: {
                 backgroundColor: '#171717',
