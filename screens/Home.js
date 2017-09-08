@@ -107,7 +107,7 @@ export default class Home extends React.Component {
     };
 
     goToTvShows = () => {
-        this.props.navigation.navigate('Tvshows');
+        this.props.navigation.navigate('TvShows');
     };
 
     renderRecentlyAddedMovies = () => {
