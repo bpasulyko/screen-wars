@@ -72,7 +72,7 @@ const Item = React.createClass({
 
 export default Item;
 
-const ITEM_WIDTH = (Dimensions.get('window').width - 40) / 4;
+const ITEM_WIDTH = (Dimensions.get('window').width - 32) / 4;
 const ITEM_HEIGHT = ITEM_WIDTH/(2/3);
 
 const styles = StyleSheet.create({

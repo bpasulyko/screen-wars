@@ -17,17 +17,41 @@ import NoItems from '../components/NoItems';
 import { FontAwesome } from '@expo/vector-icons';
 import Router from '../navigation/Router';
 import FilterMenu from '../components/FilterMenu';
-import ListButtonGroup from '../components/ListButtonGroup';
+import { getMainColor } from '../util/themeUtil';
+import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 
-export default class TvShows extends React.Component {
+const TvList = ({ state, listType, goToDetails }) => {
+    let filteredTvShows = listType.filter(state.tvShows);
+    if (state.selectedGenre) filteredTvShows = filterByGenre(filteredTvShows, state.selectedGenre);
+    if (state.selectedSort !== null) filteredTvShows = SortOptions[state.selectedSort].sort(filteredTvShows);
+    if (state.searchString) filteredTvShows = filterByString(filteredTvShows, state.searchString);
+    const text = `You haven't added any tv shows to your ${listType.name}!`;
+    const itemList = filteredTvShows.map((item) => {
+        return {
+            id: item.id,
+            poster: item.poster,
+            title: item.title,
+        };
+    });
+    return (filteredTvShows.length > 0)
+                ? <ItemList list={itemList} onClick={goToDetails} type="TV Shows" />
+                : <NoItems icon={listType.icon} text={text} />;
+};
+
+export default class TvShows extends React.PureComponent {
     state = {
         loading: true,
         tvShows: [],
         showFilterMenu: false,
-        activeList: ListTypes.COLLECTION,
         selectedGenre: null,
         selectedSort: null,
         searchString: null,
+        index: 0,
+        routes: [
+            { key: '1', title: ListTypes.COLLECTION.title },
+            { key: '2', title: ListTypes.WATCHLIST.title },
+            { key: '3', title: ListTypes.FAVORITES.title },
+        ],
     };
 
     componentDidMount() {
@@ -52,16 +76,14 @@ export default class TvShows extends React.Component {
         });
     };
 
+    handleIndexChange = index => this.setState({ index });
+
     handleFilter = () => {
         this.setState({
             showFilterMenu: !this.state.showFilterMenu,
             selectedGenre: null,
             selectedSort: null,
         });
-    };
-
-    handleListButtonClick = (activeList) => {
-        this.setState({ activeList });
     };
 
     handleGenreChange = (selectedGenre) => {
@@ -76,26 +98,28 @@ export default class TvShows extends React.Component {
         this.setState({ searchString });
     };
 
-    renderContent = () => {
-        const text = `You haven't added any TV shows to your ${this.state.activeList.name}!`
-        let filteredTvShows = this.state.activeList.filter(this.state.tvShows);
-        if (this.state.selectedGenre) filteredTvShows = filterByGenre(filteredTvShows, this.state.selectedGenre);
-        if (this.state.selectedSort !== null) filteredTvShows = SortOptions[this.state.selectedSort].sort(filteredTvShows);
-        if (this.state.searchString) filteredTvShows = filterByString(filteredTvShows, this.state.searchString);
-        return (filteredTvShows.length > 0)
-            ? this.renderItemList(filteredTvShows)
-            : <NoItems icon={this.state.activeList.icon} text={text} />;
+    renderHeader = props => {
+        return (
+            <TabBar
+                {...props}
+                indicatorStyle={{ backgroundColor: getMainColor() }}
+                style={{ backgroundColor: '#171717' }}
+                labelStyle={{ color: '#EEE' }}
+            />
+        );
     };
 
-    renderItemList = (items) => {
-        const itemList = items.map((item) => {
-            return {
-                id: item.id,
-                poster: item.poster,
-                title: item.title,
-            };
-        });
-        return <ItemList list={itemList} onClick={this.goToDetails} type="TV Shows" />;
+    renderScene = ({ route }) => {
+        switch (route.key) {
+            case '1':
+                return (<TvList state={this.state} listType={ListTypes.COLLECTION} goToDetails={this.goToDetails} />);
+            case '2':
+                return (<TvList state={this.state} listType={ListTypes.WATCHLIST} goToDetails={this.goToDetails} />);
+            case '3':
+                return (<TvList state={this.state} listType={ListTypes.FAVORITES} goToDetails={this.goToDetails} />);
+            default:
+                return null;
+        };
     };
 
     render() {
@@ -111,12 +135,13 @@ export default class TvShows extends React.Component {
                     searchString={this.state.searchString}
                     onSearchChange={this.handleSearchChange}
                 />
-                <ListButtonGroup
-                    activeList={this.state.activeList}
-                    onListButtonClick={this.handleListButtonClick}
-                />
                 <LoadingContainer loading={this.state.loading}>
-                    {this.renderContent()}
+                    <TabViewAnimated
+                        navigationState={this.state}
+                        renderScene={this.renderScene}
+                        renderHeader={this.renderHeader}
+                        onIndexChange={this.handleIndexChange}
+                    />
                 </LoadingContainer>
             </View>
         );
@@ -127,7 +152,5 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#333',
-        alignItems: 'center',
-        justifyContent: 'center',
     },
 });
