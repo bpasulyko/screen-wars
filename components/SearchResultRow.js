@@ -25,8 +25,8 @@ const SearchResultRow = React.createClass({
         const year = (releaseDate) ? `(${releaseDate.split('-')[0]})` : null;
         const icon = (this.props.rowData.media_type === 'movie' ? 'film' : 'tv');
         const posterImage = (this.props.rowData.poster_path)
-            ? <Image style={styles.image} source={{ uri: imageUrl }} />
-            : <View style={styles.image}><FontAwesome name={icon} size={20} style={styles.icon} /></View>
+            ? <Image style={styles.poster} source={{ uri: imageUrl }} />
+            : <View style={[styles.poster, styles.noImage]}><FontAwesome name={icon} size={20} style={styles.icon} /></View>
         return (
             <TouchableHighlight onPress={this.props.onResultSelect}>
                 <View style={styles.resultRow}>
@@ -52,25 +52,26 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderColor: '#555',
         borderBottomWidth: 1,
-        paddingVertical: 5,
-        paddingHorizontal: 5,
+        padding: 5,
     },
     imageContainer: {
-        elevation: 2,
-        backgroundColor: '#444',
-        borderRadius: 4,
-    },
-    image: {
+        elevation: 4,
+        borderRadius: 2,
         width: 39,
         height: 60,
-        borderRadius: 4,
+    },
+    poster: {
+        borderRadius: 2,
+        flex: 1,
+    },
+    noImage: {
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#171717',
     },
     textContainer: {
-        paddingLeft: 10,
-        width: 250,
+        paddingHorizontal: 10,
+        width: 270,
     },
     text: {
         color: '#EEE',

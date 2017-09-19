@@ -73,7 +73,7 @@ const HEIGHT = Dimensions.get('window').height;
 const styles = StyleSheet.create({
     listContainer: {
         position: 'absolute',
-        top: 50,
+        top: 45,
         width: WIDTH,
         height: HEIGHT,
         backgroundColor: 'rgba(0,0,0,0.7)',
@@ -82,12 +82,11 @@ const styles = StyleSheet.create({
     },
     list: {
         maxHeight: 400,
-        width: 300,
         elevation: 7,
     },
     noResultsContainer: {
         height: 50,
-        width: 300,
+        width: 320,
         elevation: 7,
         backgroundColor: '#444',
         alignItems: 'center',
