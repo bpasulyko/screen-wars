@@ -17,6 +17,7 @@ import NoItems from '../components/NoItems';
 import { FontAwesome } from '@expo/vector-icons';
 import Router from '../navigation/Router';
 import FilterMenu from '../components/FilterMenu';
+import SearchBox from '../components/SearchBox';
 import { getMainColor } from '../util/themeUtil';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 
@@ -132,8 +133,12 @@ export default class Movies extends React.PureComponent {
                     onGenreChange={this.handleGenreChange}
                     onSortChange={this.handleSortChange}
                     clearFilter={this.handleClearFilter}
-                    searchString={this.state.searchString}
-                    onSearchChange={this.handleSearchChange}
+                />
+                <SearchBox
+                    value={this.state.searchString}
+                    onClear={() => this.handleSearchChange(null)}
+                    onChange={(searchString) => this.handleSearchChange(searchString)}
+                    onSubmit={() => {}}
                 />
                 <LoadingContainer loading={this.state.loading}>
                     <TabViewAnimated
