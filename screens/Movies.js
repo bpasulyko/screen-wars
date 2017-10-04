@@ -139,6 +139,7 @@ export default class Movies extends React.PureComponent {
                     onClear={() => this.handleSearchChange(null)}
                     onChange={(searchString) => this.handleSearchChange(searchString)}
                     onSubmit={() => {}}
+                    containerStyle={{ height: 45 }}
                 />
                 <LoadingContainer loading={this.state.loading}>
                     <TabViewAnimated

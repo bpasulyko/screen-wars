@@ -19,6 +19,7 @@ class SearchBox extends React.Component {
         onChange: PropTypes.func,
         onSubmit: PropTypes.func,
         loading: PropTypes.bool,
+        containerStyle: PropTypes.object,
     }
 
     static defaultProps = {
@@ -68,7 +69,7 @@ class SearchBox extends React.Component {
         });
         const iconColor = this.state.focused ? getMainColor() : '#777';
         return (
-            <View style={styles.container}>
+            <View style={[styles.container, this.props.containerStyle]}>
                 <Animated.View style={[styles.searchContainer, { borderColor: borderColor }]}>
                     <MaterialIcons name="search" size={24} style={{ marginRight: 5, color: iconColor }} />
                     <TextInput
@@ -98,10 +99,7 @@ export default SearchBox;
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#171717',
-        height: 60,
-        paddingBottom: 15,
         paddingHorizontal: 15,
-        elevation: 5,
     },
     searchContainer: {
         flex: 1,

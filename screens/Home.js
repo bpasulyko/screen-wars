@@ -194,6 +194,11 @@ export default class Home extends React.Component {
                 onChange={this.setQueryString}
                 onSubmit={this.handleSearchSubmit}
                 loading={this.state.searching}
+                containerStyle={{
+                    height: 60,
+                    paddingBottom: 15,
+                    elevation: 5,
+                }}
             />
         );
     };
