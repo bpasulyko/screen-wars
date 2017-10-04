@@ -6,6 +6,8 @@ import {
     StyleSheet,
     TouchableOpacity,
     TextInput,
+    Animated,
+    ActivityIndicator,
 } from 'react-native';
 import { getMainColor } from '../util/themeUtil';
 
@@ -16,10 +18,20 @@ class SearchBox extends React.Component {
         editable: PropTypes.bool,
         onChange: PropTypes.func,
         onSubmit: PropTypes.func,
+        loading: PropTypes.bool,
     }
 
     static defaultProps = {
         editable: true,
+        loading: false,
+    }
+
+    state = {
+        focused: false,
+    }
+
+    componentWillMount() {
+        this.animation = new Animated.Value(0);
     }
 
     onClear = () => {
@@ -28,11 +40,37 @@ class SearchBox extends React.Component {
         this.props.onClear();
     }
 
+    toggleFocus = () => {
+        const value = this.state.focused ? 0 : 100;
+        Animated.timing(this.animation, { toValue: value, duration: 100 }).start();
+        this.setState({ focused: !this.state.focused });
+    }
+
+    renderRightIcon = () => {
+        const iconColor = this.state.focused ? getMainColor() : '#777';
+        if (this.props.loading) {
+            return <ActivityIndicator color={getMainColor()} />;
+        } else if (this.props.value) {
+            return (
+                <TouchableOpacity onPress={this.onClear}>
+                    <MaterialIcons name="close" size={24} style={{ color: iconColor }} />
+                </TouchableOpacity>
+            );
+        } else {
+            return null;
+        }
+    }
+
     render() {
+        const borderColor = this.animation.interpolate({
+            inputRange: [0, 100],
+            outputRange: ['#FFF', getMainColor()],
+        });
+        const iconColor = this.state.focused ? getMainColor() : '#777';
         return (
             <View style={styles.container}>
-                <View style={styles.searchContainer}>
-                    <MaterialIcons name="search" size={24} style={{ marginRight: 5, color: '#777' }} />
+                <Animated.View style={[styles.searchContainer, { borderColor: borderColor }]}>
+                    <MaterialIcons name="search" size={24} style={{ marginRight: 5, color: iconColor }} />
                     <TextInput
                         ref="search_input"
                         style={styles.input}
@@ -42,16 +80,14 @@ class SearchBox extends React.Component {
                         selectionColor={getMainColor()}
                         returnKeyType='search'
                         selectTextOnFocus
+                        onFocus={this.toggleFocus}
+                        onBlur={this.toggleFocus}
                         onChangeText={this.props.onChange}
                         onSubmitEditing={this.props.onSubmit}
                         underlineColorAndroid='rgba(0,0,0,0)'
                     />
-                    {this.props.value && (
-                        <TouchableOpacity onPress={this.onClear}>
-                            <MaterialIcons name="close" size={24} style={{ color: '#777' }} />
-                        </TouchableOpacity>
-                    )}
-                </View>
+                    {this.renderRightIcon()}
+                </Animated.View>
             </View>
         );
     }
@@ -62,8 +98,8 @@ export default SearchBox;
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#171717',
-        height: 55,
-        paddingBottom: 10,
+        height: 60,
+        paddingBottom: 15,
         paddingHorizontal: 15,
         elevation: 5,
     },
@@ -73,8 +109,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#FFF',
         elevation: 4,
-        borderRadius: 2,
+        borderRadius: 3,
         paddingHorizontal: 10,
+        borderWidth: 2,
     },
     input: {
         flex: 1,

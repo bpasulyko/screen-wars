@@ -24,6 +24,7 @@ import { getMainColor } from '../util/themeUtil';
 export default class Home extends React.Component {
     state = {
         loading: true,
+        searching: false,
         queryString: null,
         searchResults: null,
         movies: [],
@@ -84,7 +85,13 @@ export default class Home extends React.Component {
     };
 
     handleSearchSubmit = (e) => {
-        return multiSearch(e.nativeEvent.text).then((results) => this.setState({ searchResults: results }));
+        this.setState({ searching: true });
+        return multiSearch(e.nativeEvent.text).then((results) => {
+            this.setState({
+                searchResults: results,
+                searching: false,
+            });
+        });
     };
 
     clearSearch = () => {
@@ -186,6 +193,7 @@ export default class Home extends React.Component {
                 editable={!this.state.loading}
                 onChange={this.setQueryString}
                 onSubmit={this.handleSearchSubmit}
+                loading={this.state.searching}
             />
         );
     };
