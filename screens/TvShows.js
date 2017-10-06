@@ -80,11 +80,7 @@ export default class TvShows extends React.PureComponent {
     handleIndexChange = index => this.setState({ index });
 
     handleFilter = () => {
-        this.setState({
-            showFilterMenu: !this.state.showFilterMenu,
-            selectedGenre: null,
-            selectedSort: null,
-        });
+        this.setState({ showFilterMenu: !this.state.showFilterMenu });
     };
 
     handleGenreChange = (selectedGenre) => {
@@ -97,6 +93,13 @@ export default class TvShows extends React.PureComponent {
 
     handleSearchChange = (searchString) => {
         this.setState({ searchString });
+    };
+
+    handleClearFilter = () => {
+        this.setState({
+            selectedGenre: null,
+            selectedSort: null,
+        });
     };
 
     renderHeader = props => {
@@ -132,7 +135,8 @@ export default class TvShows extends React.PureComponent {
                     selectedSort={this.state.selectedSort}
                     onGenreChange={this.handleGenreChange}
                     onSortChange={this.handleSortChange}
-                    clearFilter={this.handleClearFilter}
+                    onClose={this.handleFilter}
+                    onClear={this.handleClearFilter}
                 />
                 <SearchBox
                     value={this.state.searchString}

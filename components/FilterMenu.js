@@ -1,17 +1,20 @@
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
+import Modal from 'react-native-modal';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import {
   StyleSheet,
-  Animated,
   View,
   Picker,
+  Button,
+  TouchableOpacity,
 } from 'react-native';
 
-import { FontAwesome } from '@expo/vector-icons';
 import SortOptions from '../util/SortOptions'
 import { getGenres } from '../repository/tmdbRepo';
 import BodyText from './BodyText';
+import TitleText from './TitleText';
 
 const FilterMenu = React.createClass({
     propTypes: {
@@ -20,6 +23,8 @@ const FilterMenu = React.createClass({
         selectedSort: PropTypes.number,
         onGenreChange: PropTypes.func,
         onSortChange: PropTypes.func,
+        onClose: PropTypes.func,
+        onClear: PropTypes.func,
     },
 
     getDefaultProps() {
@@ -28,13 +33,18 @@ const FilterMenu = React.createClass({
         }
     },
 
-    componentWillMount() {
-        this.animation = new Animated.Value(0);
-    },
-
-    componentDidUpdate() {
-        const value = (this.props.show) ? 80 : 0;
-        Animated.timing(this.animation, { toValue: value, duration: 250 }).start();
+    renderHeader() {
+        return (
+            <View style={[styles.header, styles.modalPadding]}>
+                <TouchableOpacity onPress={this.props.onClear}>
+                    <MaterialIcons name="close" size={28} style={{ color: '#EEE' }} />
+                </TouchableOpacity>
+                <TitleText style={styles.heading}>Filters</TitleText>
+                <TouchableOpacity onPress={this.props.onClose}>
+                    <MaterialIcons name="check" size={28} style={{ color: '#EEE' }} />
+                </TouchableOpacity>
+            </View>
+        );
     },
 
     renderGenrePicker() {
@@ -72,16 +82,21 @@ const FilterMenu = React.createClass({
     },
 
     render() {
-        const animatedStyle = { height: this.animation };
         return (
-            <View>
-                <Animated.View style={[styles.container, animatedStyle]}>
-                    <View style={styles.dropdownContainer}>
+            <Modal
+                isVisible={this.props.show}
+                style={styles.container}
+                animationIn="slideInDown"
+                animationOut="slideOutUp"
+            >
+                <View style={styles.modalContent}>
+                    {this.renderHeader()}
+                    <View style={[styles.dropdownContainer, styles.modalPadding]}>
                         {this.renderGenrePicker()}
                         {this.renderSortPicker()}
                     </View>
-                </Animated.View>
-            </View>
+                </View>
+            </Modal>
         );
     }
 });
@@ -90,18 +105,33 @@ export default FilterMenu;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#171717',
-        alignSelf: 'stretch',
+        justifyContent: 'flex-start',
+        margin: 0,
     },
-    dropdownContainer: {
+    modalPadding: {
+        paddingHorizontal: 10,
+    },
+    modalContent: {
+        backgroundColor: '#171717',
+        paddingBottom: 25,
+        justifyContent: 'center',
+        borderRadius: 4,
+    },
+    header: {
         flexDirection: 'row',
         alignSelf: 'stretch',
-        alignItems: 'center',
         justifyContent: 'space-between',
+        paddingVertical: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: '#EEE',
+    },
+    heading: {
+        fontSize: 24,
+        color: '#EEE',
+        alignSelf: 'center',
     },
     pickerContainer: {
-        flex: 1,
-        paddingHorizontal: 10,
+        paddingTop: 15,
     },
     pickerLabel: {
         color: '#EEE',
