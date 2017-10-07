@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingVertical: 15,
         borderBottomWidth: 1,
-        borderBottomColor: '#EEE',
+        borderBottomColor: '#444',
     },
     heading: {
         fontSize: 24,
