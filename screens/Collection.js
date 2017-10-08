@@ -49,12 +49,15 @@ export default class Collection extends React.Component {
         const backdropUrl = `${baseUrl}${backdropSize}${this.state.data.backdrop_path}`;
         const posterSize = imageConfig.poster_sizes[2];
         const posterUrl = `${baseUrl}${posterSize}${this.state.data.poster_path}`;
+        const posterImage = (this.state.data.poster_path)
+            ? <Image style={styles.poster} source={{ uri: posterUrl }} />
+            : <View style={[styles.poster, styles.noImage]}><FontAwesome name="film" size={40} style={styles.noImageIcon} /></View>
         return (
             <View>
                 <View style={styles.headerContainer}>
                     <Image style={styles.backdropImage} source={{ uri: backdropUrl }} />
                     <View style={styles.posterContainer}>
-                        <Image style={styles.poster} source={{ uri: posterUrl }} />
+                        {posterImage}
                     </View>
                     <TitleText style={styles.title}>{this.state.data.name}</TitleText>
                 </View>
@@ -125,5 +128,13 @@ const styles = StyleSheet.create({
         paddingTop: 15,
         fontSize: 24,
         color: '#EEE',
+    },
+    noImage: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#171717',
+    },
+    noImageIcon: {
+        color: '#555',
     },
 });
