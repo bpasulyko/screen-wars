@@ -30,7 +30,7 @@ class EpisodeList extends React.Component {
         const stillUrl = `${baseUrl}${stillSize}${episode.still_path}`;
         const stillImage = (episode.still_path)
             ? <Image style={styles.stillImage} source={{ uri: stillUrl }} />
-            : <View style={[styles.stillImage, styles.noImage]}><FontAwesome name="tv" size={20} style={styles.icon} /></View>
+            : <View style={[styles.stillImage, styles.noImage]}><FontAwesome name="tv" size={35} style={styles.noImageIcon} /></View>
         const airDate = moment(episode.air_date).format('MMMM D, YYYY');
         const rating = episode.vote_average.toFixed(1);
         return (
@@ -99,6 +99,11 @@ const styles = StyleSheet.create({
     },
     noImage: {
         backgroundColor: '#171717',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    noImageIcon: {
+        color: '#555',
     },
     starIcon: {
         color: '#FFC107',
