@@ -93,13 +93,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    noImage: {    
+    noImage: {
         backgroundColor: '#171717',
     },
     headerContent: {
         flex: 1,
         paddingLeft: 10,
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
     },
     title: {
         fontSize: 20,
