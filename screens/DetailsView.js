@@ -16,8 +16,7 @@ import Header from '../components/detailsView/Header';
 import SubHeader from '../components/detailsView/SubHeader';
 import Rating from '../components/detailsView/Rating';
 import Genres from '../components/detailsView/Genres';
-import CastList from '../components/detailsView/CastList';
-import CrewList from '../components/detailsView/CrewList';
+import PeopleList from '../components/detailsView/PeopleList';
 import CollectionSection from '../components/detailsView/CollectionSection';
 import CollectionButton from '../components/detailsView/CollectionButton';
 import BodyText from '../components/BodyText';
@@ -126,8 +125,8 @@ export default class DetailsView extends React.Component {
                                     <BodyText style={styles.releaseDate}>{this.formatReleaseDate()}</BodyText>
                                 </View>
                                 <Genres itemDetails={item} />
-                                {item.credits && item.credits.cast.length > 0 && <CastList cast={item.credits.cast} />}
-                                {item.credits && item.credits.crew.length > 0 && <CrewList crew={item.credits.crew} />}
+                                {item.credits && item.credits.cast.length > 0 && <PeopleList type="cast" people={item.credits.cast} />}
+                                {item.credits && item.credits.crew.length > 0 && <PeopleList type="crew" people={item.credits.crew} />}
                             </View>
                         </ScrollView>
                         <CollectionButton
