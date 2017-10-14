@@ -19,7 +19,7 @@ import Genres from '../components/detailsView/Genres';
 import PeopleList from '../components/detailsView/PeopleList';
 import CollectionSection from '../components/detailsView/CollectionSection';
 import CollectionButton from '../components/detailsView/CollectionButton';
-import PosterViewModal from '../components/detailsView/PosterViewModal';
+import PosterGallery from '../components/detailsView/PosterGallery';
 import Recommendations from '../components/detailsView/Recommendations';
 import BodyText from '../components/BodyText';
 import TitleText from '../components/TitleText';
@@ -142,7 +142,7 @@ export default class DetailsView extends React.Component {
                                 <Genres itemDetails={item} />
                                 {item.credits && item.credits.cast.length > 0 && <PeopleList type="cast" people={item.credits.cast} />}
                                 {item.credits && item.credits.crew.length > 0 && <PeopleList type="crew" people={item.credits.crew} />}
-                                {item.recommendations && (
+                                {item.recommendations && item.recommendations.results.length > 0 && (
                                     <Recommendations items={item.recommendations.results} type={item.type} onPress={this.goToDetails} />
                                 )}
                             </View>
@@ -156,7 +156,7 @@ export default class DetailsView extends React.Component {
                             toggleFavorite={this.toggleFavorite}
                         />
                         {item.images && (
-                            <PosterViewModal visible={this.state.posterModalVisible} onClose={this.togglePosterModal} images={item.images.posters} />
+                            <PosterGallery visible={this.state.posterModalVisible} onClose={this.togglePosterModal} images={item.images.posters} />
                         )}
                     </View>
                 </LoadingContainer>

@@ -15,7 +15,7 @@ import { getMainColor } from '../../util/themeUtil';
 import { getImageConfig } from '../../repository/tmdbRepo';
 import TitleText from '../TitleText';
 
-const PosterViewModal = ({ visible, onClose, images }) => {
+const PosterGallery = ({ visible, onClose, images }) => {
     const renderPoster = (img, key, total) => {
         const imageConfig = getImageConfig();
         const baseUrl = imageConfig.base_url;
@@ -52,7 +52,7 @@ const PosterViewModal = ({ visible, onClose, images }) => {
     );
 };
 
-export default PosterViewModal;
+export default PosterGallery;
 
 const ENTIRE_WIDTH = Dimensions.get('window').width;
 const IMAGE_WIDTH = ENTIRE_WIDTH * 0.95;
