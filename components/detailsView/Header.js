@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Image,
   View,
+  TouchableOpacity
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { getImageConfig } from '../../repository/tmdbRepo';
@@ -13,6 +14,7 @@ import TitleText from '../TitleText';
 const Header = React.createClass({
     propTypes: {
         itemDetails: React.PropTypes.shape(),
+        onPosterPress: React.PropTypes.func,
     },
 
     formatYear() {
@@ -59,9 +61,9 @@ const Header = React.createClass({
             : <View style={[styles.poster, styles.noImage]}><FontAwesome name={icon} size={50} style={styles.icon} /></View>
         return (
             <View style={styles.headerContainer}>
-                <View style={styles.posterContainer}>
+                <TouchableOpacity style={styles.posterContainer} onPress={this.props.onPosterPress}>
                     {posterImage}
-                </View>
+                </TouchableOpacity>
                 <View style={styles.headerContent}>
                     <TitleText style={[styles.text, styles.title]}>
                         {item.title || item.name} <BodyText style={styles.year}>({this.formatYear()})</BodyText>

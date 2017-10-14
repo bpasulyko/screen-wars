@@ -44,6 +44,7 @@ class App extends React.Component {
             'star-wars-outline': require('./assets/fonts/SFDistantGalaxyOutline.ttf'),
             'raleway-bold': require('./assets/fonts/Raleway-ExtraBold.ttf'),
             'raleway': require('./assets/fonts/Raleway-Regular.ttf'),
+            'Arial': require('./assets/fonts/Raleway-Regular.ttf'),
         });
         this.setState({ fontLoaded: true });
     }

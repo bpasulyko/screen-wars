@@ -19,6 +19,7 @@ import Genres from '../components/detailsView/Genres';
 import PeopleList from '../components/detailsView/PeopleList';
 import CollectionSection from '../components/detailsView/CollectionSection';
 import CollectionButton from '../components/detailsView/CollectionButton';
+import PosterViewModal from '../components/detailsView/PosterViewModal';
 import BodyText from '../components/BodyText';
 import TitleText from '../components/TitleText';
 import Button from '../components/Button';
@@ -33,6 +34,7 @@ export default class DetailsView extends React.Component {
         loading: true,
         itemDetails: {},
         inCollection: false,
+        posterModalVisible: false,
     };
 
     componentDidMount() {
@@ -94,6 +96,10 @@ export default class DetailsView extends React.Component {
         });
     };
 
+    togglePosterModal = () => {
+        this.setState({ posterModalVisible: !this.state.posterModalVisible });
+    };
+
     formatReleaseDate = () => {
         const item = this.state.itemDetails;
         const releaseDate = (item.type === 'movie') ? item.release_date : item.first_air_date;
@@ -111,7 +117,7 @@ export default class DetailsView extends React.Component {
                         <ScrollView>
                             <Backdrop path={item.backdrop_path} />
                             <View>
-                                <Header itemDetails={item} />
+                                <Header itemDetails={item} onPosterPress={this.togglePosterModal} />
                                 <SubHeader itemDetails={item} onSeasonsClick={this.goToSeasons} />
                                 <View style={[styles.overview, { backgroundColor: getMainColor(0.7) }]}>
                                     <TitleText style={styles.heading}>Overview</TitleText>
@@ -137,6 +143,9 @@ export default class DetailsView extends React.Component {
                             onDelete={this.deleteItem}
                             toggleFavorite={this.toggleFavorite}
                         />
+                        {item.images && (
+                            <PosterViewModal visible={this.state.posterModalVisible} onClose={this.togglePosterModal} images={item.images.posters} />
+                        )}
                     </View>
                 </LoadingContainer>
             </View>
