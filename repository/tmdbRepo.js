@@ -36,7 +36,7 @@ export function multiSearch(queryString) {
 }
 
 export function getByType(type, id) {
-    return fetch(`${BASE_URL}/${type}/${id}?api_key=${API_KEY}&language=en&append_to_response=credits,images`)
+    return fetch(`${BASE_URL}/${type}/${id}?api_key=${API_KEY}&language=en&append_to_response=credits,images,recommendations`)
         .then((response) => response.json())
         .catch((error) => {
             console.error(error);

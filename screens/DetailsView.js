@@ -20,6 +20,7 @@ import PeopleList from '../components/detailsView/PeopleList';
 import CollectionSection from '../components/detailsView/CollectionSection';
 import CollectionButton from '../components/detailsView/CollectionButton';
 import PosterViewModal from '../components/detailsView/PosterViewModal';
+import Recommendations from '../components/detailsView/Recommendations';
 import BodyText from '../components/BodyText';
 import TitleText from '../components/TitleText';
 import Button from '../components/Button';
@@ -96,6 +97,14 @@ export default class DetailsView extends React.Component {
         });
     };
 
+    goToDetails = (selectedItemId, type) => {
+        const view = (type === 'movie') ? 'MovieDetails' : 'TvDetails';
+        this.props.navigation.navigate(view, {
+            id: selectedItemId,
+            type: type,
+        });
+    };
+
     togglePosterModal = () => {
         this.setState({ posterModalVisible: !this.state.posterModalVisible });
     };
@@ -133,6 +142,9 @@ export default class DetailsView extends React.Component {
                                 <Genres itemDetails={item} />
                                 {item.credits && item.credits.cast.length > 0 && <PeopleList type="cast" people={item.credits.cast} />}
                                 {item.credits && item.credits.crew.length > 0 && <PeopleList type="crew" people={item.credits.crew} />}
+                                {item.recommendations && (
+                                    <Recommendations items={item.recommendations.results} type={item.type} onPress={this.goToDetails} />
+                                )}
                             </View>
                         </ScrollView>
                         <CollectionButton
