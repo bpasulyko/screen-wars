@@ -1,8 +1,9 @@
 import React from 'react';
 import {
   StyleSheet,
-  Text,
+  View,
 } from 'react-native';
+import TitleText from './TitleText';
 
 const TextBubble = React.createClass({
     propTypes: {
@@ -10,7 +11,7 @@ const TextBubble = React.createClass({
     },
 
     render() {
-        return <Text style={styles.text}>{this.props.children}</Text>;
+        return <View style={styles.text}><TitleText style={{ color: '#EEE' }}>{this.props.children}</TitleText></View>;
     }
 });
 
@@ -18,13 +19,11 @@ export default TextBubble;
 
 const styles = StyleSheet.create({
     text: {
-        paddingVertical: 3,
-        paddingHorizontal: 10,
+        paddingVertical: 8,
+        paddingHorizontal: 12,
         backgroundColor: '#444',
-        borderRadius: 3,
-        borderWidth: 1,
-        borderColor: '#555',
-        color: '#EEE',
-        margin: 2,
+        borderRadius: 4,
+        margin: 4,
+        elevation: 4,
     },
 });

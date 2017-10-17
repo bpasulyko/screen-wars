@@ -30,7 +30,7 @@ export default Recommendations;
 
 const styles = StyleSheet.create({
     container: {
-        paddingVertical: 10,
+        paddingBottom: 100,
     },
     heading: {
         color: '#EEE',
