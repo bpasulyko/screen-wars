@@ -103,7 +103,7 @@ export default class Home extends React.Component {
 
     goToDetails = (selectedItemId, type) => {
         const view = type === 'movie' ? 'MovieDetails' : 'TvDetails';
-        this.props.navigation.navigate(view, {
+        this.props.navigation.navigate('Details', {
             id: selectedItemId,
             type: type,
         });

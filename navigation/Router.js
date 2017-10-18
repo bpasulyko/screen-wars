@@ -21,6 +21,21 @@ const DrawerIcon = ({ navigate }) => {
     );
 };
 
+const standardHeaderStyle = {
+    backgroundColor: '#171717',
+    elevation: 0,
+};
+
+const transparentHeaderStyle = {
+    position: 'absolute',
+    backgroundColor: 'transparent',
+    zIndex: 100,
+    top: 0,
+    left: 0,
+    right: 0,
+    elevation: 0,
+};
+
 export const HomeStack = StackNavigator({
     Home: {
         screen: Home,
@@ -28,12 +43,10 @@ export const HomeStack = StackNavigator({
             headerTintColor: '#EEE',
             headerTitle: <NavBarTitle title="Screen Wars" />,
             headerLeft: <DrawerIcon {...navigation} />,
-            headerStyle: {
-                backgroundColor: '#171717',
-                elevation: 0,
-            },
+            headerStyle: standardHeaderStyle,
         }),
     },
+    Details: getDetailsView(),
     ...MoviesStack,
     ...TvStack,
 });
@@ -45,41 +58,16 @@ export const MoviesStack = StackNavigator({
             headerTintColor: '#EEE',
             headerTitle: <NavBarTitle title="Movies" />,
             headerLeft: <DrawerIcon {...navigation} />,
-            headerStyle: {
-                backgroundColor: '#171717',
-                elevation: 0,
-            },
+            headerStyle: standardHeaderStyle,
             headerRight: <FilterButton onPress={() => navigation.setParams({ filter: true })} />,
         }),
     },
-    MovieDetails: {
-        screen: DetailsView,
-        navigationOptions: ({ navigation }) => ({
-            headerTintColor: '#EEE',
-            headerStyle: {
-                position: 'absolute',
-                backgroundColor: 'transparent',
-                zIndex: 100,
-                top: 0,
-                left: 0,
-                right: 0,
-                elevation: 0,
-            },
-        }),
-    },
+    MovieDetails: getDetailsView(),
     Collection: {
         screen: Collection,
         navigationOptions: ({ navigation }) => ({
             headerTintColor: '#EEE',
-            headerStyle: {
-                position: 'absolute',
-                backgroundColor: 'transparent',
-                zIndex: 100,
-                top: 0,
-                left: 0,
-                right: 0,
-                elevation: 0,
-            },
+            headerStyle: transparentHeaderStyle,
         }),
     },
 });
@@ -91,37 +79,17 @@ export const TvStack = StackNavigator({
             headerTintColor: '#EEE',
             headerTitle: <NavBarTitle title="TV" />,
             headerLeft: <DrawerIcon {...navigation} />,
-            headerStyle: {
-                backgroundColor: '#171717',
-                elevation: 0,
-            },
+            headerStyle: standardHeaderStyle,
             headerRight: <FilterButton onPress={() => navigation.setParams({ filter: true })} />,
         }),
     },
-    TvDetails: {
-        screen: DetailsView,
-        navigationOptions: ({ navigation }) => ({
-            headerTintColor: '#EEE',
-            headerStyle: {
-                position: 'absolute',
-                backgroundColor: 'transparent',
-                zIndex: 100,
-                top: 0,
-                left: 0,
-                right: 0,
-                elevation: 0,
-            },
-        }),
-    },
+    TvDetails: getDetailsView(),
     Seasons: {
         screen: Seasons,
         navigationOptions: ({ navigation }) => ({
             headerTintColor: '#EEE',
             headerTitle: <NavBarTitle title="Seasons" />,
-            headerStyle: {
-                backgroundColor: '#171717',
-                elevation: 0,
-            },
+            headerStyle: standardHeaderStyle,
         }),
     },
     Episodes: {
@@ -129,10 +97,7 @@ export const TvStack = StackNavigator({
         navigationOptions: ({ navigation }) => ({
             headerTintColor: '#EEE',
             headerTitle: <NavBarTitle title="Episodes" />,
-            headerStyle: {
-                backgroundColor: '#171717',
-                elevation: 0,
-            },
+            headerStyle: standardHeaderStyle,
         }),
     },
 });
@@ -144,10 +109,17 @@ export const SettingsStack = StackNavigator({
             headerTintColor: '#EEE',
             headerTitle: <NavBarTitle title="Settings" noIcon />,
             headerLeft: <DrawerIcon {...navigation} />,
-            headerStyle: {
-                backgroundColor: '#171717',
-                elevation: 0,
-            },
+            headerStyle: standardHeaderStyle,
         }),
     },
 });
+
+function getDetailsView() {
+    return {
+        screen: DetailsView,
+        navigationOptions: ({ navigation }) => ({
+            headerTintColor: '#EEE',
+            headerStyle: transparentHeaderStyle,
+        }),
+    };
+}
