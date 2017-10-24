@@ -15,6 +15,7 @@ import ItemList from '../components/ItemList';
 import { FontAwesome } from '@expo/vector-icons';
 import Router from '../navigation/Router';
 import TitleText from '../components/TitleText';
+import Backdrop from '../components/detailsView/Backdrop';
 
 import { getImageConfig, getCollection } from '../repository/tmdbRepo';
 
@@ -45,8 +46,6 @@ export default class Collection extends React.Component {
     renderContent = () => {
         const imageConfig = getImageConfig();
         const baseUrl = imageConfig.base_url;
-        const backdropSize = imageConfig.backdrop_sizes[1];
-        const backdropUrl = `${baseUrl}${backdropSize}${this.state.data.backdrop_path}`;
         const posterSize = imageConfig.poster_sizes[2];
         const posterUrl = `${baseUrl}${posterSize}${this.state.data.poster_path}`;
         const posterImage = (this.state.data.poster_path)
@@ -55,7 +54,7 @@ export default class Collection extends React.Component {
         return (
             <View>
                 <View style={styles.headerContainer}>
-                    <Image style={styles.backdropImage} source={{ uri: backdropUrl }} />
+                    <Backdrop path={this.state.data.backdrop_path} singleImage />
                     <View style={styles.posterContainer}>
                         {posterImage}
                     </View>
@@ -96,16 +95,12 @@ const BACKDROP_HEIGHT = WIDTH * 0.5625;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#333',
+        backgroundColor: '#222',
         alignItems: 'center',
         justifyContent: 'center',
     },
     headerContainer: {
         height: 310,
-    },
-    backdropImage: {
-        width: WIDTH,
-        height: BACKDROP_HEIGHT,
     },
     posterContainer: {
         position: 'absolute',

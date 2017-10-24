@@ -124,7 +124,7 @@ export default class DetailsView extends React.Component {
                 <LoadingContainer loading={this.state.loading}>
                     <View>
                         <ScrollView>
-                            <Backdrop path={item.backdrop_path} />
+                            {item.images && <Backdrop images={[item.backdrop_path, ...item.images.backdrops.map(x => x.file_path)]} />}
                             <View>
                                 <Header itemDetails={item} onPosterPress={this.togglePosterModal} />
                                 <SubHeader itemDetails={item} onSeasonsClick={this.goToSeasons} />
