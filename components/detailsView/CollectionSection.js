@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Image,
   StyleSheet,
@@ -10,8 +11,8 @@ import TitleText from '../TitleText';
 
 import { getImageConfig } from '../../repository/tmdbRepo';
 
-const CollectionSection = React.createClass({
-    propTypes: {
+class CollectionSection extends React.Component {
+    static propTypes = {
         collectionData: PropTypes.shape({
             id: PropTypes.number,
             name: PropTypes.string,
@@ -19,7 +20,7 @@ const CollectionSection = React.createClass({
             backdrop_path: PropTypes.string,
         }),
         onViewLinkClick: PropTypes.func,
-    },
+    }
 
     render() {
         const imageConfig = getImageConfig();
@@ -39,7 +40,7 @@ const CollectionSection = React.createClass({
             </View>
         );
     }
-});
+}
 
 export default CollectionSection;
 

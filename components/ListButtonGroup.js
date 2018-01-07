@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import {
   StyleSheet,
@@ -9,15 +10,15 @@ import ListTypes from '../util/ListTypes';
 import BodyText from './BodyText';
 import TitleText from './TitleText';
 
-const ListButtonGroup = React.createClass({
-    propTypes: {
+class ListButtonGroup extends React.Component {
+    static propTypes = {
         onListButtonClick: PropTypes.func,
         activeList: PropTypes.shape({
             name: PropTypes.string,
             title: PropTypes.string,
             icon: PropTypes.string,
         }),
-    },
+    }
 
     render() {
         return (
@@ -34,7 +35,7 @@ const ListButtonGroup = React.createClass({
             </View>
         );
     }
-});
+}
 
 export default ListButtonGroup;
 

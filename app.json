@@ -4,19 +4,15 @@
       "description": "",
       "slug": "screen-wars",
       "privacy": "unlisted",
-      "sdkVersion": "21.0.0",
+      "sdkVersion": "24.0.0",
       "version": "1.8.0",
       "orientation": "portrait",
       "primaryColor": "#171717",
-      "icon": "./screenWarsIcon2.png",
-      "notification": {
-        "icon": "https://s3.amazonaws.com/exp-us-standard/placeholder-push-icon-blue-circle.png",
-        "color": "#000000"
-      },
-      "loading": {
-        "icon": "./screenWarsIcon2.png",
-        "backgroundColor": "#171717",
-        "hideExponentText": false
+      "icon": "./assets/images/screenWarsIcon2.png",
+      "splash": {
+        "image": "./assets/images/splash.png",
+        "resizeMode": "cover",
+        "backgroundColor": "#171717"
       },
       "packagerOpts": {
         "assetExts": ["ttf", "mp4"]

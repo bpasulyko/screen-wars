@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import {
   StyleSheet,
@@ -11,13 +12,13 @@ import { getImageConfig } from '../../repository/tmdbRepo';
 import BodyText from '../BodyText';
 import TitleText from '../TitleText';
 
-const Header = React.createClass({
-    propTypes: {
-        itemDetails: React.PropTypes.shape(),
-        onPosterPress: React.PropTypes.func,
-    },
+class Header extends React.Component {
+    static propTypes = {
+        itemDetails: PropTypes.object,
+        onPosterPress: PropTypes.func,
+    }
 
-    formatYear() {
+    formatYear = () => {
         const item = this.props.itemDetails;
         if (item.type === 'movie') {
             return item.release_date.split('-')[0];
@@ -26,17 +27,17 @@ const Header = React.createClass({
                 ? `${item.first_air_date.split('-')[0]}-${item.last_air_date.split('-')[0]}`
                 : `${item.first_air_date.split('-')[0]}-`;
         }
-    },
+    }
 
-    formatRuntime() {
+    formatRuntime = () => {
         const item = this.props.itemDetails;
         const runtime = (item.type === 'movie') ? item.runtime : item.episode_run_time[0];
         const hours = Math.floor(runtime/60);
         const mins = runtime%60;
         return (hours > 0) ? `${hours}h ${mins}min` : `${mins}min`;
-    },
+    }
 
-    renderDirectorSection() {
+    renderDirectorSection = () => {
         const item = this.props.itemDetails;
         const directors = (item.type === 'movie')
             ? _.filter(item.credits.crew, { job: 'Director' })
@@ -48,7 +49,7 @@ const Header = React.createClass({
                 <BodyText style={[styles.text, { fontSize: 16 }]}>{directors.map((x) => x.name).join(', ')}</BodyText>
             </View>
         );
-    },
+    }
 
     render() {
         const imageConfig = getImageConfig();
@@ -74,7 +75,7 @@ const Header = React.createClass({
             </View>
         );
     }
-});
+}
 
 export default Header;
 

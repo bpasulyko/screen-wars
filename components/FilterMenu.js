@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Modal from 'react-native-modal';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -16,8 +17,8 @@ import { getGenres } from '../repository/tmdbRepo';
 import BodyText from './BodyText';
 import TitleText from './TitleText';
 
-const FilterMenu = React.createClass({
-    propTypes: {
+class FilterMenu extends React.Component {
+    static propTypes = {
         show: PropTypes.bool,
         selectedGenre: PropTypes.number,
         selectedSort: PropTypes.number,
@@ -25,15 +26,13 @@ const FilterMenu = React.createClass({
         onSortChange: PropTypes.func,
         onClose: PropTypes.func,
         onClear: PropTypes.func,
-    },
+    }
 
-    getDefaultProps() {
-        return {
-            show: false,
-        }
-    },
+    static defaultProps = {
+        show: false,
+    }
 
-    renderHeader() {
+    renderHeader = () => {
         return (
             <View style={[styles.header, styles.modalPadding]}>
                 <TouchableOpacity onPress={this.props.onClear}>
@@ -45,9 +44,9 @@ const FilterMenu = React.createClass({
                 </TouchableOpacity>
             </View>
         );
-    },
+    }
 
-    renderGenrePicker() {
+    renderGenrePicker = () => {
         const allGenres = [{
             id: 0,
             name: 'All',
@@ -64,9 +63,9 @@ const FilterMenu = React.createClass({
                 </View>
             </View>
         );
-    },
+    }
 
-    renderSortPicker() {
+    renderSortPicker = () => {
         return (
             <View style={styles.pickerContainer}>
                 <BodyText style={styles.pickerLabel}>Sort</BodyText>
@@ -79,7 +78,7 @@ const FilterMenu = React.createClass({
                 </View>
             </View>
         );
-    },
+    }
 
     render() {
         return (
@@ -99,7 +98,7 @@ const FilterMenu = React.createClass({
             </Modal>
         );
     }
-});
+}
 
 export default FilterMenu;
 

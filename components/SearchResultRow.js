@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet,
   View,
@@ -9,11 +10,11 @@ import { FontAwesome } from '@expo/vector-icons';
 import { getImageConfig } from '../repository/tmdbRepo';
 import BodyText from './BodyText';
 
-const SearchResultRow = React.createClass({
-    propTypes: {
-        rowData: React.PropTypes.object,
-        onResultSelect: React.PropTypes.func,
-    },
+class SearchResultRow extends React.Component {
+    static propTypes = {
+        rowData: PropTypes.object,
+        onResultSelect: PropTypes.func,
+    }
 
     render() {
         const imageConfig = getImageConfig();
@@ -41,7 +42,7 @@ const SearchResultRow = React.createClass({
             </TouchableHighlight>
         );
     }
-});
+}
 
 export default SearchResultRow;
 

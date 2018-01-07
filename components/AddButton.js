@@ -1,12 +1,13 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { TextInput, StyleSheet, TouchableHighlight, Animated } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
-const AddButton = React.createClass({
-    propTypes: {
+class AddButton extends React.Component {
+    static propTypes = {
         emitter: PropTypes.object,
         searchEnabled: PropTypes.bool,
-    },
+    }
 
     componentWillMount() {
         this.animation = new Animated.Value(0);
@@ -18,7 +19,7 @@ const AddButton = React.createClass({
         }
     },
 
-    handlePress() {
+    handlePress = () => {
         Animated.spring(
             this.animation,
             {
@@ -26,7 +27,7 @@ const AddButton = React.createClass({
             }
         ).start();
         this.props.emitter.emit('search');
-    },
+    }
 
     render() {
         const animatedStyle = {
@@ -45,7 +46,7 @@ const AddButton = React.createClass({
             </TouchableHighlight>
         );
     }
-});
+}
 
 export default AddButton;
 

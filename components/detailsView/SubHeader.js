@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet,
   Image,
@@ -10,21 +11,21 @@ import { FontAwesome } from '@expo/vector-icons';
 import Rating from './Rating';
 import BodyText from '../BodyText';
 
-const SubHeader = React.createClass({
-    propTypes: {
-        itemDetails: React.PropTypes.shape(),
-        onSeasonsClick: React.PropTypes.func,
-    },
+class SubHeader extends React.Component {
+    static propTypes = {
+        itemDetails: PropTypes.object,
+        onSeasonsClick: PropTypes.func,
+    }
 
-    renderMovieTagLine(item) {
+    renderMovieTagLine = (item) => {
         return (
             <View style={styles.detailsContainer}>
                 <BodyText style={styles.tagline}>{item.tagline.toUpperCase()}</BodyText>
             </View>
         );
-    },
+    }
 
-    renderEpisodesSection(item) {
+    renderEpisodesSection = (item) => {
         return (
             <TouchableHighlight onPress={() => this.props.onSeasonsClick()} style={styles.detailsContainer}>
                 <View style={styles.details}>
@@ -36,7 +37,7 @@ const SubHeader = React.createClass({
                 </View>
             </TouchableHighlight>
         );
-    },
+    }
 
     render() {
         const item = this.props.itemDetails;
@@ -52,7 +53,7 @@ const SubHeader = React.createClass({
             </View>
         );
     }
-});
+}
 
 export default SubHeader;
 

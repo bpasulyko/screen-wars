@@ -1,11 +1,12 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { ActivityIndicator, View, StyleSheet } from 'react-native';
 import { getMainColor } from '../util/themeUtil';
 
-const LoadingContainer = React.createClass({
-    propTypes: {
+class LoadingContainer extends React.Component {
+    static propTypes = {
         loading: PropTypes.bool,
-    },
+    }
 
     render() {
         return (this.props.loading)
@@ -16,7 +17,7 @@ const LoadingContainer = React.createClass({
             )
             : this.props.children;
     }
-});
+}
 
 export default LoadingContainer;
 

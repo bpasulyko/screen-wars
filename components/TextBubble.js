@@ -1,19 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet,
   View,
 } from 'react-native';
 import TitleText from './TitleText';
 
-const TextBubble = React.createClass({
-    propTypes: {
-        children: React.PropTypes.string,
-    },
+class TextBubble extends React.Component {
+    static propTypes = {
+        children: PropTypes.string,
+    }
 
     render() {
         return <View style={styles.text}><TitleText style={{ color: '#EEE' }}>{this.props.children}</TitleText></View>;
     }
-});
+}
 
 export default TextBubble;
 

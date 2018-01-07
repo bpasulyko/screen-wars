@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import {
   StyleSheet,
@@ -8,10 +9,10 @@ import TextBubble from '../TextBubble';
 import BodyText from '../BodyText';
 import TitleText from '../TitleText';
 
-const Genres = React.createClass({
-    propTypes: {
-        itemDetails: React.PropTypes.shape(),
-    },
+class Genres extends React.Component {
+    static propTypes = {
+        itemDetails: PropTypes.shape(),
+    }
 
     render() {
         return (
@@ -25,7 +26,7 @@ const Genres = React.createClass({
             </View>
         );
     }
-});
+}
 
 export default Genres;
 

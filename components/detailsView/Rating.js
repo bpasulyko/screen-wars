@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet,
   View,
@@ -6,12 +7,12 @@ import {
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
-const Rating = React.createClass({
-    propTypes: {
-        rating: React.PropTypes.number,
-    },
+class Rating extends React.Component {
+    static propTypes = {
+        rating: PropTypes.number,
+    }
 
-    renderStars() {
+    renderStars = () => {
         const rating = this.props.rating/2;
         const fullStars = Math.floor(rating);
         const halfStar = (rating % 1 > 0.5) ? 1 : 0;
@@ -24,7 +25,7 @@ const Rating = React.createClass({
             classes.push('star-half');
         }
         return classes.map((iconClass, i) => <FontAwesome key={i} name={iconClass} size={18} style={styles.icon} />);
-    },
+    }
 
     render() {
         return (
@@ -36,7 +37,7 @@ const Rating = React.createClass({
             </View>
         );
     }
-});
+}
 
 export default Rating;
 

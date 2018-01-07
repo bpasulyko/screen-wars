@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet,
   View,
@@ -9,21 +10,21 @@ import {
 import SearchResultRow from './SearchResultRow';
 import BodyText from './BodyText';
 
-const SearchResults = React.createClass({
-    propTypes: {
-        results: React.PropTypes.array,
-        onResultSelect: React.PropTypes.func,
-    },
+class SearchResults extends React.Component {
+    static propTypes = {
+        results: PropTypes.array,
+        onResultSelect: PropTypes.func,
+    }
 
     componentWillMount() {
         this.animation = new Animated.Value(0);
-    },
+    }
 
     componentDidMount() {
         Animated.spring(this.animation, { toValue: 400 }).start();
-    },
+    }
 
-    renderListView() {
+    renderListView = () => {
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         const results = ds.cloneWithRows(this.props.results);
         return (
@@ -40,15 +41,15 @@ const SearchResults = React.createClass({
                 }}
             />
         );
-    },
+    }
 
-    renderNoResults() {
+    renderNoResults = () => {
         return (
             <View style={styles.noResultsContainer}>
                 <BodyText style={styles.noResults}>No Results Found</BodyText>
             </View>
         );
-    },
+    }
 
     render() {
         const animatedStyle = {
@@ -63,7 +64,7 @@ const SearchResults = React.createClass({
             </View>
         );
     }
-});
+}
 
 export default SearchResults;
 

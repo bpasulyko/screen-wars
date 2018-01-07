@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet,
   View,
@@ -7,14 +8,14 @@ import {
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
-const Button = React.createClass({
-    propTypes: {
-        text: React.PropTypes.string,
-        onClick: React.PropTypes.func,
-        color: React.PropTypes.string,
-        icon: React.PropTypes.string,
-        styles: React.PropTypes.number,
-    },
+class Button extends React.Component {
+    static propTypes = {
+        text: PropTypes.string,
+        onClick: PropTypes.func,
+        color: PropTypes.string,
+        icon: PropTypes.string,
+        styles: PropTypes.number,
+    }
 
     render() {
         const customStyles = (this.props.styles) ? [styles.button, this.props.styles] : [styles.button];
@@ -30,7 +31,7 @@ const Button = React.createClass({
             </TouchableNativeFeedback>
         );
     }
-});
+}
 
 export default Button;
 

@@ -1,13 +1,14 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { View, Text, StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { getIcon, getMainColor } from '../util/themeUtil';
 
-const NavBarTitle = React.createClass({
-    propTypes: {
+class NavBarTitle extends React.Component {
+    static propTypes = {
         title: PropTypes.string,
         noIcon: PropTypes.bool,
-    },
+    }
 
     render() {
         return (
@@ -17,7 +18,7 @@ const NavBarTitle = React.createClass({
             </View>
         );
     }
-});
+}
 
 export default NavBarTitle;
 

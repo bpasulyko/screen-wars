@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet,
   ScrollView,
@@ -7,8 +8,8 @@ import {
 import Item from './Item';
 import BodyText from './BodyText';
 
-const ItemList = React.createClass({
-    propTypes: {
+class ItemList extends React.Component {
+    static propTypes = {
         list: PropTypes.arrayOf(PropTypes.shape({
             id: PropTypes.number,
             poster: PropTypes.string,
@@ -18,13 +19,11 @@ const ItemList = React.createClass({
         onClick: PropTypes.func,
         noWrap: PropTypes.bool,
         type: PropTypes.string,
-    },
+    }
 
-    getDefaultProps() {
-        return {
-            noWrap: false,
-        };
-    },
+    static defaultProps = {
+        noWrap: false,
+    }
 
     render() {
         if (this.props.noWrap) {
@@ -43,7 +42,7 @@ const ItemList = React.createClass({
             </ScrollView>
         );
     }
-});
+}
 
 export default ItemList;
 

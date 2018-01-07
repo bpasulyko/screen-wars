@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet,
   Image,
@@ -11,8 +12,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { getImageConfig } from '../repository/tmdbRepo';
 import TitleText from './TitleText';
 
-const Item = React.createClass({
-    propTypes: {
+class Item extends React.Component {
+    static propTypes = {
         item: PropTypes.shape({
             id: PropTypes.number,
             poster: PropTypes.string,
@@ -20,21 +21,21 @@ const Item = React.createClass({
             inCollection: PropTypes.bool,
         }),
         onClick: PropTypes.func,
-    },
+    }
 
     componentWillMount() {
         this.animation = new Animated.Value(0);
-    },
+    }
 
-    handlePress() {
+    handlePress = () => {
         Animated.sequence([
             Animated.timing(this.animation, { toValue: 1, duration: 100 }),
             Animated.timing(this.animation, { toValue: 0, duration: 100 }),
         ]).start();
         this.props.onClick(this.props.item.id);
-    },
+    }
 
-    renderImage() {
+    renderImage = () => {
         const imageConfig = getImageConfig();
         const baseUrl = imageConfig.base_url;
         const size = imageConfig.poster_sizes[1];
@@ -48,7 +49,7 @@ const Item = React.createClass({
                 {this.props.item.inCollection && <MaterialIcons size={16} name="check" style={styles.checkMark} />}
             </View>
         );
-    },
+    }
 
     render() {
         const animatedStyle = {
@@ -68,7 +69,7 @@ const Item = React.createClass({
             </Animated.View>
         );
     }
-});
+}
 
 export default Item;
 
