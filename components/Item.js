@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { getImageConfig } from '../repository/tmdbRepo';
+import { getMainColor } from '../util/themeUtil';
 import TitleText from './TitleText';
 
 class Item extends React.Component {
@@ -46,7 +47,7 @@ class Item extends React.Component {
         return (
             <View>
                 {image}
-                {this.props.item.inCollection && <MaterialIcons size={16} name="check" style={styles.checkMark} />}
+                {this.props.item.inCollection && <MaterialIcons size={12} name="check" style={[{ backgroundColor: getMainColor() }, styles.checkMark]} />}
             </View>
         );
     }
@@ -104,5 +105,7 @@ const styles = StyleSheet.create({
         color: '#EEE',
         bottom: 5,
         right: 5,
+        padding: 2,
+        borderRadius: 100/2,
     },
 });

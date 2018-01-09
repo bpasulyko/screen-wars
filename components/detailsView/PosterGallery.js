@@ -8,7 +8,7 @@ import {
   StyleSheet,
   View,
   Image,
-  TouchableHighlight,
+  TouchableOpacity,
   Dimensions,
 } from 'react-native';
 
@@ -20,10 +20,10 @@ const PosterGallery = ({ visible, onClose, images }) => {
     const renderPoster = (img, key, total) => {
         const imageConfig = getImageConfig();
         const baseUrl = imageConfig.base_url;
-        const posterSize = imageConfig.poster_sizes[2];
+        const posterSize = imageConfig.poster_sizes[3];
         return (
             <View key={key}>
-                <Image style={[styles.poster, { borderColor: getMainColor() }]} source={{ uri: `${baseUrl}original${img.file_path}` }} />
+                <Image style={[styles.poster, { borderColor: getMainColor() }]} source={{ uri: `${baseUrl}${posterSize}{img.file_path}` }} />
                 <View style={[styles.pagination, { backgroundColor: getMainColor(), borderColor: getMainColor() }]}>
                     <TitleText style={styles.count}>{`${key + 1} of ${total}`}</TitleText>
                 </View>
@@ -39,13 +39,10 @@ const PosterGallery = ({ visible, onClose, images }) => {
             animationOut="bounceOut"
         >
             <View style={styles.modalContent}>
-                <TouchableHighlight style={styles.closeButton} onPress={onClose}>
+                <TouchableOpacity style={styles.closeButton} onPress={onClose}>
                     <MaterialIcons name="close" size={30} style={{ color: '#EEE' }}/>
-                </TouchableHighlight>
-                <Swiper
-                    showsPagination={false}
-                    loop={false}
-                >
+                </TouchableOpacity>
+                <Swiper showsPagination={false}>
                     {images.map((img, key) => renderPoster(img, key, images.length))}
                 </Swiper>
             </View>
@@ -97,6 +94,5 @@ const styles = StyleSheet.create({
         top: 2,
         right: 10,
         padding: 10,
-        borderRadius: 8,
     },
 });

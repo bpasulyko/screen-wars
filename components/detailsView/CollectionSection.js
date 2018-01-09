@@ -28,15 +28,14 @@ class CollectionSection extends React.Component {
         const backdropSize = imageConfig.backdrop_sizes[1];
         const backdropUrl = `${baseUrl}${backdropSize}${this.props.collectionData.backdrop_path}`;
         return (
-            <View>
-                <Image style={styles.collectionBackdrop} source={{ uri: backdropUrl }}>
-                    <TitleText style={styles.collectionTitle}>{"Part of the " + this.props.collectionData.name}</TitleText>
-                    <TouchableHighlight onPress={() => this.props.onViewLinkClick(this.props.collectionData.id)} style={styles.collectionLink}>
-                        <View>
-                            <TitleText style={styles.collectionLinkText}>View Collection</TitleText>
-                        </View>
-                    </TouchableHighlight>
-                </Image>
+            <View style={styles.backdropContainer}>
+                <TitleText style={styles.collectionTitle}>{"Part of the " + this.props.collectionData.name}</TitleText>
+                <TouchableHighlight onPress={() => this.props.onViewLinkClick(this.props.collectionData.id)} style={styles.collectionLink}>
+                    <View>
+                        <TitleText style={styles.collectionLinkText}>View Collection</TitleText>
+                    </View>
+                </TouchableHighlight>
+                <Image style={styles.collectionBackdrop} source={{ uri: backdropUrl }} />
             </View>
         );
     }
@@ -48,12 +47,17 @@ const WIDTH = Dimensions.get('window').width;
 const BACKDROP_HEIGHT = WIDTH * 0.5625;
 
 const styles = StyleSheet.create({
+    backdropContainer: {
+        width: WIDTH,
+        height: BACKDROP_HEIGHT,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        padding: 20,
+    },
     collectionBackdrop: {
         width: WIDTH,
         height: BACKDROP_HEIGHT,
-        padding: 20,
-        flexDirection: 'column',
-        justifyContent: 'space-between',
+        position: 'absolute',
     },
     collectionTitle: {
         color: '#EEE',
@@ -64,11 +68,13 @@ const styles = StyleSheet.create({
             height: 2,
         },
         textShadowRadius: 10,
+        zIndex: 10,
     },
     collectionLink: {
         backgroundColor: 'rgba(30, 30, 30, 0.8)',
         borderRadius: 50,
         padding: 10,
+        zIndex: 10,
     },
     collectionLinkText: {
         color: '#EEE',
