@@ -23,7 +23,7 @@ const PosterGallery = ({ visible, onClose, images }) => {
         const posterSize = imageConfig.poster_sizes[3];
         return (
             <View key={key}>
-                <Image style={[styles.poster, { borderColor: getMainColor() }]} source={{ uri: `${baseUrl}${posterSize}{img.file_path}` }} />
+                <Image style={[styles.poster, { borderColor: getMainColor() }]} source={{ uri: `${baseUrl}original${img.file_path}` }} />
                 <View style={[styles.pagination, { backgroundColor: getMainColor(), borderColor: getMainColor() }]}>
                     <TitleText style={styles.count}>{`${key + 1} of ${total}`}</TitleText>
                 </View>
