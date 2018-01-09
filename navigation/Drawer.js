@@ -55,6 +55,8 @@ const Drawer = DrawerNavigator({
     },
 }, {
     drawerWidth: 280,
+    drawerOpenRoute: 'DrawerOpen',
+    drawerCloseRoute: 'DrawerClose',
     contentComponent: SideDrawer,
     contentOptions: {
         activeTintColor: '#FFF',

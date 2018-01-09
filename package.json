@@ -6,7 +6,7 @@
   "private": true,
   "main": "main.js",
   "dependencies": {
-    "@expo/vector-icons": "~5.0.0",
+    "@expo/vector-icons": "^6.2.2",
     "expo": "^24.0.0",
     "firebase": "^3.6.8",
     "lodash": "^4.17.4",
