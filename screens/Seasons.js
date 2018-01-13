@@ -19,7 +19,7 @@ export default class Seasons extends React.Component {
         loading: true,
         id: null,
         seasons: [],
-        inCollection: false,
+        inWatchList: false,
     };
 
     componentDidMount() {
@@ -29,7 +29,7 @@ export default class Seasons extends React.Component {
             seasons: _.filter(this.props.navigation.state.params.seasons, (season) => season.season_number > 0),
             seasonStatus: params.seasonStatus,
             id: params.id,
-            inCollection: params.inCollection,
+            inWatchList: params.inWatchList,
         });
     }
 
@@ -38,7 +38,7 @@ export default class Seasons extends React.Component {
         this.props.navigation.navigate('Episodes', {
             tvId: this.state.id,
             seasonNumber: seasonNumber,
-            inCollection: this.state.inCollection
+            inWatchList: this.state.inWatchList
         });
     };
 

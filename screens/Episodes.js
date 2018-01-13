@@ -23,7 +23,7 @@ export default class Episodes extends React.Component {
         loading: true,
         seasonData: null,
         episodeStatus: null,
-        inCollection: false,
+        inWatchList: false,
     };
 
     componentDidMount() {
@@ -36,7 +36,7 @@ export default class Episodes extends React.Component {
                         seasonData: responseJson,
                         loading: false,
                         episodeStatus: details.val(),
-                        inCollection: params.inCollection,
+                        inWatchList: params.inWatchList,
                     });
                 });
             });
@@ -73,7 +73,7 @@ export default class Episodes extends React.Component {
                             {season.name} <BodyText style={styles.year}>({season.air_date.split('-')[0]})</BodyText>
                         </TitleText>
                         <BodyText style={styles.text}>{season.episodes.length + ' Episodes'}</BodyText>
-                        {this.state.inCollection && <Switch
+                        {this.state.inWatchList && <Switch
                             style={styles.toggle}
                             onValueChange={(value) => this.handleUpdateEpisodeStatus(value, season.episodes.map(x => x.id))}
                             value={allEpisodesWatched}
@@ -95,7 +95,7 @@ export default class Episodes extends React.Component {
                     episodes={this.state.seasonData.episodes}
                     episodeStatus={this.state.episodeStatus}
                     onEpisodeStatusUpdate={this.handleUpdateEpisodeStatus}
-                    showSwitch={this.state.inCollection}
+                    showSwitch={this.state.inWatchList}
                 />
             </View>
         );

@@ -93,7 +93,7 @@ export default class DetailsView extends React.Component {
             id: this.state.itemDetails.id,
             seasons: this.state.itemDetails.seasons,
             seasonStatus: this.state.itemDetails.seasonStatus,
-            inCollection: this.state.inCollection,
+            inWatchList: this.state.inCollection && !this.state.itemDetails.watched,
         });
     };
 
