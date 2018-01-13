@@ -27,14 +27,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#171717',
         alignItems: 'center',
-        paddingLeft: 15,
     },
     titleIcon: {
         marginRight: 15,
     },
     titleText: {
-        color: '#EEE',
+        color: '#ffe919',
         fontSize: 25,
-        fontFamily: 'star-wars',
+        fontFamily: 'star-wars-outline',
     },
 });
