@@ -5,7 +5,7 @@
       "slug": "screen-wars",
       "privacy": "unlisted",
       "sdkVersion": "24.0.0",
-      "version": "1.8.0",
+      "version": "1.9.0",
       "orientation": "portrait",
       "primaryColor": "#171717",
       "icon": "./assets/images/screenWarsIcon2.png",
