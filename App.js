@@ -18,7 +18,7 @@ import { loadAppDefaults } from './repository/tmdbRepo';
 firebase.initializeApp(firebaseConfig);
 window.firebase = firebase;
 
-class App extends React.Component {
+export default class App extends React.Component {
     state = {
         appIsReady: false,
         fontLoaded: false,
@@ -75,5 +75,3 @@ const styles = StyleSheet.create({
         backgroundColor: '#171717',
     },
 });
-
-Expo.registerRootComponent(App);
